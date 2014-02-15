@@ -1,0 +1,2 @@
+class SimpleComponet < World
+end
