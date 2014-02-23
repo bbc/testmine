@@ -1,2 +1,0 @@
-class SimpleComponet < World
-end
