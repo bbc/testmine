@@ -10,7 +10,7 @@ class CreateTestDefinitions < ActiveRecord::Migration
  
       # Foreign keys
       t.integer  :parent_id       # What owns this test?
-      t.integer  :parent_type     # What type is it?
+      t.integer  :suite_id        # What suite does it belong to?
 
       t.timestamps
     end
