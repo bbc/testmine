@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 20140218211529) do
     t.text     "description"
     t.string   "file_name"
     t.integer  "line"
-    t.integer  "test_suite_id"
     t.integer  "parent_id"
+    t.integer  "suite_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
