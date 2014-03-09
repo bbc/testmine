@@ -32,7 +32,7 @@ describe TestDefinition do
           repo:          'https://www.github.com/bbc-test/titan'
       )
 
-      suite.find_or_add_test_definition(
+      suite.add_test_definition(
           name: 'Scanning item',
           node_type: 'Cucumber::Feature',
           description: 'Scanning an item',
@@ -40,7 +40,7 @@ describe TestDefinition do
           line: 1
       )
 
-      suite.find_or_add_test_definition(
+      suite.add_test_definition(
           name: 'Showing total',
           node_type: 'Cucumber::Feature',
           description: 'Showing cart total',
@@ -60,28 +60,24 @@ describe TestDefinition do
           runner:        'Ruby Cucumber',
       )
 
-      test = suite.find_or_add_test_definition(
+      test = suite.add_test_definition(
           name: 'Scanning things',
           node_type: 'Cucumber::Scenario',
       )
 
       test.suite.name.should == "Cucumber features"
 
-      subtest = test.find_or_add_test_definition(
+      subtest = test.add_test_definition(
           name: 'Given something',
           node_type: 'Cucumber::Step',
       )
 
-      subtest = test.find_or_add_test_definition(
+      subtest = test.add_test_definition(
           name: 'Then something',
           node_type: 'Cucumber::Step',
       )
 
       subtest.parent.name.should == "Scanning things"
-
-      puts suite.inspect
-      puts suite.tests.inspect
-      puts suite.tests.first.children.inspect
 
       suite.tests.count.should == 1
       suite.tests.first.children.count.should == 2

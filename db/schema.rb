@@ -11,13 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140218211529) do
+ActiveRecord::Schema.define(version: 20140302222218) do
+
+  create_table "results", force: true do |t|
+    t.integer  "test_definition_id"
+    t.integer  "run_id"
+    t.integer  "parent_id"
+    t.integer  "value"
+    t.string   "status"
+    t.text     "output"
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "runs", force: true do |t|
     t.integer  "world_id"
     t.string   "owner"
     t.integer  "hive_job_id"
     t.string   "target"
+    t.string   "status"
+    t.datetime "started_at"
+    t.datetime "finished_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -42,6 +58,7 @@ ActiveRecord::Schema.define(version: 20140218211529) do
     t.text     "description"
     t.string   "file_name"
     t.integer  "line"
+    t.string   "category"
     t.integer  "parent_id"
     t.integer  "suite_id"
     t.datetime "created_at"

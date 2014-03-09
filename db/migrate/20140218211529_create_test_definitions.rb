@@ -7,6 +7,7 @@ class CreateTestDefinitions < ActiveRecord::Migration
       t.text    :description       # "\nAs a cashier\nI want to scan an item\nSo I can demand cash"
       t.string  :file_name         # "features\/scan_items.feature"
       t.integer :line              # 1 -- line number from the file where the definition starts
+      t.string  :category          # Allows you to group tests
  
       # Foreign keys
       t.integer  :parent_id       # What owns this test?
