@@ -15,8 +15,6 @@ describe Result do
           :project   => "Titan",
           :version   => "1.2.3" )
 
-      puts "Run create"
-
       @run = Run.create( world: @world, target: 'x86_64' )
     end
 

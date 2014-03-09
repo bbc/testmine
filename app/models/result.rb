@@ -17,10 +17,11 @@ class Result < ActiveRecord::Base
   # returns an integer that represents the test result status
   # Useful for sorting results based on status
   def status_score
-    { "pass"   => 5,
-      "fail"   => 4,
-      "error"  => 3,
-      "notrun" => 2 }[status]
+    { "pass"    => 5,
+      "fail"    => 4,
+      "error"   => 3,
+      "timeout" => 2,
+      "notrun"  => 1 }[status]
   end
 
   # Given a collection of result objects, return a summary of the
@@ -30,10 +31,10 @@ class Result < ActiveRecord::Base
   def self.summary_status(results)
     statuses = results.collect { |r| r.status }
 
-    resulting_status = :error
-    resulting_status = :pass if statuses.count(:pass) > 0
-    resulting_status = :notrun if statuses.count(:notrun) > 0
-    resulting_status = :fail if statuses.count(:fail) > 0
+    resulting_status = "error"
+    resulting_status = "pass"   if statuses.count("pass") > 0
+    resulting_status = "notrun" if statuses.count("notrun") > 0
+    resulting_status = "fail"   if statuses.count("fail") > 0
 
     resulting_status
   end
