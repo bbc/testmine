@@ -10,11 +10,10 @@ describe IrIngestor do
       started: Time.now.to_s,
       finished: Time.now.to_s,
       target: 'x86_64',
-      user:   "anon",
       project: 'hive',
       world: {
         component: 'web_app',
-        version: '0.2.1'
+        version: '0.2.2'
       },
       project: "hive",
       suite: "cucumber",
@@ -35,17 +34,17 @@ describe IrIngestor do
             {
               "type" => "Cucumber::Step",
               "name" => "Given something",
-              "status" => "passed"
+              "status" => "pass"
             },
             {
               "type" => "Cucumber::Step",
               "name" => "When something happens",
-              "status" => "passed"
+              "status" => "pass"
             },
             {
               "type" => "Cucumber::Step",
               "name" => "Then something else happens",
-              "status" => "false"
+              "status" => "pass"
             }
             ]
           }]
@@ -59,7 +58,9 @@ describe IrIngestor do
 
       run = IrIngestor.parse_ir(@ir)
 
-      p run
+      run.results.count.should == 5
+      run.top_level_results.count.should == 1
+      run.top_level_results.first.status.should == "fail"
     end
 
 

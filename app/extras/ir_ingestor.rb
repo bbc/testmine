@@ -16,7 +16,6 @@ class IrIngestor
     results  = ir["results"] || ir["tests"]
     suite    = ir["suite"]
 
-    p ir
 
     #
     # 1) Process the world under test
@@ -87,19 +86,23 @@ class IrIngestor
         description: description
       )
 
+      parent_id = parent_result.id if parent_result
       result = Result.create(
         :test_definition_id => test_definition.id,
-        #:status => :passed,
+        :status => status,
+        :parent_id => parent_id,
         :run_id => run.id
       )
 
       if children
         child_results = process_results(run, suite, children, test_definition, result)
 
-        result.status =  Result.summary_status( child_results )
-        result.save
-        results.push result
+        if !status
+          result.status =  Result.summary_status( child_results )
+          result.save
+        end
       end
+      results.push result
     end
 
     results
