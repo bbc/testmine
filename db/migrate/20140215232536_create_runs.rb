@@ -5,6 +5,9 @@ class CreateRuns < ActiveRecord::Migration
       t.string     :owner
       t.integer    :hive_job_id, index: true
       t.string     :target, index: true
+      t.string     :status
+      t.timestamp  :started_at
+      t.timestamp  :finished_at
 
       t.timestamps
     end

@@ -1,0 +1,108 @@
+require 'json'
+class IrIngestor
+
+
+  def self.parse_ir( json )
+
+    ir = JSON.parse( json )
+
+    type     = ir["type"] || "ruby cucumber"
+    started  = ir["started"]
+    finished = ir["finished"]
+    target   = ir["target"]
+    project  = ir["project"]
+    component= ir["component"] || ir["world"]["component"]
+    version  = ir["version"] || ir["world"]["version"]
+    results  = ir["results"] || ir["tests"]
+    suite    = ir["suite"]
+
+    p ir
+
+    #
+    # 1) Process the world under test
+    #
+
+    world = process_world( project, component, version) or raise "Couldn't derive a world"
+
+
+    #
+    # 2) Process the run information
+    # (Need the world to create a run)
+    #
+
+    run = Run.create( :started_at  => started,
+                      :finished_at => finished,
+                      :target      => target,
+                      :world_id    => world.id ) or raise "Couldn't create a new run"
+
+    #
+    # 3) Process the suite
+    #
+    suite = Suite.find_or_create(
+      project:       project,
+      name:          suite,
+      runner:        type,
+    )
+
+    #
+    # 4) Process the test results
+    # (Need the run to associate with results)
+    #
+
+    results = process_results( run, suite, results, suite ) or raise "Couldn't process results"
+
+    run.status = Result.summary_status( results )
+    run.save
+    run
+  end
+
+
+  def self.process_world( project, component, version )
+     World::SingleComponent.find_or_create(
+        :component => component,
+        :project   => project,
+        :version   => version )
+  end
+
+  # Recursively process results structure
+  def self.process_results(run, suite, results_array, parent_definiton, parent_result = nil)
+
+    results = []
+    results_array.each do |r|
+
+      file        = r["file"]
+      line        = r["line"]
+      type        = r["type"]
+      name        = r["name"]
+      description = r["description"]
+      children    = r["children"]
+      status      = r["status"]
+
+
+      test_definition = parent_definiton.add_test_definition(
+        name: name,
+        node_type: type,
+        file: file,
+        line: line,
+        description: description
+      )
+
+      result = Result.create(
+        :test_definition_id => test_definition.id,
+        #:status => :passed,
+        :run_id => run.id
+      )
+
+      if children
+        child_results = process_results(run, suite, children, test_definition, result)
+
+        result.status =  Result.summary_status( child_results )
+        result.save
+        results.push result
+      end
+    end
+
+    results
+  end
+
+end

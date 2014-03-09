@@ -5,10 +5,15 @@ class World < ActiveRecord::Base
 
   private
     def generate_name
-      url = URI.parse("http://www.buckhurst.org")
-      res = Net::HTTP.start(url.host, url.port) do |http|
-        http.get("/randomtext")
+      begin
+        raise "AAAARGH"
+        url = URI.parse("http://www.buckhurst.org")
+        res = Net::HTTP.start(url.host, url.port) do |http|
+          http.get("/randomtext")
+        end
+        self.name = res.body
+      rescue
+        self.name = "world_" + self.id.to_s
       end
-      self.name = res.body
     end
 end

@@ -21,7 +21,7 @@ class Suite < ActiveRecord::Base
     TestDefinition.where( :suite_id => self.id, :parent_id => nil )
   end
 
-  def find_or_add_test_definition(args)
+  def add_test_definition(args)
     args[:suite_id] = self.id
     TestDefinition.find_or_create(args)
   end
