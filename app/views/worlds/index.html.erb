@@ -14,7 +14,7 @@
   <% @worlds.each do |w| %>
 
     <tr>
-      <td><%= w.name -%></td>
+      <td><%= link_to w.name, "worlds/#{w.id}" -%></td>
       <td><%= w.id -%></td>
       <td><%= w.component -%></td>
       <td><%= w.version -%></td>
