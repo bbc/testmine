@@ -23,4 +23,47 @@ module ApplicationHelper
     }[status]
   end
 
+  # Outputs a time from, realtive to the current time
+  def pretty_time(time)
+    if time
+      time.strftime("%Y-%m-%d %H:%M:%S")
+    else
+      "~"
+    end
+  end
+
+  # Outputs different time formats relative to the current time
+  def simple_time(time)
+
+    if !time
+      "~"
+    else
+
+      now = Time.now
+
+      format = "%Y-%m-%d %H:%M:%S"
+
+      if time.year == now.year
+        if time.yday == now.yday
+          format = "%H:%M:%S"
+        else
+          format = "%d-%m %H:%M:%S"
+        end
+      end
+
+      time.strftime(format)
+    end
+  end
+
+  def pretty_truncate(string, length, emphasis)
+    if string.length > length
+      html = %{<#{emphasis}><span id="str-#{string.object_id}" href="#" data-toggle="tooltip" title="#{string}">#{string.truncate(length)}</span></#{emphasis}>}
+      html += %{<script>$('#str-#{string.object_id}').tooltip({"animation": true })</script>}
+    else
+      html = "<#{emphasis}>#{string}</#{emphasis}>"
+    end
+
+    html.html_safe
+  end
+
 end
