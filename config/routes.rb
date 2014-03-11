@@ -1,9 +1,11 @@
 Testmite::Application.routes.draw do
+  get "worlds/show"
   get "worlds/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   get 'worlds' => 'worlds#index'
+  get 'worlds/:id' => 'worlds#show'
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
