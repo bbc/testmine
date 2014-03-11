@@ -1,0 +1,34 @@
+<div class="span6">
+  <h1><%= @world.name -%></h1>
+</div>
+
+<div class="span6">
+  <table class="table">
+
+    <tr><th>ID</th><td><%= @world.id -%></td></tr>
+    <tr><th>Component</th><td><%= @world.component -%></td></tr>
+    <tr><th>Version</th><td><%= @world.version -%></td></tr>
+    <tr><th>Runs</th><td><%= @world.runs.count -%></td></tr>
+  </table>
+</div>
+
+<div>
+
+  <table class="table table-striped">
+  <% @runs.each do |r| %>
+
+    <tr>
+      <td><%= link_to r.id, "/runs/#{r.id}" -%></td>
+      <td><%= r.owner -%></td>
+      <td><%= r.target -%></td>
+      <td><%= status_badge(r.status) -%></td>
+      <td><%= r.duration -%></td>
+      <td><%= r.finished_at -%></td>
+    </tr>
+
+
+
+  <% end %>
+  </table>
+
+</div>

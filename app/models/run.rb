@@ -5,4 +5,8 @@ class Run < ActiveRecord::Base
   def top_level_results
     results.select { |r| r.parent == nil }
   end
+
+  def duration
+    finished_at - started_at
+  end
 end

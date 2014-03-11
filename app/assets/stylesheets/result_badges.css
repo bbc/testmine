@@ -1,0 +1,51 @@
+.version-label {
+  color: #000000;
+}
+
+.badge-result {
+  width: 20px;
+  display: inline-block;
+  text-align: center;
+}
+
+.badge-count-0 {
+  opacity: 0.2;
+}
+
+
+
+.result {
+  width: 50px;
+  display: inline-block;
+  text-align: center;
+  font-size: 10.998px;
+  font-weight: bold;
+  line-height: 14px;
+  font-family: monospace;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #999999;
+  padding: 1px 4px 2px;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+}
+
+.result-fail, .result-regression {
+  background-color: #b94a48;
+}
+
+.result-notrun {
+  background-color: #f89406;
+}
+
+.result-pass, .result-newpass {
+  background-color: #468847;
+}
+
+.result-error {
+  background-color: #333333;
+}
+
