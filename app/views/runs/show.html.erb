@@ -1,0 +1,85 @@
+  <div class="span3">
+    <h1>Run <%= @run.id -%></h1>
+    <p><strong>Target:</strong> <em><%= @run.target -%></em></p>
+    <hr />
+    <p><span class="result result-<%= @run.status -%>"><%= @run.status -%></span>
+      | <a href="all-results">all-results</a>
+    </p>
+  </div>
+
+  <br>
+  <div>
+    <table class="table table-striped table-condensed table-tight table-hover">
+      <tr>
+        <th colspan="3"></th>
+        <th></th>
+        <th>
+          <span class="badge badge-success badge-result">P</span>
+          <span class="badge badge-important badge-result">F</span>
+          <span class="badge badge-inverse badge-result">N</span>
+          <span class="badge badge-total badge-result">E</span>
+        </th>
+        <th></th>
+      </tr>
+
+      <% @run.top_level_results.each do |r| %>
+          <tr class="info">
+            <td colspan="3"><%= pretty_truncate(r.test.name, 80, 'strong') -%></td>
+
+            <td>
+              <span class="result result-<%= r.status -%>"><%= r.status -%></span>
+            </td>
+            <td>
+              <span class="badge badge-result badge-success badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
+              <span class="badge badge-result badge-important badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
+              <span class="badge badge-result badge-default badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
+              <span class="badge badge-result badge-inverse badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
+            </td><td><%= simple_time(r.ended_at) %></td>
+          </tr>
+
+          <% r.children.each do |s| %>
+
+              <tr class="warning">
+                <td></td><td colspan="2"><%= pretty_truncate(s.test.name, 80, 'em') -%></td>
+
+                <td>
+                  <span class="result result-<%= s.status -%>"><%= s.status -%></span>
+                </td>
+
+                <td>
+                  <span class="badge badge-result badge-success badge-count-<%= s.count(:pass) -%>"><%= s.count(:pass) %></span>
+                  <span class="badge badge-result badge-important badge-count-<%= s.count(:fail) -%>"><%= s.count(:fail) or 0 %></span>
+                  <span class="badge badge-result badge-default badge-count-<%= s.count(:notrun) -%>"><%= s.count(:notrun) %></span>
+                  <span class="badge badge-result badge-inverse badge-count-<%= s.count(:error) -%>"><%= s.count(:error) -%></span>
+                </td><td><%= simple_time(r.ended_at) %></td>
+              </tr>
+
+              <% s.children.each do |s| %>
+
+                  <tr>
+                    <td></td><td></td><td><%= pretty_truncate(s.test.name, 80, 'em') -%></td>
+
+                    <td>
+                      <span class="result result-<%= s.status -%>"><%= s.status -%></span>
+                    </td>
+
+                    <td>
+                      <% if s.children.count > 0 %>
+                      <span class="badge badge-result badge-success badge-count-<%= s.count(:pass) -%>"><%= s.count(:pass) %></span>
+                      <span class="badge badge-result badge-important badge-count-<%= s.count(:fail) -%>"><%= s.count(:fail) or 0 %></span>
+                      <span class="badge badge-result badge-default badge-count-<%= s.count(:notrun) -%>"><%= s.count(:notrun) %></span>
+                      <span class="badge badge-result badge-inverse badge-count-<%= s.count(:error) -%>"><%= s.count(:error) -%></span>
+                    <% end %>
+                    </td><td><%= simple_time(r.ended_at) %></td>
+                  </tr>
+
+              <% end %>
+
+
+          <% end %>
+
+      <% end %>
+
+    </table>
+    <hr>
+  </div>

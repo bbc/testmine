@@ -1,4 +1,5 @@
 Testmite::Application.routes.draw do
+  get "runs/show"
   get "worlds/show"
   get "worlds/index"
   # The priority is based upon order of creation: first created -> highest priority.
@@ -6,6 +7,8 @@ Testmite::Application.routes.draw do
 
   get 'worlds' => 'worlds#index'
   get 'worlds/:id' => 'worlds#show'
+
+  get 'runs/:id'   => 'runs#show'
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
