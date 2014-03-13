@@ -13,7 +13,7 @@ class World < ActiveRecord::Base
         end
         self.name = res.body
       rescue
-        self.name = "world_" + rand(100000)
+        self.name = "world_" + rand(100000).to_s
       end
     end
 end

@@ -7,13 +7,13 @@ describe IrIngestor do
     before(:all) do
     @ir = {
       type: "ruby cucumber",
-      started: Time.now.to_s,
+      started: Time.now.to_s - 20,
       finished: Time.now.to_s,
       target: 'x86_64',
       project: 'hive',
       world: {
         component: 'web_app',
-        version: '0.2.2'
+        version: '0.2.1'
       },
       project: "hive",
       suite: "cucumber",
@@ -44,7 +44,7 @@ describe IrIngestor do
             {
               "type" => "Cucumber::Step",
               "name" => "Then something else happens",
-              "status" => "pass"
+              "status" => "fail"
             }
             ]
           }]
@@ -62,8 +62,6 @@ describe IrIngestor do
       run.top_level_results.count.should == 1
       run.top_level_results.first.status.should == "fail"
     end
-
-
   end
 
 end

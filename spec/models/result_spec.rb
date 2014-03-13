@@ -22,7 +22,7 @@ describe Result do
 
       Result.create(
         :test_definition_id => @test.id,
-        :status => :passed,
+        :status => "pass",
         :run_id => @run.id
       )
 

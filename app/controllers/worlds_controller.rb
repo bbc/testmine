@@ -6,5 +6,6 @@ class WorldsController < ApplicationController
   def show
     @world = World.find(params[:id])
     @runs = @world.runs
+    @aggregate_results = AggregateResult.find( :world_id => @world.id )
   end
 end
