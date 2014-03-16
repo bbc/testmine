@@ -4,8 +4,16 @@ class WorldsController < ApplicationController
   end
 
   def show
-    @world = World.find(params[:id])
+    @world = World.find(params[:id].to_i)
     @runs = @world.runs
     @aggregate_results = AggregateResult.find( :world_id => @world.id )
+  end
+
+  def compare
+    @reference = World.find(params[:reference].to_i)
+    @primary = World.find(params[:primary].to_i)
+
+    @comparisons = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i )
+
   end
 end

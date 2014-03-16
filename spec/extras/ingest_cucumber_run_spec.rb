@@ -7,13 +7,13 @@ describe IrIngestor do
     before(:all) do
     @ir = {
       type: "ruby cucumber",
-      started: Time.now.to_s - 20,
+      started: Time.now-20,
       finished: Time.now.to_s,
-      target: 'x86_64',
+      target: 'x86_32',
       project: 'hive',
       world: {
         component: 'web_app',
-        version: '0.2.1'
+        version: '0.2.2'
       },
       project: "hive",
       suite: "cucumber",
@@ -29,7 +29,7 @@ describe IrIngestor do
             "file" => "features/simple_feature.feature",
             "line" => 14,
             "type" => "Cucumber::Scenario",
-            "name" => "Basic scenario with background",
+            "name" => "Deleted scenario",
             "children" =>[
             {
               "type" => "Cucumber::Step",
@@ -44,7 +44,7 @@ describe IrIngestor do
             {
               "type" => "Cucumber::Step",
               "name" => "Then something else happens",
-              "status" => "fail"
+              "status" => "pass"
             }
             ]
           }]

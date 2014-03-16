@@ -38,4 +38,8 @@ class Result < ActiveRecord::Base
 
     resulting_status
   end
+
+  def world
+    run.world
+  end
 end

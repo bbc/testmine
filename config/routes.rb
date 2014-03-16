@@ -7,10 +7,9 @@ Testmite::Application.routes.draw do
 
   get 'worlds' => 'worlds#index'
   get 'worlds/:id' => 'worlds#show'
+  get 'worlds/:primary/:reference' => 'worlds#compare'
 
   get 'runs/:id'   => 'runs#show'
-
-  get 'results/worlds/:id' => 'worlds#aggregate_results'
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

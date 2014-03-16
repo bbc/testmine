@@ -49,3 +49,10 @@
   background-color: #333333;
 }
 
+.result-nodiff {
+  opacity: 0.2;
+}
+
+.table th.world-right-aligned {
+  text-align: right;
+}
