@@ -33,7 +33,7 @@
           border-radius: 3px;
 }
 
-.result-fail, .result-regression {
+.result-fail, .result-regression, .result-regres {
   background-color: #b94a48;
 }
 
