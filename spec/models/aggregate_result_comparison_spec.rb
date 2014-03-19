@@ -58,7 +58,7 @@ describe AggregateResult do
       comparisons = AggregateResultComparison.find( @world1.id, @world2.id )
       comparisons.count.should == 2
       comparisons.first.should be_a AggregateResultComparison
-      comparisons.collect { |c| c.status }.should == ["newpass", "regression"]
+      comparisons.collect { |c| c.status }.should == ["newpass", "regres"]
     end
 
     it "contains aggregates from two different worlds" do

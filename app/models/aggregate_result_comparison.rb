@@ -68,12 +68,21 @@ class AggregateResultComparison
     elsif @reference.status == "pass" and @primary.status == "fail"
       status = "regres"
     end
+
+    if status == "newpass" && @primary.children.count < @reference.children.count
+      status = "notrun"
+    end
+
+    if status == "pass" && @primary.children.count > @reference.children.count
+      status = "newpass"
+    end
+
     status
   end
 
   # Do primary and reference results differ
   def diff
-    @primary.status != @reference.status
+    @primary.status != @reference.status || @primary.children.count != @reference.children.count
   end
 
   def children

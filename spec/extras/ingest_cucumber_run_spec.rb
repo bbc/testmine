@@ -44,7 +44,7 @@ describe IrIngestor do
             {
               "type" => "Cucumber::Step",
               "name" => "Then something else happens",
-              "status" => "pass"
+              "status" => "fail"
             }
             ]
           }]

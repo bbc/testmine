@@ -83,10 +83,10 @@
             <span class="result result-<%= r.status -%>"><%= r.status -%></span>
           </td>
           <td>
-            <span class="badge badge-result badge-success badge-count-<%= r.best.count(:pass) -%>"><%= r.best.count(:pass) %></span>
-            <span class="badge badge-result badge-important badge-count-<%= r.best.count(:fail) -%>"><%= r.best.count(:fail) or 0 %></span>
-            <span class="badge badge-result badge-default badge-count-<%= r.best.count(:notrun) -%>"><%= r.best.count(:notrun) %></span>
-            <span class="badge badge-result badge-inverse badge-count-<%= r.best.count(:error) -%>"><%= r.best.count(:error) -%></span>
+            <span class="badge badge-result badge-success badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
+            <span class="badge badge-result badge-important badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
+            <span class="badge badge-result badge-default badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
+            <span class="badge badge-result badge-inverse badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
           </td>
         </tr>
 

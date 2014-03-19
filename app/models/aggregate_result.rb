@@ -81,7 +81,11 @@ class AggregateResult
   end
 
   def status
-    best.status
+    if self.children.count == 0
+      self.best.status
+    else
+      Result.summary_status(children)
+    end
   end
 
   def target
@@ -89,7 +93,7 @@ class AggregateResult
   end
 
   def count (status)
-    best.count(status)
+    self.children.collect { |c| c.status == status.to_s }.count(true)
   end
 
 end
