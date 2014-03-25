@@ -1,20 +1,13 @@
-<div class="span12">
 
-  <div class="row">
-    <div class="span12">
-      <h1><%= @primary.name -%> vs <%= @reference.name -%></h1>
-      <hr />
-    </div>
-  </div>
+  <div class="col-xs-12">
+    <h1><%= @primary.project + ": " + @primary.component -%></h1>
+    <h2><%= link_to @primary.version, "/worlds/#{@primary.id}" -%> vs <%= link_to @reference.version, "worlds/#{@reference.id}" -%></h2>
+    <hr />
+   </div>
 
   <br>
-  <div class="span11">
+  <div class="col-xs-12">
     <table class="table table-condensed table-tight table-hover">
-      <tr>
-        <th colspan="6" class="world-right-aligned"><span class="label label-primary"><%= @reference.name -%></span></th>
-        <th colspan="4"><span class="label label-info"><%= @primary.name -%></span></th>
-      </tr>
-
       <tr>
         <th colspan="2">Feature</th>
         <th>Target</th>
@@ -25,8 +18,8 @@
           <span class="badge badge-inverse badge-result">N</span>
           <span class="badge badge-total badge-result">E</span>
         </th>
-        <th>ref</th>
-        <th>this</th>
+        <th><span class="label label-primary"><%= @reference.version -%></span></th>
+        <th><span class="label label-info"><%= @primary.version -%></span></th>
         <th>
           <span class="badge badge-success badge-result">P</span>
           <span class="badge badge-important badge-result">F</span>
@@ -110,4 +103,3 @@
     </table>
     <hr>
   </div>
-</div>

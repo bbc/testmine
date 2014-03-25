@@ -69,7 +69,7 @@ class AggregateResultComparison
       status = "regres"
     end
 
-    if status == "newpass" && @primary.children.count < @reference.children.count
+    if status.match("pass") && @primary.children.count < @reference.children.count
       status = "notrun"
     end
 

@@ -3,8 +3,9 @@
 <table class="table table-striped">
 
   <thead>
-    <th>World</th>
     <th>ID</th>
+    <th>World</th>
+    <th>Project</th>
     <th>Component</th>
     <th>Version</th>
     <th>Runs</th>
@@ -14,8 +15,9 @@
   <% @worlds.each do |w| %>
 
     <tr>
-      <td><%= link_to w.name, "worlds/#{w.id}" -%></td>
       <td><%= w.id -%></td>
+      <td><%= link_to w.name, "worlds/#{w.id}" -%></td>
+      <td><%= w.project -%></td>
       <td><%= w.component -%></td>
       <td><%= w.version -%></td>
       <td><%= w.runs.count -%></td>

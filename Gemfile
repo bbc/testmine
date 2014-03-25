@@ -5,7 +5,7 @@ gem 'rails', '4.0.2'
 
 gem 'thin'
 
-gem "twitter-bootstrap-rails"
+#gem "twitter-bootstrap-rails"
 
 group :development, :test do
   gem 'rspec-rails'

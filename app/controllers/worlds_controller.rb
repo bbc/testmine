@@ -7,6 +7,7 @@ class WorldsController < ApplicationController
     @world = World.find(params[:id].to_i)
     @runs = @world.runs
     @aggregate_results = AggregateResult.find( :world_id => @world.id )
+    @comparison_worlds = @world.similar
   end
 
   def compare
