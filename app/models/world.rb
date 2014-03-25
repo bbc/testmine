@@ -3,6 +3,10 @@ class World < ActiveRecord::Base
   
   has_many :runs
 
+  def similar
+    World.where( :project => project, :component => component).select { |w| w.id != self.id }
+  end
+
   private
     def generate_name
       begin

@@ -1,4 +1,4 @@
-  <div class="span3">
+  <div class="col-xs-3">
     <h1>Run <%= @run.id -%></h1>
     <p><strong>Target:</strong> <em><%= @run.target -%></em></p>
     <p><strong>World:</strong> <em><%= link_to @run.world.name, "/worlds/#{@run.world.id}" -%></em></p>
@@ -7,7 +7,7 @@
   </div>
 
   <br>
-  <div>
+  <div class="col-xs-12">
     <table class="table table-condensed table-tight table-hover">
       <tr>
         <th colspan="3"></th>
