@@ -4,17 +4,19 @@ class IrIngestor
 
   def self.parse_ir( json )
 
-    ir = JSON.parse( json )
+    ir = JSON.parse(json)
 
     type     = ir["type"] || "ruby cucumber"
     started  = ir["started"]
     finished = ir["finished"]
     target   = ir["target"]
-    project  = ir["project"]
+    project  = ir["project"] || ir["world"]["project"]
     component= ir["component"] || ir["world"]["component"]
     version  = ir["version"] || ir["world"]["version"]
     results  = ir["results"] || ir["tests"]
     suite    = ir["suite"]
+
+
 
 
     #
@@ -67,42 +69,49 @@ class IrIngestor
   def self.process_results(run, suite, results_array, parent_definiton, parent_result = nil)
 
     results = []
-    results_array.each do |r|
+    if results_array.respond_to?(:each)
+      results_array.each do |r|
+        file        = r["file"]
+        line        = r["line"]
+        type        = r["type"]
+        name        = r["name"]
+        description = r["description"]
+        children    = r["children"]
+        status      = r["status"]
+        started     = r["started"]
+        finished    = r["finished"]
 
-      file        = r["file"]
-      line        = r["line"]
-      type        = r["type"]
-      name        = r["name"]
-      description = r["description"]
-      children    = r["children"]
-      status      = r["status"]
 
+        test_definition = parent_definiton.add_test_definition(
+          name: name,
+          node_type: type,
+          file: file,
+          line: line,
+          description: description
+        )
 
-      test_definition = parent_definiton.add_test_definition(
-        name: name,
-        node_type: type,
-        file: file,
-        line: line,
-        description: description
-      )
+        parent_id = parent_result.id if parent_result
+        result = Result.create(
+          :test_definition_id => test_definition.id,
+          :status => status,
+          :parent_id => parent_id,
+          :run_id => run.id,
+          :started_at => started,
+          :finished_at => finished
+        )
 
-      parent_id = parent_result.id if parent_result
-      result = Result.create(
-        :test_definition_id => test_definition.id,
-        :status => status,
-        :parent_id => parent_id,
-        :run_id => run.id
-      )
+        if children
+          child_results = process_results(run, suite, children, test_definition, result)
 
-      if children
-        child_results = process_results(run, suite, children, test_definition, result)
-
-        if !status
-          result.status =  Result.summary_status( child_results )
-          result.save
+          if !status
+            result.status =  Result.summary_status( child_results )
+            result.save
+          end
         end
+        results.push result
       end
-      results.push result
+    else
+      puts results_array.inspect
     end
 
     results

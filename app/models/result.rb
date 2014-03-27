@@ -4,6 +4,17 @@ class Result < ActiveRecord::Base
   belongs_to :parent, :foreign_key => "parent_id", :class_name => 'Result'
   has_many   :children, :foreign_key => "parent_id", :class_name => 'Result', :dependent => :destroy
   alias_attribute :test, :test_definition
+  before_save do |result|
+    result.status = Result.normalize_result(result.status)
+  end
+
+  def self.normalize_result(status)
+    { "passed"    => "pass",
+      "failed"    => "fail",
+      "errored"   => "error",
+      "undefined" => "notrun",
+      "skipped"   => "notrun" }[status] || status
+  end
 
   # Count the status results of children
   #   result.count(:pass)
@@ -21,7 +32,7 @@ class Result < ActiveRecord::Base
       "fail"    => 4,
       "error"   => 3,
       "timeout" => 2,
-      "notrun"  => 1 }[status]
+      "notrun"  => 1 }[status] || 0
   end
 
   # Given a collection of result objects, return a summary of the

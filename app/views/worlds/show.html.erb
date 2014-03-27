@@ -72,7 +72,7 @@
       <th>
         <span class="badge-success badge-result">P</span>
         <span class="badge badge-important badge-result">F</span>
-        <span class="badge badge-inverse badge-result">N</span>
+        <span class="badge badge-warning badge-result">N</span>
         <span class="badge badge-total badge-result">E</span>
       </th>
     </tr>
@@ -90,7 +90,7 @@
           <td>
             <span class="badge badge-result badge-success badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
             <span class="badge badge-result badge-important badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
-            <span class="badge badge-result badge-default badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
+            <span class="badge badge-result badge-warning badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
             <span class="badge badge-result badge-inverse badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
           </td>
         </tr>
@@ -110,7 +110,7 @@
               <td>
                 <span class="badge badge-result badge-success badge-count-<%= s.best.count(:pass) -%>"><%= s.best.count(:pass) %></span>
                 <span class="badge badge-result badge-important badge-count-<%= s.best.count(:fail) -%>"><%= s.best.count(:fail) or 0 %></span>
-                <span class="badge badge-result badge-default badge-count-<%= s.best.count(:notrun) -%>"><%= s.best.count(:notrun) %></span>
+                <span class="badge badge-result badge-warning badge-count-<%= s.best.count(:notrun) -%>"><%= s.best.count(:notrun) %></span>
                 <span class="badge badge-result badge-inverse badge-count-<%= s.best.count(:error) -%>"><%= s.best.count(:error) -%></span>
               </td>
             </tr>
@@ -129,6 +129,12 @@
 
       <p>Compare results against...</p>
       <ul>
+
+      <% if @comparison_worlds.empty? %>
+
+        <p>Couldn't find any comparison worlds</p>
+
+      <% end %>
 
       <% @comparison_worlds.each do |w| %>
 

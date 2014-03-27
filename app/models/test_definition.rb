@@ -9,12 +9,13 @@ class TestDefinition < ActiveRecord::Base
     TestDefinition.where(
       name: args[:name],
       suite_id: args[:suite_id],
+      file: args[:file],
       parent_id: args[:parent_id]
     ).first_or_create do |test|
       test.name = args[:name]
       test.node_type = args[:node_type]
       test.description = args[:description]
-      test.file_name = args[:file_name]
+      test.file = args[:file]
       test.line = args[:line]
       test.parent_id = args[:parent_id]
     end
@@ -23,6 +24,7 @@ class TestDefinition < ActiveRecord::Base
   def add_test_definition(args)
     args[:suite_id] = self.suite_id
     args[:parent_id] = self.id
+    args[:file] = self.file if !args[:file]
     TestDefinition.find_or_create(args)
   end
   

@@ -10,7 +10,6 @@ class World < ActiveRecord::Base
   private
     def generate_name
       begin
-        raise "No internet"
         url = URI.parse("http://www.buckhurst.org")
         res = Net::HTTP.start(url.host, url.port) do |http|
           http.get("/randomtext")

@@ -9,8 +9,9 @@ class CreateWorlds < ActiveRecord::Migration
       t.string :version
 
       t.timestamps
-      
-      t.index [:component, :version]
+
+      t.index [:project, :component]
+      t.index [:project, :component, :version]
     end
   end
 end

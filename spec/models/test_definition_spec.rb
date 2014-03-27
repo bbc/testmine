@@ -9,14 +9,14 @@ describe TestDefinition do
         name: 'Scanning item',
         node_type: 'Cucumber::Feature',
         description: 'Scanning an item',
-        file_name: 'items.feature',
+        file: 'items.feature',
         line: 1
       )
       
       test_definition.name.should be_a String
       test_definition.node_type.should be_a String
       test_definition.description.should be_a String
-      test_definition.file_name.should be_a String
+      test_definition.file.should be_a String
       test_definition.line.should be_a Fixnum
     end
 
@@ -36,7 +36,7 @@ describe TestDefinition do
           name: 'Scanning item',
           node_type: 'Cucumber::Feature',
           description: 'Scanning an item',
-          file_name: 'items.feature',
+          file: 'items.feature',
           line: 1
       )
 
@@ -44,7 +44,7 @@ describe TestDefinition do
           name: 'Showing total',
           node_type: 'Cucumber::Feature',
           description: 'Showing cart total',
-          file_name: 'items.feature',
+          file: 'items.feature',
           line: 7
       )
 
