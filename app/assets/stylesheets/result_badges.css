@@ -103,3 +103,7 @@
 .table th.world-right-aligned {
   text-align: right;
 }
+
+.table-element-center {
+  text-align: center;
+}

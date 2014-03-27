@@ -10,6 +10,8 @@ class CreateSuites < ActiveRecord::Migration
       t.string :repo
 
       t.timestamps
+
+      t.index [:project, :name]
     end
   end
 end

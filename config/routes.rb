@@ -11,6 +11,12 @@ Testmite::Application.routes.draw do
 
   get 'runs/:id'   => 'runs#show'
 
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      post 'submit' => 'results#ingest_ir'
+    end
+  end
+
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20140302222218) do
     t.string   "status"
     t.text     "output"
     t.datetime "started_at"
-    t.datetime "ended_at"
+    t.datetime "finished_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -52,13 +52,14 @@ ActiveRecord::Schema.define(version: 20140302222218) do
     t.datetime "updated_at"
   end
 
+  add_index "suites", ["project", "name"], name: "index_suites_on_project_and_name"
+
   create_table "test_definitions", force: true do |t|
     t.string   "name"
     t.string   "node_type"
     t.text     "description"
-    t.string   "file_name"
+    t.string   "file"
     t.integer  "line"
-    t.string   "category"
     t.integer  "parent_id"
     t.integer  "suite_id"
     t.datetime "created_at"
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(version: 20140302222218) do
     t.datetime "updated_at"
   end
 
-  add_index "worlds", ["component", "version"], name: "index_worlds_on_component_and_version"
+  add_index "worlds", ["project", "component", "version"], name: "index_worlds_on_project_and_component_and_version"
+  add_index "worlds", ["project", "component"], name: "index_worlds_on_project_and_component"
 
 end

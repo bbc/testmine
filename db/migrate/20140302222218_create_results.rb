@@ -17,7 +17,7 @@ class CreateResults < ActiveRecord::Migration
       t.string    :status
       t.text      :output
       t.timestamp :started_at
-      t.timestamp :ended_at
+      t.timestamp :finished_at
 
       t.timestamps
     end
