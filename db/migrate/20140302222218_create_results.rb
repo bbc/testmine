@@ -3,13 +3,13 @@ class CreateResults < ActiveRecord::Migration
     create_table :results do |t|
 
       # The objects these results are associated with
-      t.integer   :test_definition_id
+      t.integer   :test_definition_id, index: true
 
       # Run grouping (Which captures target and world information)
-      t.integer   :run_id
+      t.integer   :run_id, index: true
 
       # Result parent -- this would typically cache child summary results
-      t.integer   :parent_id
+      t.integer   :parent_id, index: true
 
       # Simple integer value associated with a result
       t.integer   :value

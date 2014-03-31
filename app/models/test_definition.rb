@@ -28,4 +28,12 @@ class TestDefinition < ActiveRecord::Base
     TestDefinition.find_or_create(args)
   end
   
+  def file_name( modifier = :short )
+    file_name = file
+    if modifier == :short
+      file =~ /.*features\/(.*.feature)/
+      file_name = $1 if $1
+    end
+    file_name
+  end
 end

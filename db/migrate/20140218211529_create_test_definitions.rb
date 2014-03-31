@@ -9,10 +9,10 @@ class CreateTestDefinitions < ActiveRecord::Migration
       t.integer :line              # 1 -- line number from the file where the definition starts
  
       # Foreign keys
-      t.integer  :parent_id       # What owns this test?
-      t.integer  :suite_id        # What suite does it belong to?
+      t.integer  :parent_id, index: true       # What owns this test?
+      t.integer  :suite_id, index: true        # What suite does it belong to?
 
-      #t.index [:name, :suite_id, :file, :parent_id]
+      t.index [:name, :suite_id, :file, :parent_id], name: 'lookup'
 
       t.timestamps
     end

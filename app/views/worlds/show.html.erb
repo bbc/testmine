@@ -70,16 +70,16 @@
       <th></th>
       <th>Result</th>
       <th>
-        <span class="badge-success badge-result">P</span>
-        <span class="badge badge-important badge-result">F</span>
-        <span class="badge badge-warning badge-result">N</span>
-        <span class="badge badge-total badge-result">E</span>
+        <span class="badge-pass badge-result">P</span>
+        <span class="badge badge-fail badge-result">F</span>
+        <span class="badge badge-notrun badge-result">N</span>
+        <span class="badge badge-error badge-result">E</span>
       </th>
     </tr>
 
     <% @aggregate_results.each do |r| %>
         <tr class="info">
-          <td colspan="2"><strong><%=  pretty_truncate(r.test_definition.name, 80, 'strong') -%></strong></td>
+          <td colspan="2"><strong><%=  pretty_truncate("#{r.test_definition.name} <code>#{r.test_definition.file_name(:short)}</code>", 80, 'strong') -%></strong></td>
 
           <td><%= r.target -%></td>
 
@@ -88,10 +88,10 @@
             <span class="result result-<%= r.status -%>"><%= r.status -%></span>
           </td>
           <td>
-            <span class="badge badge-result badge-success badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
-            <span class="badge badge-result badge-important badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
-            <span class="badge badge-result badge-warning badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
-            <span class="badge badge-result badge-inverse badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
+            <span class="badge badge-result badge-pass badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
+            <span class="badge badge-result badge-fail badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
+            <span class="badge badge-result badge-notrun badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
+            <span class="badge badge-result badge-error badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
           </td>
         </tr>
 
@@ -108,10 +108,10 @@
               </td>
 
               <td>
-                <span class="badge badge-result badge-success badge-count-<%= s.best.count(:pass) -%>"><%= s.best.count(:pass) %></span>
-                <span class="badge badge-result badge-important badge-count-<%= s.best.count(:fail) -%>"><%= s.best.count(:fail) or 0 %></span>
-                <span class="badge badge-result badge-warning badge-count-<%= s.best.count(:notrun) -%>"><%= s.best.count(:notrun) %></span>
-                <span class="badge badge-result badge-inverse badge-count-<%= s.best.count(:error) -%>"><%= s.best.count(:error) -%></span>
+                <span class="badge badge-result badge-pass badge-count-<%= s.best.count(:pass) -%>"><%= s.best.count(:pass) %></span>
+                <span class="badge badge-result badge-fail badge-count-<%= s.best.count(:fail) -%>"><%= s.best.count(:fail) or 0 %></span>
+                <span class="badge badge-result badge-notrun badge-count-<%= s.best.count(:notrun) -%>"><%= s.best.count(:notrun) %></span>
+                <span class="badge badge-result badge-error badge-count-<%= s.best.count(:error) -%>"><%= s.best.count(:error) -%></span>
               </td>
             </tr>
 

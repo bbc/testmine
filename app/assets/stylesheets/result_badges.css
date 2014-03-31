@@ -27,27 +27,27 @@
   opacity: 0.2;
 }
 
-.badge-important {
+.badge-fail {
     background-color: #b94a48;
 }
 
-.badge-important[href] {
+.badge-fail[href] {
     background-color: #953b39;
 }
 
-.badge-warning {
+.badge-notrun {
     background-color: #f89406;
 }
 
-.badge-warning[href] {
+.badge-notrun[href] {
     background-color: #c67605;
 }
 
-.badge-success {
+.badge-pass {
     background-color: #468847;
 }
 
-.badge-success[href] {
+.badge-pass[href] {
     background-color: #356635;
 }
 
@@ -57,6 +57,10 @@
 
 .badge-info[href] {
     background-color: #2d6987;
+}
+
+.badge-error {
+    background-color: #333333;
 }
 
 
