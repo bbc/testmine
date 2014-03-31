@@ -4,7 +4,7 @@ class CreateWorlds < ActiveRecord::Migration
       t.string :type
       t.string :name
       t.text   :description
-      t.string :project
+      t.string :project, index: true
       t.string :component
       t.string :version
 

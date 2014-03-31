@@ -1,7 +1,7 @@
   <div class="col-xs-3">
     <h1>Run <%= @run.id -%></h1>
     <p><strong>Target:</strong> <em><%= @run.target -%></em></p>
-    <p><strong>World:</strong> <em><%= link_to @run.world.name, "/worlds/#{@run.world.id}" -%></em></p>
+    <p><strong>World:</strong> <em><%= link_to "#{@run.world.component}: #{@run.world.version}", "/worlds/#{@run.world.id}" -%></em></p>
     <p><span class="result result-<%= @run.status -%>"><%= @run.status -%></span>
     </p>
   </div>
@@ -13,10 +13,10 @@
         <th colspan="3"></th>
         <th></th>
         <th>
-          <span class="badge badge-success badge-result">P</span>
-          <span class="badge badge-important badge-result">F</span>
-          <span class="badge badge-warning badge-result">N</span>
-          <span class="badge badge-inverse badge-result">E</span>
+          <span class="badge badge-pass badge-result">P</span>
+          <span class="badge badge-fail badge-result">F</span>
+          <span class="badge badge-notrun badge-result">N</span>
+          <span class="badge badge-error badge-result">E</span>
         </th>
         <th></th>
       </tr>
@@ -24,16 +24,16 @@
       <% @run.top_level_results.each do |r| %>
           <tbody>
           <tr class="info">
-            <td colspan="3"><%= pretty_truncate("#{r.test.name} {#{r.test.file}}", 80, 'strong') -%></td>
+            <td colspan="3"><%= pretty_truncate("#{r.test_definition.name} <code>#{r.test_definition.file_name(:short)}</code>", 80, 'strong') -%></td>
 
             <td>
               <span class="result result-<%= r.status -%>"><%= r.status -%></span>
             </td>
             <td>
-              <span class="badge badge-result badge-success badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
-              <span class="badge badge-result badge-important badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
-              <span class="badge badge-result badge-warning badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
-              <span class="badge badge-result badge-inverse badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
+              <span class="badge badge-result badge-pass badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
+              <span class="badge badge-result badge-fail badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
+              <span class="badge badge-result badge-notrun badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
+              <span class="badge badge-result badge-error badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
             </td><td><%= simple_time(r.finished_at) %></td>
           </tr>
 
@@ -47,10 +47,10 @@
                 </td>
 
                 <td>
-                  <span class="badge badge-result badge-success badge-count-<%= s.count(:pass) -%>"><%= s.count(:pass) %></span>
-                  <span class="badge badge-result badge-important badge-count-<%= s.count(:fail) -%>"><%= s.count(:fail) or 0 %></span>
-                  <span class="badge badge-result badge-warning badge-count-<%= s.count(:notrun) -%>"><%= s.count(:notrun) %></span>
-                  <span class="badge badge-result badge-inverse badge-count-<%= s.count(:error) -%>"><%= s.count(:error) -%></span>
+                  <span class="badge badge-result badge-pass badge-count-<%= s.count(:pass) -%>"><%= s.count(:pass) %></span>
+                  <span class="badge badge-result badge-fail badge-count-<%= s.count(:fail) -%>"><%= s.count(:fail) or 0 %></span>
+                  <span class="badge badge-result badge-notrun badge-count-<%= s.count(:notrun) -%>"><%= s.count(:notrun) %></span>
+                  <span class="badge badge-result badge-error badge-count-<%= s.count(:error) -%>"><%= s.count(:error) -%></span>
                 </td><td><%= simple_time(r.finished_at) %></td>
               </tr>
 
@@ -65,10 +65,10 @@
 
                     <td>
                       <% if s.children.count > 0 %>
-                      <span class="badge badge-result badge-success badge-count-<%= s.count(:pass) -%>"><%= s.count(:pass) %></span>
-                      <span class="badge badge-result badge-important badge-count-<%= s.count(:fail) -%>"><%= s.count(:fail) or 0 %></span>
-                      <span class="badge badge-result badge-warning badge-count-<%= s.count(:notrun) -%>"><%= s.count(:notrun) %></span>
-                      <span class="badge badge-result badge-inverse badge-count-<%= s.count(:error) -%>"><%= s.count(:error) -%></span>
+                      <span class="badge badge-result badge-pass badge-count-<%= s.count(:pass) -%>"><%= s.count(:pass) %></span>
+                      <span class="badge badge-result badge-fail badge-count-<%= s.count(:fail) -%>"><%= s.count(:fail) or 0 %></span>
+                      <span class="badge badge-result badge-notrun badge-count-<%= s.count(:notrun) -%>"><%= s.count(:notrun) %></span>
+                      <span class="badge badge-result badge-error badge-count-<%= s.count(:error) -%>"><%= s.count(:error) -%></span>
                     <% end %>
                     </td><td><%= simple_time(r.finished_at) %></td>
                   </tr>

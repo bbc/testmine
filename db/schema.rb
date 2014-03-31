@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20140302222218) do
     t.datetime "updated_at"
   end
 
+  add_index "test_definitions", ["name", "suite_id", "file", "parent_id"], name: "lookup"
+
   create_table "worlds", force: true do |t|
     t.string   "type"
     t.string   "name"
