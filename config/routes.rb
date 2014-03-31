@@ -11,6 +11,8 @@ Testmite::Application.routes.draw do
 
   get 'runs/:id'   => 'runs#show'
 
+  get '/status' => 'api/v1/status#show'
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       post 'submit' => 'results#ingest_ir'
