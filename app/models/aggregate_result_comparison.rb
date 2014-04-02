@@ -16,9 +16,15 @@ class AggregateResultComparison
 
     primary_world = World.find( primary_world_id)
     reference_world = World.find( reference_world_id)
+    
+    target = args[:target]
 
-    primary_aggregates = AggregateResult.find( :world_id => primary_world_id, :parent_id => primary_parent_id )
-    reference_aggregates = AggregateResult.find( :world_id => reference_world_id, :parent_id => reference_parent_id )
+    primary_aggregates = AggregateResult.find( :world_id => primary_world_id,
+                                               :parent_id => primary_parent_id,
+                                               :target => target )
+    reference_aggregates = AggregateResult.find( :world_id => reference_world_id,
+                                                 :parent_id => reference_parent_id,
+                                                 :target => target )
 
     hash = [ primary_aggregates, reference_aggregates ].flatten.reduce({}) do |h, a|
 
@@ -89,7 +95,8 @@ class AggregateResultComparison
 
     AggregateResultComparison.find( primary.world.id, reference.world.id,
                                     :primary_parent_id => primary.results.map {|r| r.id },
-                                    :reference_parent_id => reference.results.map {|r| r.id} )
+                                    :reference_parent_id => reference.results.map {|r| r.id},
+                                    :target => target)
   end
 
 end
