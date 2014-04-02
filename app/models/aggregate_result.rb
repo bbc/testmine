@@ -9,8 +9,15 @@ class AggregateResult
     if !parent_id.nil?
       parent_id = nil if parent_id.empty?
     end
-
-    runs = Run.where( :world_id => world_id )
+    
+    target = args[:target]
+    
+    runs =
+    if target
+      Run.where( :world_id => world_id, :target => target )
+    else
+      Run.where( :world_id => world_id )
+    end
 
     results = runs.collect { |r|
       Result.where( :run_id => r.id, :parent_id => parent_id )
