@@ -8,6 +8,8 @@ Testmite::Application.routes.draw do
   get 'worlds' => 'worlds#index'
   get 'worlds/:id' => 'worlds#show'
   get 'worlds/:primary/:reference' => 'worlds#compare'
+  
+  get 'comparison/:primary/:reference' => 'worlds#comparison_element'
 
   get 'runs/:id'   => 'runs#show'
 

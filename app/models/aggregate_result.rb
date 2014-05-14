@@ -19,8 +19,14 @@ class AggregateResult
       Run.where( :world_id => world_id )
     end
 
+    test_definition_id = args[:test_definition_id]
+    
     results = runs.collect { |r|
-      Result.where( :run_id => r.id, :parent_id => parent_id )
+      if test_definition_id
+        Result.where( :run_id => r.id, :parent_id => parent_id, :test_definition_id => test_definition_id )        
+      else
+        Result.where( :run_id => r.id, :parent_id => parent_id )
+      end
     }
 
     aggregate( results.flatten )

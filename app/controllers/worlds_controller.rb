@@ -15,6 +15,12 @@ class WorldsController < ApplicationController
     @primary = World.find(params[:primary].to_i)
 
     @comparisons = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i )
-
+  end
+  
+  def comparison_element
+    @comparison = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i,
+                                                  :test_definition_id => params[:test],
+                                                  :target => params[:target] ).first
+    render layout: false
   end
 end

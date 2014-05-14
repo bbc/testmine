@@ -1,0 +1,67 @@
+      <% c = @comparison %>
+          <tr class="info">
+            <td colspan="2"><strong><%= pretty_truncate("#{c.test_definition.name} <code>#{c.test_definition.file_name(:short)}</code>", 80, 'strong') -%></strong></td>
+            <td><%= c.target -%></td>
+
+            <td><%= c.reference.results.count -%></td>
+            <td class="table-element-center">
+              <span class="badge badge-result badge-pass badge-count-<%= c.reference.count("pass") -%>"><%= c.reference.count("pass") %></span>
+              <span class="badge badge-result badge-fail badge-count-<%= c.reference.count("fail") -%>"><%= c.reference.count("fail") or 0 %></span>
+              <span class="badge badge-result badge-notrun badge-count-<%= c.reference.count("notrun") -%>"><%= c.reference.count("notrun") %></span>
+              <span class="badge badge-result badge-error badge-count-<%= c.reference.count("error") -%>"><%= c.reference.count("error") -%></span>
+            </td>
+            <td class="table-element-center">
+              <span class="result result-<%= c.reference.status -%>"><%= c.reference.status -%></span>
+            </td>
+            <td class="table-element-center">
+              <span class="result result-<%= c.primary.status -%>"><%= c.primary.status -%></span>
+            </td>
+            <td class="table-element-center">
+              <span class="badge badge-result badge-pass badge-count-<%= c.primary.count("pass") -%>"><%= c.primary.count("pass") %></span>
+              <span class="badge badge-result badge-fail badge-count-<%= c.primary.count("fail") -%>"><%= c.primary.count("fail") or 0 %></span>
+              <span class="badge badge-result badge-notrun badge-count-<%= c.primary.count("notrun") -%>"><%= c.primary.count("notrun") %></span>
+              <span class="badge badge-result badge-error badge-count-<%= c.primary.count("error") -%>"><%= c.primary.count("error") -%></span>
+            </td>
+            <td><%= c.primary.results.count %></td>
+
+            <td>
+              <span class="result result-comparison result-<%= c.status -%> <%= c.diff ? '' : 'result-nodiff'-%>"><%= c.status -%></span>
+            </td>
+
+          </tr>
+
+          <% c.children.each do |s| %>
+              <tr>
+                <td></td><td><em><%=  pretty_truncate(s.test_definition.name, 40, 'em') -%></em></td>
+                <td><%= s.target -%></td>
+
+                <td><%= s.reference.results.count -%></td>
+                <td class="table-element-center">
+                  <span class="badge badge-result badge-pass badge-count-<%= s.reference.count("pass") -%>"><%= s.reference.count("pass") %></span>
+                  <span class="badge badge-result badge-fail badge-count-<%= s.reference.count("fail") -%>"><%= s.reference.count("fail") or 0 %></span>
+                  <span class="badge badge-result badge-notrun badge-count-<%= s.reference.count("notrun") -%>"><%= s.reference.count("notrun") %></span>
+                  <span class="badge badge-result badge-error badge-count-<%= s.reference.count("error") -%>"><%= s.reference.count("error") -%></span>
+                </td>
+                <td class="table-element-center">
+                  <span class="result result-<%= s.reference.status -%>"><%= s.reference.status -%></span>
+                </td>
+                <td class="table-element-center">
+                  <span class="result result-<%= s.primary.status -%>"><%= s.primary.status -%></span>
+                </td>
+                <td class="table-element-center">
+                  <span class="badge badge-result badge-pass badge-count-<%= s.primary.count("pass") -%>"><%= s.primary.count("pass") %></span>
+                  <span class="badge badge-result badge-fail badge-count-<%= s.primary.count("fail") -%>"><%= s.primary.count("fail") or 0 %></span>
+                  <span class="badge badge-result badge-notrun badge-count-<%= s.primary.count("notrun") -%>"><%= s.primary.count("notrun") %></span>
+                  <span class="badge badge-result badge-error badge-count-<%= s.primary.count("error") -%>"><%= s.primary.count("error") -%></span>
+                </td>
+                <td><%= s.primary.results.count -%></td>
+
+                <td>
+                  <span class="result result-comparison result-<%= s.status -%> <%= s.diff ? '' : 'result-nodiff' %>    "><%= s.status -%></span>
+                </td>
+
+              </tr>
+
+          <% end %>
+
+
