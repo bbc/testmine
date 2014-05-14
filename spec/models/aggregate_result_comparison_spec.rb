@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AggregateResult do
+describe AggregateResultComparison do
   describe "adding a result" do
 
     before(:each) do
