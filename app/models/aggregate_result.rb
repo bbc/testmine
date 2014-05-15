@@ -6,30 +6,32 @@ class AggregateResult
 
     world_id = args[:world_id]
     parent_id = args[:parent_id]
-    if !parent_id.nil?
-      parent_id = nil if parent_id.empty?
-    end
     
-    target = args[:target]
-    
-    runs =
-    if target
-      Run.where( :world_id => world_id, :target => target )
+    if parent_id && parent_id.empty?
+      []
     else
-      Run.where( :world_id => world_id )
-    end
-
-    test_definition_id = args[:test_definition_id]
+        
+      target = args[:target]
     
-    results = runs.collect { |r|
-      if test_definition_id
-        Result.where( :run_id => r.id, :parent_id => parent_id, :test_definition_id => test_definition_id )        
+      runs =
+      if target
+        Run.where( :world_id => world_id, :target => target )
       else
-        Result.where( :run_id => r.id, :parent_id => parent_id )
+        Run.where( :world_id => world_id )
       end
-    }
 
-    aggregate( results.flatten )
+      test_definition_id = args[:test_definition_id]
+    
+      results = runs.collect { |r|
+        if test_definition_id
+          Result.where( :run_id => r.id, :parent_id => parent_id, :test_definition_id => test_definition_id )        
+        else
+          Result.where( :run_id => r.id, :parent_id => parent_id )
+        end
+      }
+
+      aggregate( results.flatten )
+    end
   end
 
   # Class function for taking an array of result objects, and aggregating
