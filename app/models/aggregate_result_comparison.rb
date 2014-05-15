@@ -20,14 +20,23 @@ class AggregateResultComparison
     
     target = args[:target]
 
-    primary_aggregates = AggregateResult.find( :world_id => primary_world_id,
-                                               :parent_id => primary_parent_id,
-                                               :target => target,
-                                               :test_definition_id => test_definition_id )
-    reference_aggregates = AggregateResult.find( :world_id => reference_world_id,
-                                                 :parent_id => reference_parent_id,
+    if primary_parent_id && primary_parent_id.empty?
+      primary_aggregates = []
+    else 
+      primary_aggregates = AggregateResult.find( :world_id => primary_world_id,
+                                                 :parent_id => primary_parent_id,
                                                  :target => target,
                                                  :test_definition_id => test_definition_id )
+    end
+    
+    if reference_parent_id && reference_parent_id.empty?
+      reference_aggregates = []  
+    else
+      reference_aggregates = AggregateResult.find( :world_id => reference_world_id,
+                                                   :parent_id => reference_parent_id,
+                                                   :target => target,
+                                                   :test_definition_id => test_definition_id )
+    end
 
     hash = [ primary_aggregates, reference_aggregates ].flatten.reduce({}) do |h, a|
       
