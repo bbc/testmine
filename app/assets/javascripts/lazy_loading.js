@@ -10,10 +10,10 @@ function loadComparisons() {
 function loadComparison(id)
 {
     var elems = id.split("-");
-    var primary_id = elems[0];
-    var reference_id = elems[1];
-    var test_definition_id = elems[2];
-    var target = elems[3];
+    var primary_id = elems.shift();
+    var reference_id = elems.shift();
+    var test_definition_id = elems.shift();
+    var target = elems.join('-');
     
     $.ajax({ url: '/comparison/'+primary_id+'/'+reference_id+'?test='+test_definition_id+'&target='+target,
              type: 'GET',
