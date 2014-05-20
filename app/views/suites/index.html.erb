@@ -1,0 +1,24 @@
+<h1>Test Suites</h1>
+
+<table class="table table-striped">
+
+  <thead>
+    <th>Project</th>
+    <th>Suite</th>
+    <th>Runner</th>
+    <th>Created</th>    
+  </thead>
+
+  <tbody>
+  <% @suites.each do |s| %>
+
+    <tr>
+      <td><%= s.project -%></td>
+      <td><%= link_to ( s.name ? s.name : "unnamed"), "/suites/#{s.id}"-%></td>
+      <td><%= s.runner -%></td>
+      <td><%= simple_time s.created_at -%></td>
+    </tr>
+
+  <% end %>
+  </tbody>
+</table>

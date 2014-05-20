@@ -24,7 +24,7 @@
       <% @run.top_level_results.each do |r| %>
           <tbody>
           <tr class="info">
-            <td colspan="3"><%= pretty_truncate("#{r.test_definition.name} <code>#{r.test_definition.file_name(:short)}</code>", 80, 'strong') -%></td>
+            <td colspan="3"><%= pretty_truncate("#{h r.test_definition.name} <code>#{r.test_definition.file_name(:short)}</code>", 80, 'strong') -%></td>
 
             <td>
               <span class="result result-<%= r.status -%>"><%= r.status -%></span>
@@ -40,7 +40,7 @@
           <% r.children.each do |s| %>
 
               <tr class="warning">
-                <td></td><td colspan="2"><%= pretty_truncate(s.test.name, 80, 'em') -%></td>
+                <td></td><td colspan="2"><%= pretty_truncate(h s.test.name, 80, 'em') -%></td>
 
                 <td>
                   <span class="result result-<%= s.status -%>"><%= s.status -%></span>
@@ -57,7 +57,7 @@
               <% s.children.each do |s| %>
 
                   <tr>
-                    <td></td><td></td><td><%= pretty_truncate(s.test.name, 80, 'em') -%></td>
+                    <td></td><td></td><td><%= pretty_truncate(h s.test.name, 80, 'em') -%></td>
 
                     <td>
                       <span class="result result-<%= s.status -%>"><%= s.status -%></span>
