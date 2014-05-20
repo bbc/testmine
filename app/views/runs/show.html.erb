@@ -40,7 +40,7 @@
           <% r.children.each do |s| %>
 
               <tr class="warning">
-                <td></td><td colspan="2"><%= pretty_truncate(h s.test.name, 80, 'em') -%></td>
+                <td></td><td colspan="2"><%= pretty_truncate(h(s.test.name), 80, 'em') -%></td>
 
                 <td>
                   <span class="result result-<%= s.status -%>"><%= s.status -%></span>
@@ -57,7 +57,7 @@
               <% s.children.each do |s| %>
 
                   <tr>
-                    <td></td><td></td><td><%= pretty_truncate(h s.test.name, 80, 'em') -%></td>
+                    <td></td><td></td><td><%= pretty_truncate(h(s.test.name), 80, 'em') -%></td>
 
                     <td>
                       <span class="result result-<%= s.status -%>"><%= s.status -%></span>
