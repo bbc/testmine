@@ -18,7 +18,7 @@ function loadComparison(id)
     $.ajax({ url: '/comparison/'+primary_id+'/'+reference_id+'?test='+test_definition_id+'&target='+target,
              type: 'GET',
              success: function( data ) {
-                $("#"+id).replaceWith(data);
+                $('[id="' + id + '"]').replaceWith(data);
              }
            })
     
