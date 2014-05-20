@@ -79,7 +79,7 @@
 
     <% @aggregate_results.each do |r| %>
         <tr class="info">
-          <td colspan="2"><strong><%=  pretty_truncate("#{r.test_definition.name} <code>#{r.test_definition.file_name(:short)}</code>", 80, 'strong') -%></strong></td>
+          <td colspan="2"><strong><%=  pretty_truncate("#{h r.test_definition.name} <code>#{r.test_definition.file_name(:short)}</code>", 80, 'strong') -%></strong></td>
 
           <td><%= r.target -%></td>
 
@@ -98,7 +98,7 @@
         <% r.children.each do |s| %>
 
             <tr>
-              <td></td><td><em><%=  pretty_truncate(s.test_definition.name, 80, 'em') -%></em></td>
+              <td></td><td><em><%=  pretty_truncate(h(s.test_definition.name), 80, 'em') -%></em></td>
               <td><%= r.target -%></td>
 
               <td><%= s.results.count %></td>

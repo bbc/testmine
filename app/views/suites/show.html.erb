@@ -1,0 +1,46 @@
+<div class="col-xs-6">
+  <h1><%= ( @suite.name ? @suite.name : "Unnamed suite (##{@suite.id})" )-%> </h1>
+  <p class="lead"><%= @suite.description -%></p>
+  <p><%= link_to @suite.url, @suite.url if @suite.url -%> </p>
+  <p><%= link_to @suite.repo, @suite.repo if @suite.url-%></p>
+</div>
+
+<div class="col-xs-6">
+  <table class="table">
+
+    <tr><th>ID</th><td><%= @suite.id -%></td></tr>
+    <tr><th>Project</th><td><%= @suite.project -%></td></tr>
+    <tr><th>Runner</th><td><%= @suite.runner -%></td></tr>
+    <tr><th>Created</th><td><%= simple_time(@suite.created_at) -%></td></tr>
+  </table>
+
+</div>
+
+<div>
+  <%= @suite.documentation -%>
+</div>
+
+<div class="col-xs-12">
+  <h3>Latest test worlds</h3>
+  
+  <table class="table table-striped">
+
+  <thead>
+    <th>ID</th>
+    <th>World</th>
+    <th>Version</th>
+    <th>Runs</th>
+  </thead>
+  <% @worlds.each do |w| %>
+ 
+     <tr>
+      <td><%= w.id -%></td>
+      <td><%= link_to w.name, "/worlds/#{w.id}" -%></td>
+      <td><%= w.version -%></td>
+      <td><%= w.runs.count -%></td>
+    </tr> 
+  
+  <% end %>
+  </table>
+  
+</div>

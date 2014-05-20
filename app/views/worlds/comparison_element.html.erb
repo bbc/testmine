@@ -1,6 +1,6 @@
       <% c = @comparison %>
           <tr class="info">
-            <td colspan="2"><strong><%= pretty_truncate("#{c.test_definition.name} <code>#{c.test_definition.file_name(:short)}</code>", 80, 'strong') -%></strong></td>
+            <td colspan="2"><strong><%= pretty_truncate("#{h(c.test_definition.name)} <code>#{h(c.test_definition.file_name(:short))}</code>", 80, 'strong') -%></strong></td>
             <td><%= c.target -%></td>
 
             <td><%= c.reference.results.count -%></td>
@@ -32,7 +32,7 @@
 
           <% c.children.each do |s| %>
               <tr>
-                <td></td><td><em><%=  pretty_truncate(s.test_definition.name, 40, 'em') -%></em></td>
+                <td></td><td><em><%=  pretty_truncate(h(s.test_definition.name), 80, 'em') -%></em></td>
                 <td><%= s.target -%></td>
 
                 <td><%= s.reference.results.count -%></td>
