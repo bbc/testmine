@@ -11,6 +11,13 @@ class WorldsController < ApplicationController
     }
     @comparison_worlds = @world.similar
   end
+  
+  def aggregate_element
+    @aggregate = AggregateResult.find( :world_id => params[:world_id].to_i,
+                                       :test_definition_id => params[:test].to_i,
+                                       :target => params[:target] ).first
+    render layout: false
+  end
 
   def compare
     @reference = World.find(params[:reference].to_i)
@@ -20,7 +27,7 @@ class WorldsController < ApplicationController
       a.target + a.test_definition.name <=> b.target + b.test_definition.name
     }
   end
-  
+   
   def comparison_element
     @comparison = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i,
                                                   :test_definition_id => params[:test].to_i,
