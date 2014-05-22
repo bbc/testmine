@@ -4,7 +4,7 @@ class WorldsController < ApplicationController
   end
 
   def show
-    @world = World.find(params[:id].to_i)
+    @world = World.includes(:runs).find(params[:id].to_i)
     @runs = @world.runs
     @aggregate_results = AggregateResult.find( :world_id => @world.id ).sort { |a,b|
       a.target + a.test_definition.name <=> b.target + b.test_definition.name
