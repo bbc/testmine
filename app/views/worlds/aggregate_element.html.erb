@@ -26,6 +26,7 @@
 
               <td>
                 <span class="result result-<%= s.status -%>"><%= s.status -%></span>
+                <%= hive_job_link(r.best.run) if r.best -%>
               </td>
 
               <td>

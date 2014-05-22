@@ -18,8 +18,10 @@
           <span class="badge badge-notrun badge-result">N</span>
           <span class="badge badge-error badge-result">E</span>
         </th>
+        <th></th>
         <th class="table-element-center"><span class="label label-primary"><%= @reference.version -%></span></th>
         <th class="table-element-center"><span class="label label-info"><%= @primary.version -%></span></th>
+        <th></th>
         <th class="table-element-center">
           <span class="badge badge-pass badge-result">P</span>
           <span class="badge badge-fail badge-result">F</span>
@@ -39,7 +41,7 @@
         
           <td colspan="2"><strong><%= pretty_truncate("#{h(c.test_definition.name)} <code>#{h(c.test_definition.file_name(:short))}</code>", 80, 'strong') -%></strong></td>
           <td><%= c.target -%></td>
-          <td colspan="7">
+          <td colspan="9">
             <div class="progress progress-striped active">
               <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: <%=rand(100)-%>%">
                 <span class="sr-only">Loading...</span>

@@ -65,5 +65,26 @@ module ApplicationHelper
 
     html.html_safe
   end
+  
+  def hive_url(args = {})
+    if ENV['HIVE_URL']
+      base = ENV['HIVE_URL']
+      if args[:job]
+        "#{base}/jobs/#{args[:job].to_s}"
+      else
+        base
+      end
+    else
+      nil
+    end
+  end
+  
+  def hive_job_link( run )
+    if hive_url && run.hive_job_id
+      "<a href='#{hive_url(:job => run.hive_job_id)}'><i class='fa fa-search'></i></a>".html_safe
+    else
+      ""
+    end
+  end
 
 end
