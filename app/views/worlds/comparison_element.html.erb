@@ -10,12 +10,14 @@
               <span class="badge badge-result badge-notrun badge-count-<%= c.reference.count("notrun") -%>"><%= c.reference.count("notrun") %></span>
               <span class="badge badge-result badge-error badge-count-<%= c.reference.count("error") -%>"><%= c.reference.count("error") -%></span>
             </td>
+            <td></td>
             <td class="table-element-center">
               <span class="result result-<%= c.reference.status -%>"><%= c.reference.status -%></span>
             </td>
             <td class="table-element-center">
               <span class="result result-<%= c.primary.status -%>"><%= c.primary.status -%></span>
             </td>
+            <td></td>
             <td class="table-element-center">
               <span class="badge badge-result badge-pass badge-count-<%= c.primary.count("pass") -%>"><%= c.primary.count("pass") %></span>
               <span class="badge badge-result badge-fail badge-count-<%= c.primary.count("fail") -%>"><%= c.primary.count("fail") or 0 %></span>
@@ -42,11 +44,17 @@
                   <span class="badge badge-result badge-notrun badge-count-<%= s.reference.count("notrun") -%>"><%= s.reference.count("notrun") %></span>
                   <span class="badge badge-result badge-error badge-count-<%= s.reference.count("error") -%>"><%= s.reference.count("error") -%></span>
                 </td>
+                <td>
+                  <%= hive_job_link(s.reference.best.run) if s.reference.best && s.reference.best.run -%>
+                </td>
                 <td class="table-element-center">
                   <span class="result result-<%= s.reference.status -%>"><%= s.reference.status -%></span>
                 </td>
                 <td class="table-element-center">
                   <span class="result result-<%= s.primary.status -%>"><%= s.primary.status -%></span>
+                </td>
+                <td>
+                  <%= hive_job_link(s.primary.best.run) if s.primary.best && s.primary.best.run -%>
                 </td>
                 <td class="table-element-center">
                   <span class="badge badge-result badge-pass badge-count-<%= s.primary.count("pass") -%>"><%= s.primary.count("pass") %></span>

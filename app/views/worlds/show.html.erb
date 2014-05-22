@@ -48,7 +48,9 @@
     <tr>
       <td><%= link_to r.id, "/runs/#{r.id}" -%></td>
       <td><%= r.target -%></td>
-      <td><%= status_badge(r.status) -%></td>
+      <td><%= status_badge(r.status) -%>
+          <%= hive_job_link(r) -%>
+      </td>
       <td><%= r.started_at.to_s(:short) -%></td>
       <td><%= r.duration -%></td>
     </tr>

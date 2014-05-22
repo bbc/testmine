@@ -15,18 +15,18 @@ class AggregateResult
     
       runs =
       if target
-        Run.where( :world_id => world_id, :target => target )
+        Run.includes(:world).where( :world_id => world_id, :target => target )
       else
-        Run.where( :world_id => world_id )
+        Run.includes(:world).where( :world_id => world_id )
       end
 
       test_definition_id = args[:test_definition_id]
     
       results = runs.collect { |r|
         if test_definition_id
-          Result.where( :run_id => r.id, :parent_id => parent_id, :test_definition_id => test_definition_id )        
+          Result.includes(:test_definition, :run => [ :world ], :children => [ :test_definition ]).where( :run_id => r.id, :parent_id => parent_id, :test_definition_id => test_definition_id)        
         else
-          Result.where( :run_id => r.id, :parent_id => parent_id )
+          Result.includes(:test_definition, :run => [ :world ], :children => [ :test_definition ]).where( :run_id => r.id, :parent_id => parent_id )
         end
       }
 

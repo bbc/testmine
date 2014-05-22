@@ -15,7 +15,7 @@ class IrIngestor
     version  = ir["version"] || ir["world"]["version"]
     results  = ir["results"] || ir["tests"]
     suite    = ir["suite"]
-
+    hive_job_id = ir["hive_job"]
 
 
 
@@ -34,6 +34,7 @@ class IrIngestor
     run = Run.create( :started_at  => started,
                       :finished_at => finished,
                       :target      => target,
+                      :hive_job_id => hive_job_id,
                       :world_id    => world.id ) or raise "Couldn't create a new run"
 
     #

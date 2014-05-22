@@ -15,8 +15,8 @@ class AggregateResultComparison
     reference_parent_id = args[:reference_parent_id]
     test_definition_id  = args[:test_definition_id]
 
-    primary_world = World.find( primary_world_id)
-    reference_world = World.find( reference_world_id)
+    primary_world = World.includes(:runs).find( primary_world_id)
+    reference_world = World.includes(:runs).find( reference_world_id)
     
     target = args[:target]
 

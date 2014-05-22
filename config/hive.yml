@@ -1,0 +1,15 @@
+development: &defaults
+  url: http://localhost:3001
+
+test:
+  <<: *defaults
+
+production-test:
+  <<: *defaults
+  address: hive-activemq.test.cloud.bbc.co.uk
+  password: xn1J23k52qCA5p2
+
+production:
+  <<: *defaults
+  address: hive-activemq.cloud.bbc.co.uk
+  password: xn1J23k52qCA5p2
