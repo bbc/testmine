@@ -1,5 +1,11 @@
 <div class="col-xs-6">
-  <h1><%= @world.project + ": " + @world.component -%></h1>
+  <h1>
+    <% if @world.project.eql? @world.component %>
+      <%= @world.project -%>
+    <% else %>
+      <%= @world.project + ": " + @world.component -%>
+    <% end %>
+  </h1>
   <h2><%= @world.version -%></h2>
 </div>
 

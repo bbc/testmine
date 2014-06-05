@@ -1,35 +1,45 @@
+# world_id, parent_result_id, test_definition_id, target
+# best_result_id, status, pass_count, fail_count, error_count, notrun_count
+
 class AggregateResult
   attr_accessor :results, :world, :test_definition
 
   # Returns an array of AggregateResult objects
+  # You can find aggregate results in a number of ways:
+  #   AggregateResult.find( :world_id => 1234 )
+  #   AggregateResult.find( :world_id => 1234, target => 'firefox' )
+  #   AggregateResult.find( :world_id => 1234, :parent_id => parent_result_id)
+  # Required params:
+  #   :world_id
+  # Optional params:
+  #   :parent_id, :target, :test_definition_id
   def self.find( args )
 
     world_id = args[:world_id]
     parent_id = args[:parent_id]
+    target = args[:target]
+    test_definition_id = args[:test_definition_id]
+
     
     if parent_id && parent_id.empty?
       []
     else
-        
-      target = args[:target]
-    
+            
       runs =
       if target
         Run.where( :world_id => world_id, :target => target )
       else
         Run.where( :world_id => world_id )
       end
-
-      test_definition_id = args[:test_definition_id]
     
       results = runs.collect { |r|
         if test_definition_id
           Result.includes(:test_definition,
                           :run => [ :world ],
-                          :children => [ :test_definition, :run, :children => [ :children, :test_definition ] ]
+                          :children => [ :test_definition, :run => [:world], :children => [ :children, :test_definition, :run ] ]
                           ).where( :run_id => r.id, :parent_id => parent_id, :test_definition_id => test_definition_id)        
         else
-          Result.includes(:test_definition, :run => [ :world ], :children => [ :test_definition, :run, :children => [:children] ]).where( :run_id => r.id, :parent_id => parent_id )
+          Result.includes(:test_definition, :run => [ :world ], :children => [ :test_definition, :run => [:world], :children => [:children, :run] ]).where( :run_id => r.id, :parent_id => parent_id )
         end
       }
 
