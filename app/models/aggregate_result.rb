@@ -31,17 +31,21 @@ class AggregateResult
       else
         Run.where( :world_id => world_id )
       end
+      
+      run_ids = runs.collect { |r| r.id }
     
-      results = runs.collect { |r|
-        if test_definition_id
-          Result.includes(:test_definition,
+      results = 
+      if test_definition_id
+        Result.includes(:test_definition,
                           :run => [ :world ],
                           :children => [ :test_definition, :run => [:world], :children => [ :children, :test_definition, :run ] ]
-                          ).where( :run_id => r.id, :parent_id => parent_id, :test_definition_id => test_definition_id)        
-        else
-          Result.includes(:test_definition, :run => [ :world ], :children => [ :test_definition, :run => [:world], :children => [:children, :run] ]).where( :run_id => r.id, :parent_id => parent_id )
-        end
-      }
+                          ).where( :run_id => run_ids, :parent_id => parent_id, :test_definition_id => test_definition_id)        
+      else
+        Result.includes(:test_definition,
+                          :run => [ :world ],
+                          :children => [ :test_definition, :run => [:world], :children => [:children, :run] ]
+                          ).where( :run_id => run_ids, :parent_id => parent_id )
+      end
 
       aggregate( results.flatten )
     end
@@ -65,8 +69,11 @@ class AggregateResult
 
   # Returns an array of AggregateResult children
   def children
-    child_result_set = @results.map { |r| r.children }
-    AggregateResult.aggregate(child_result_set.flatten)
+    if !@children
+      child_result_set = @results.map { |r| r.children }
+      @children = AggregateResult.aggregate(child_result_set.flatten)
+    end
+    @children
   end
 
   def best
@@ -89,6 +96,7 @@ class AggregateResult
     @test_definition = _test_definition
     @world = _world
     @results = _result
+    @count = {}
   end
 
 
@@ -120,8 +128,12 @@ class AggregateResult
     best.run.target if !best.run.nil?
   end
 
+  # Counts the statuses of all the child elements
   def count (status)
-    self.children.collect { |c| c.status == status.to_s }.count(true)
+    if !@count[status]
+      @count[status] = self.children.collect { |c| c.status == status.to_s }.count(true)
+    end
+    @count[status]
   end
 
 end
