@@ -71,23 +71,25 @@ class AggregateResultComparison
 
   # Return the comparison status for the primary world
   def status
+    if !@status
+      status = @primary.status
+      if @primary.status == "pass" and @reference.status != "pass"
+        status = "newpass"
+      elsif @reference.status == "pass" and @primary.status == "fail"
+        status = "regres"
+      end
 
-    status = @primary.status
-    if @primary.status == "pass" and @reference.status != "pass"
-      status = "newpass"
-    elsif @reference.status == "pass" and @primary.status == "fail"
-      status = "regres"
+      if status.match("pass") && @primary.children.count < @reference.children.count
+        status = "notrun"
+      end
+
+      if status == "pass" && @primary.children.count > @reference.children.count
+        status = "newpass"
+      end
+
+      @status = status
     end
-
-    if status.match("pass") && @primary.children.count < @reference.children.count
-      status = "notrun"
-    end
-
-    if status == "pass" && @primary.children.count > @reference.children.count
-      status = "newpass"
-    end
-
-    status
+    @status
   end
 
   # Do primary and reference results differ
@@ -96,11 +98,13 @@ class AggregateResultComparison
   end
 
   def children
-
-    AggregateResultComparison.find( primary.world.id, reference.world.id,
+    if !@children
+      @children = AggregateResultComparison.find( primary.world.id, reference.world.id,
                                     :primary_parent_id => primary.results.map {|r| r.id },
                                     :reference_parent_id => reference.results.map {|r| r.id},
                                     :target => target)
+    end
+    @children
   end
 
 end

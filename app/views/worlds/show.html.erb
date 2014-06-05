@@ -32,7 +32,7 @@
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div class="tab-pane active" id="runs">
+    <div class="tab-pane " id="runs">
 
     <br />
 
@@ -66,7 +66,7 @@
 
   </div>
 
-  <div class="tab-pane" id="results">
+  <div class="tab-pane active" id="results">
 
   <br />
 
@@ -96,15 +96,19 @@
             </strong>
           </td>
           <td><%= r.target -%></td>
-          <td colspan="3">
-            <div class="progress progress-striped active">
-              <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: <%=rand(100)-%>%">
-                <span class="sr-only">45% Complete</span>
-              </div>
-            </div>
+
+          <td><%= r.results.count %></td>
+          <td>
+            <span class="result">????</span>
+          </td>
+          <td>
+            <span class="badge badge-result badge-pass">?</span>
+            <span class="badge badge-result badge-fail">?</span>
+            <span class="badge badge-result badge-notrun">?</span>
+            <span class="badge badge-result badge-error">?</span>
           </td>
         </tr>
-
+          
     <% end %>
 
 
