@@ -1,0 +1,34 @@
+<div class="col-xs-12">
+  <h1 class="pull-right"><span class="label label-default"><%= @test.node_type -%></h1>
+  <h2><%= @test.name -%> </h2>
+  <p class="lead"><%= @test.description -%></p>
+  <p>
+    <table class="table table-condensed">
+    
+    <thead>
+      <th></th>
+      <%  @results.each do |r| %>
+      <th><span class="badge badge-result badge-<%= r.status -%>"><%= r.status.capitalize[0] -%></span></th>
+      <% end %>
+    </thead>
+  </p>
+  <% if @test.children && !@test.children.empty? -%>
+    <% @test.children.each_with_index do |t, i| %>
+      <tr>
+        <td><%= link_to(t.name, "/tests/#{t.id}") -%></td>
+        
+        <% @results.each do |r| %>
+          <% status = ( r.children[i] ? r.children[i].status : 'notrun' ) %>
+          <td><span class="badge badge-result badge-<%= status -%>"><%= status.capitalize[0] -%></span></td>
+        <% end %>
+        
+      </tr>
+      
+    <% end %>
+    </table>
+    
+  <% else %>
+    <p class="lead">No child tests found</p>
+  <% end %>
+</div>
+
