@@ -1,8 +1,10 @@
     <% r = @aggregate %>
         <tr class="info">
-          <td colspan="2"><strong><%=  pretty_truncate("#{h r.test_definition.name} <code>#{h(r.test_definition.file_name(:short))}</code>", 80, 'strong') -%></strong></td>
+          <td><%= pretty_node(r) -%></td>
 
-          <td><%= r.target -%></td>
+          <td colspan="2" class="test-name"><strong>
+            <%= link_to( pretty_truncate(h(r.test_definition.name), 80, 'strong', h(r.test_definition.file_name(:short))), "/tests/#{r.test_definition.id}") -%></strong>
+          </td>
 
           <td><%= r.results.count %></td>
           <td>
@@ -19,8 +21,8 @@
         <% r.children.each do |s| %>
 
             <tr>
-              <td></td><td><em><%=  pretty_truncate(h(s.test_definition.name), 80, 'em') -%></em></td>
-              <td><%= r.target -%></td>
+              <td><%= pretty_node(s) -%></td>
+              <td></td><td class="test-name"><em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}") -%></em></td>
 
               <td><%= s.results.count %></td>
 
