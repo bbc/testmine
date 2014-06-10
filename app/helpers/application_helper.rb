@@ -55,15 +55,32 @@ module ApplicationHelper
     end
   end
 
-  def pretty_truncate(string, length, emphasis)
+  def pretty_truncate(string, length, emphasis, additional = nil)
+    
+    visible_text = string
+    popup_text = ''
+    
     if string.length > length
-      html = %{<#{emphasis}><span id="str-#{string.object_id}" href="#" data-toggle="tooltip" title="#{string}">#{string.truncate(length)}</span></#{emphasis}>}
+      popup_text = string
+    end
+    
+    if additional
+      popup_text = %{#{popup_text} #{additional}} 
+    end
+    
+    if popup_text.length > 0
+      html = %{<#{emphasis}><span id="str-#{string.object_id}" href="#" data-toggle="tooltip" title="#{popup_text}">#{string.truncate(length)}</span></#{emphasis}>}
       html += %{<script>$('#str-#{string.object_id}').tooltip({"animation": true })</script>}
     else
       html = "<#{emphasis}>#{string}</#{emphasis}>"
     end
 
     html.html_safe
+  end
+  
+  def pretty_node( result )
+    short_result = result.test_definition.node_type.split('::').last
+    "<code>#{short_result}</code>".html_safe
   end
   
   def hive_url(args = {})

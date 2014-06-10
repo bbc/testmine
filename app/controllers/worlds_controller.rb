@@ -6,9 +6,12 @@ class WorldsController < ApplicationController
   def show
     @world = World.includes(:runs).find(params[:id].to_i)
     @runs = @world.runs
-    @aggregate_results = AggregateResult.find( :world_id => @world.id ).sort { |a,b|
+    aggregate_results = AggregateResult.find( :world_id => @world.id ).sort { |a,b|
       a.target + a.test_definition.name <=> b.target + b.test_definition.name
     }
+    
+    @aggregate_results_hash = aggregate_results.group_by { |i| i.target }
+    
     @comparison_worlds = @world.similar
   end
   
@@ -23,9 +26,12 @@ class WorldsController < ApplicationController
     @reference = World.find(params[:reference].to_i)
     @primary = World.find(params[:primary].to_i)
 
-    @comparisons = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i ).sort { |a,b|
+    comparisons = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i ).sort { |a,b|
       a.target + a.test_definition.name <=> b.target + b.test_definition.name
     }
+    
+    @comparisons_hash = comparisons.group_by { |i| i.target }
+    
   end
    
   def comparison_element
