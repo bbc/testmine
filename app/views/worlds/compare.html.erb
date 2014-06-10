@@ -7,10 +7,38 @@
 
   <br>
   <div class="col-xs-12">
+    
+    
+    <div class="panel-group" id="accordion">
+
+      <% counter = 0%>
+      <% @comparisons_hash.each do |t,a| %>
+    
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
+            </h4>
+          </div>
+          <div id="collapse-<%=t-%>" class="panel-collapse collapse <%= counter==0 ? 'in' : '' -%>">
+          <% counter += 1 %>
+    
     <table class="table table-condensed table-tight table-hover">
       <tr>
-        <th colspan="2">Feature</th>
-        <th>Target</th>
+        <th></th>
+        <th colspan="2"></th>
+        <th></th>
+        <th></th>
+        <th colspan="2" class="table-element-right"><h3><span class="label label-primary"><%= @reference.version -%></span></h3></th>
+        <th colspan="2" class="table-element-left"><h3><span class="label label-info"><%= @primary.version -%></span></h3></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      
+      <tr>
+        <th></th>
+        <th colspan="2"></th>
         <th></th>
         <th class="table-element-center">
           <span class="badge badge-pass badge-result">P</span>
@@ -19,8 +47,8 @@
           <span class="badge badge-error badge-result">E</span>
         </th>
         <th></th>
-        <th class="table-element-center"><span class="label label-primary"><%= @reference.version -%></span></th>
-        <th class="table-element-center"><span class="label label-info"><%= @primary.version -%></span></th>
+        <th></th>
+        <th></th>
         <th></th>
         <th class="table-element-center">
           <span class="badge badge-pass badge-result">P</span>
@@ -32,15 +60,18 @@
 
         <th>Diff</th>
       </tr>
+      
 
-      <% @comparisons.each do |c| %>
+      
+      
+      <% a.each do |c| %>
       
         <% id="comparison-#{c.primary.world.id.to_s}-#{c.reference.world.id.to_s}-#{c.test_definition.id.to_s}-#{c.target}" %>
       
         <tr id="<%=id-%>" class="info comparison-loader">
         
-          <td colspan="2"><strong><%= pretty_truncate("#{h(c.test_definition.name)} <code>#{h(c.test_definition.file_name(:short))}</code>", 80, 'strong') -%></strong></td>
-          <td><%= c.target -%></td>
+          <td><%= pretty_node(c) -%></td>
+          <td colspan="2"><strong><%= pretty_truncate(h(c.test_definition.name), 80, 'strong') -%></strong></td>
             <td><%= c.reference.results.count -%></td>
             <td class="table-element-center">
               <span class="badge badge-result badge-pass">?</span>
@@ -73,6 +104,15 @@
       <% end %>
 
     </table>
+    
+              </div>
+        </div>
+        
+      <% end %>
+    </div>
+
+    
+    
     <hr>
   </div>
 

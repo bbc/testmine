@@ -10,7 +10,7 @@
   <div class="col-xs-12">
     <table class="table table-condensed table-tight table-hover">
       <tr>
-        <th colspan="3"></th>
+        <th colspan="4"></th>
         <th></th>
         <th>
           <span class="badge badge-pass badge-result">P</span>
@@ -24,7 +24,8 @@
       <% @run.top_level_results.each do |r| %>
           <tbody>
           <tr class="info">
-            <td colspan="3"><%= pretty_truncate("#{h r.test_definition.name} <code>#{r.test_definition.file_name(:short)}</code>", 80, 'strong') -%></td>
+            <td><%= pretty_node(r) -%></td>
+            <td colspan="3" class="test-name"><%= link_to( pretty_truncate("#{h r.test_definition.name}", 80, 'strong', r.test_definition.file_name(:short) ), "/tests/#{r.test_definition.id}") -%></td>
 
             <td>
               <span class="result result-<%= r.status -%>"><%= r.status -%></span>
@@ -40,7 +41,8 @@
           <% r.children.each do |s| %>
 
               <tr class="warning">
-                <td></td><td colspan="2"><%= pretty_truncate(h(s.test.name), 80, 'em') -%></td>
+                <td><%= pretty_node(s) -%></td>
+                <td></td><td colspan="2" class="test-name"><%= link_to( pretty_truncate(h(s.test.name), 80, 'em'), "/tests/#{s.test.id}") -%></td>
 
                 <td>
                   <span class="result result-<%= s.status -%>"><%= s.status -%></span>
@@ -57,6 +59,7 @@
               <% s.children.each do |s| %>
 
                   <tr>
+                <td><%= pretty_node(s) -%></td>
                     <td></td><td></td><td><%= pretty_truncate(h(s.test.name), 80, 'em') -%></td>
 
                     <td>

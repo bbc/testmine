@@ -63,6 +63,8 @@
     background-color: #333333;
 }
 
+.badge-parent {
+}
 
 
 .result {
@@ -110,4 +112,12 @@
 
 .table-element-center {
   text-align: center;
+}
+
+.table-element-left {
+  text-align: left;
+}
+
+.table-element-right {
+  text-align: right;
 }

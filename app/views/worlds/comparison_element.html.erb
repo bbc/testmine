@@ -1,14 +1,15 @@
       <% c = @comparison %>
           <tr class="info">
-            <td colspan="2"><strong><%= pretty_truncate("#{h(c.test_definition.name)} <code>#{h(c.test_definition.file_name(:short))}</code>", 80, 'strong') -%></strong></td>
-            <td><%= c.target -%></td>
+            <td><%= pretty_node(c) -%></td>
+            <td colspan="2" class="test-name"><strong>
+              <%= link_to( pretty_truncate(h(c.test_definition.name), 80, 'strong', h(c.test_definition.file_name(:short))), "/tests/#{c.test_definition.id}") -%></strong></td>
 
             <td><%= c.reference.results.count -%></td>
             <td class="table-element-center">
-              <span class="badge badge-result badge-pass badge-count-<%= c.reference.count("pass") -%>"><%= c.reference.count("pass") %></span>
-              <span class="badge badge-result badge-fail badge-count-<%= c.reference.count("fail") -%>"><%= c.reference.count("fail") or 0 %></span>
-              <span class="badge badge-result badge-notrun badge-count-<%= c.reference.count("notrun") -%>"><%= c.reference.count("notrun") %></span>
-              <span class="badge badge-result badge-error badge-count-<%= c.reference.count("error") -%>"><%= c.reference.count("error") -%></span>
+              <span class="badge badge-parent badge-result badge-pass badge-count-<%= c.reference.count("pass") -%>"><%= c.reference.count("pass") %></span>
+              <span class="badge badge-parent badge-result badge-fail badge-count-<%= c.reference.count("fail") -%>"><%= c.reference.count("fail") or 0 %></span>
+              <span class="badge badge-parent badge-result badge-notrun badge-count-<%= c.reference.count("notrun") -%>"><%= c.reference.count("notrun") %></span>
+              <span class="badge badge-parent badge-result badge-error badge-count-<%= c.reference.count("error") -%>"><%= c.reference.count("error") -%></span>
             </td>
             <td></td>
             <td class="table-element-center">
@@ -19,10 +20,10 @@
             </td>
             <td></td>
             <td class="table-element-center">
-              <span class="badge badge-result badge-pass badge-count-<%= c.primary.count("pass") -%>"><%= c.primary.count("pass") %></span>
-              <span class="badge badge-result badge-fail badge-count-<%= c.primary.count("fail") -%>"><%= c.primary.count("fail") or 0 %></span>
-              <span class="badge badge-result badge-notrun badge-count-<%= c.primary.count("notrun") -%>"><%= c.primary.count("notrun") %></span>
-              <span class="badge badge-result badge-error badge-count-<%= c.primary.count("error") -%>"><%= c.primary.count("error") -%></span>
+              <span class="badge badge-parent badge-result badge-pass badge-count-<%= c.primary.count("pass") -%>"><%= c.primary.count("pass") %></span>
+              <span class="badge badge-parent badge-result badge-fail badge-count-<%= c.primary.count("fail") -%>"><%= c.primary.count("fail") or 0 %></span>
+              <span class="badge badge-parent badge-result badge-notrun badge-count-<%= c.primary.count("notrun") -%>"><%= c.primary.count("notrun") %></span>
+              <span class="badge badge-parent badge-result badge-error badge-count-<%= c.primary.count("error") -%>"><%= c.primary.count("error") -%></span>
             </td>
             <td><%= c.primary.results.count %></td>
 
@@ -34,8 +35,8 @@
 
           <% c.children.each do |s| %>
               <tr>
-                <td></td><td><em><%=  pretty_truncate(h(s.test_definition.name), 80, 'em') -%></em></td>
-                <td><%= s.target -%></td>
+                <td><%= pretty_node(s) -%></td>
+                <td></td><td  class="test-name"><em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}") -%></em></td>
 
                 <td><%= s.reference.results.count -%></td>
                 <td class="table-element-center">

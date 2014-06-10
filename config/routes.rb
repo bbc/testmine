@@ -20,6 +20,8 @@ Testmite::Application.routes.draw do
   get 'comparison/:primary/:reference' => 'worlds#comparison_element'
 
   get 'runs/:id'   => 'runs#show'
+  
+  get 'tests/:id'  => 'tests#show'
 
   get '/status' => 'api/v1/status#show'
 
