@@ -79,11 +79,10 @@
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=counter-%>"><%=t-%></a>
             </h4>
           </div>
-          <div id="collapse-<%=t-%>" class="panel-collapse collapse <%= counter==0 ? 'in' : '' -%>">
-          <% counter += 1 %>
+          <div id="collapse-<%=counter-%>" class="panel-collapse collapse <%= counter==0 ? 'in' : '' -%>">
     
 
               <table class="table table-condensed">
@@ -128,6 +127,8 @@
               </table>
           </div>
         </div>
+
+        <% counter += 1 %>
         
       <% end %>
     </div>
