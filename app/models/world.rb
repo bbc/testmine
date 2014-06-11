@@ -4,7 +4,7 @@ class World < ActiveRecord::Base
   has_many :runs
 
   def similar
-    World.where( :project => project, :component => component).select { |w| w.id != self.id }
+    World.includes(:runs).where( :project => project, :component => component).limit(100).order('id DESC').select { |w| w.id != self.id }
   end
 
   private
