@@ -19,6 +19,7 @@ class WorldsController < ApplicationController
     @aggregate = AggregateResult.find( :world_id => params[:world_id].to_i,
                                        :test_definition_id => params[:test].to_i,
                                        :target => params[:target] ).first
+    @target = params[:target]
     render layout: false
   end
 
@@ -38,6 +39,7 @@ class WorldsController < ApplicationController
     @comparison = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i,
                                                   :test_definition_id => params[:test].to_i,
                                                   :target => params[:target] ).first
+    @target = params[:target]
     render layout: false
   end
 end
