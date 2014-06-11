@@ -2,33 +2,63 @@
   <h1 class="pull-right"><span class="label label-default"><%= @test.node_type -%></h1>
   <h2><%= @test.name -%> </h2>
   <p class="lead"><%= @test.description -%></p>
-  <p>
-    <table class="table table-condensed">
     
-    <thead>
-      <th></th>
-      <%  @results.each do |r| %>
-      <th><span class="badge badge-result badge-<%= r.status -%>"><%= r.status.capitalize[0] -%></span></th>
-      <% end %>
-    </thead>
-  </p>
-  <% if @test.children && !@test.children.empty? -%>
-    <% @test.children.each_with_index do |t, i| %>
-      <tr>
-        <td><%= link_to(t.name, "/tests/#{t.id}") -%></td>
-        
-        <% @results.each do |r| %>
-          <% status = ( r.children[i] ? r.children[i].status : 'notrun' ) %>
-          <td><span class="badge badge-result badge-<%= status -%>"><%= status.capitalize[0] -%></span></td>
-        <% end %>
-        
-      </tr>
-      
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+    <% counter = 0 %>
+    <% @results_hash.each do |t,a| %>
+    <% li_class='active' if params[:target] == t %>
+    <li class="<%=li_class-%>"><a href="#tab-<%=counter-%>" data-toggle="tab"><%=t-%></a></li>
+    <% counter += 1 %>
     <% end %>
-    </table>
+  </ul>
     
-  <% else %>
-    <p class="lead">No child tests found</p>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    
+  <% counter = 0 %>
+  <% @results_hash.each do |t, a| %>
+
+    <% tab_class='active' if params[:target] == t %>
+    <div class="tab-pane <%=tab_class-%>" id="tab-<%=counter-%>">
+    <% counter += 1 %>
+      <table class="table">
+    
+        <thead>
+          <th></th>
+          <%  (0..14).each do |i| %>
+          <% r = a[i] %>
+          <% if r %>
+            <th><span class="badge badge-result badge-<%= r.status -%>"><%= r.status.capitalize[0] -%></span></th>
+          <% else %>
+            <th></th>
+          <% end %>
+        <% end %>
+        </thead>
+
+        <% if @test.children && !@test.children.empty? -%>
+          <% @test.children.each_with_index do |t, i| %>
+          <tr>
+            <td><%= link_to(t.name, "/tests/#{t.id}") -%></td>
+        
+            <% (0..14).each do |i| %>
+            <% r = a[i] %>
+            <% if r %>
+              <% status = ( r.children[i] ? r.children[i].status : 'notrun' ) %>
+              <td><span class="badge badge-result badge-<%= status -%>"><%= status.capitalize[0] -%></span></td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <% end %>
+          </tr>
+      
+          <% end %>
+        <% end %>
+      </table>
+    
+    </div>
   <% end %>
+  </div>
+    
 </div>
 

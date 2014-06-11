@@ -2,7 +2,7 @@
           <tr class="info">
             <td><%= pretty_node(c) -%></td>
             <td colspan="2" class="test-name"><strong>
-              <%= link_to( pretty_truncate(h(c.test_definition.name), 80, 'strong', h(c.test_definition.file_name(:short))), "/tests/#{c.test_definition.id}") -%></strong></td>
+              <%= link_to( pretty_truncate(h(c.test_definition.name), 80, 'strong', h(c.test_definition.file_name(:short))), "/tests/#{c.test_definition.id}?target=#{@target}") -%></strong></td>
 
             <td><%= c.reference.results.count -%></td>
             <td class="table-element-center">
@@ -36,7 +36,7 @@
           <% c.children.each do |s| %>
               <tr>
                 <td><%= pretty_node(s) -%></td>
-                <td></td><td  class="test-name"><em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}") -%></em></td>
+                <td></td><td  class="test-name"><em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}?target=#{@target}") -%></em></td>
 
                 <td><%= s.reference.results.count -%></td>
                 <td class="table-element-center">
