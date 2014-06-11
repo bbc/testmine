@@ -139,23 +139,28 @@
 
       <br />
 
-      <p>Compare results against...</p>
+      <p class="lead">Compare results against...</p>
       <ul>
 
       <% if @comparison_worlds.empty? %>
 
-        <p>Couldn't find any comparison worlds</p>
+        <p class="lead">Couldn't find any comparison worlds</p>
 
       <% end %>
+      
+      <div class="col-xs-6">
 
+      <table class="table table-condensed">
       <% @comparison_worlds.each do |w| %>
-
-        <li><%= link_to w.version, "/worlds/#{@world.id}/#{w.id}" -%></li>
-
+        <tr>
+          <td><%= link_to w.version, "/worlds/#{@world.id}/#{w.id}" -%></td>
+          <td><%= w.runs.count -%> runs</td>
+          <td><%= time_ago_in_words w.created_at -%> ago</td>
+        </tr>
       <% end %>
-      </ul>
-
-
+      </table>
+      
+      </div>
 
     </div>
 
