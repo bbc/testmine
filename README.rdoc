@@ -1,12 +1,9 @@
 == Testmite
 
 Testmite is our test results analytics platform. You can get up and running very easily by running:
-```
-bundle install --local
-bundle exec rake db:migrate
-bundle exec rails s
-```
-
+    bundle install --local
+    bundle exec rake db:migrate
+    bundle exec rails s
 You should get a testmite instance on port 3000 with an sqlite database.
 
 In order to submit your results to testmite, you will need to format your test results as PostResult IR
