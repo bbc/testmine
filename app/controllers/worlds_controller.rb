@@ -2,6 +2,20 @@ class WorldsController < ApplicationController
   def index
     @worlds = World.last(20).reverse
   end
+  
+  
+  # world/search?hive_job_id=3000
+  def search
+    
+    search_params = {}
+    search_params[:hive_job_id] = params[:hive_job_id] if params[:hive_job_id]
+    
+    run = Run.where( search_params ).first
+      
+    world = run.world
+    
+    redirect_to "/worlds/#{world.id}"
+  end
 
   def show
     @world = World.includes(:runs).find(params[:id].to_i)

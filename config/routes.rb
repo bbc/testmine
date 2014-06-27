@@ -9,6 +9,7 @@ Testmite::Application.routes.draw do
   get "runs/show"
   get "worlds/show"
   get "worlds/index"
+  get "worlds/search" => 'worlds#search'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
