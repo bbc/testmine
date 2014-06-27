@@ -61,14 +61,14 @@
         <!-- Results for the children -->
         <% if @test.children && !@test.children.empty? -%>
         <tbody>
-          <% @test.children.each_with_index do |t, i| %>
+          <% @test.children.each_with_index do |t, j| %>
           <tr>
             <td><%= link_to(t.name, "/tests/#{t.id}?target=#{a[0].run.target}") -%></td>
         
             <% (0..14).each do |i| %>
             <% r = a[i] %>
             <% if r %>
-              <% status = ( r.children[i] ? r.children[i].status : 'notrun' ) %>
+              <% status = ( r.children[j] ? r.children[j].status : 'notrun' ) %>
               <td><span class="badge badge-result badge-<%= status -%>"><%= status.capitalize[0] -%></span></td>
             <% else %>
               <td></td>
