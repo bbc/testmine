@@ -38,12 +38,12 @@ class AggregateResult
       if test_definition_id
         Result.includes(:test_definition,
                           :run => [ :world ],
-                          :children => [ :test_definition, :run => [:world], :children => [ :children, :test_definition, :run ] ]
+                          :children => [ :test_definition, :run => [:world], :children => [ :test_definition, :run, :children => [ :children, :test_definition, :run ] ] ]
                           ).where( :run_id => run_ids, :parent_id => parent_id, :test_definition_id => test_definition_id)        
       else
         Result.includes(:test_definition,
                           :run => [ :world ],
-                          :children => [ :test_definition, :run => [:world], :children => [:children, :run] ]
+                          :children => [ :test_definition, :run => [:world], :children => [:children, :test_definition, :run] ]
                           ).where( :run_id => run_ids, :parent_id => parent_id )
       end
 
