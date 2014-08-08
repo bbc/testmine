@@ -98,7 +98,7 @@ module ApplicationHelper
   
   def hive_job_link( run )
     if hive_url && run.hive_job_id
-      "<a href='#{hive_url(:job => run.hive_job_id)}'><i class='fa fa-search'></i></a>".html_safe
+      "<a href='#{hive_url(:job => run.hive_job_id)}'><img src='/images/hive-14.png'></img></a>".html_safe
     else
       ""
     end
