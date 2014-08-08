@@ -58,6 +58,8 @@ GEM
     mysql2 (0.3.15)
     polyglot (0.3.3)
     rack (1.5.2)
+    rack-bbc_auth (1.0)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.2)
@@ -132,6 +134,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   mysql2
+  rack-bbc_auth
   rails (= 4.0.2)
   rspec-rails
   sass-rails (~> 4.0.0)
