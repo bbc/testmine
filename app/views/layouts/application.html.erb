@@ -23,19 +23,21 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"><i class="fa fa-circle-o-notch fa-spin"></i> testmite</a>
+      <a class="navbar-brand" href="/"><%= image_tag('testmite-20.png') -%></i></a><a class="navbar-brand">Testmite</a>
+      
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/suites">Suites</a></li>
-        <li><a href="/worlds">Recent</a></li>
+        <li class="<%= current_page?('/worlds') ? 'active' : '' -%>"><a href="/worlds">Recent</a></li>
+        <li class="<%= current_page?('/suites') ? 'active' : '' -%>"><a href="/suites">Suites</a></li>
+        <li class="<%= current_page?(controller: 'keys', action: 'show') ? 'active' : '' -%>"><a href="/keys">Keys</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/keys">Keys</a></li>
+        <li><a>Not signed in</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Titan <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#">DeviceDB</a></li>
             <li><a href="#">Hive</a></li>
