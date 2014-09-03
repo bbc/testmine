@@ -19,6 +19,7 @@ class WorldsController < ApplicationController
 
   def show
     @world = World.includes(:runs).find(params[:id].to_i)
+
     @runs = @world.runs
     aggregate_results = AggregateResult.find( :world_id => @world.id ).sort { |a,b|
       a.target + a.test_definition.name <=> b.target + b.test_definition.name
@@ -26,7 +27,7 @@ class WorldsController < ApplicationController
     
     @aggregate_results_hash = aggregate_results.group_by { |i| i.target }
     
-    @comparison_worlds = @world.similar
+    @comparison_worlds = Run.group(:world).where(:world_id => @world.similar).limit(10).count
   end
   
   def aggregate_element
