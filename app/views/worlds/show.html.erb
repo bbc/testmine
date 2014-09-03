@@ -84,7 +84,6 @@
           </div>
           <div id="collapse-<%=counter-%>" class="panel-collapse collapse <%= counter==0 ? 'in' : '' -%>">
     
-
               <table class="table table-condensed">
 
                 <tr>
@@ -151,10 +150,10 @@
       <div class="col-xs-6">
 
       <table class="table table-condensed">
-      <% @comparison_worlds.each do |w| %>
+      <% @comparison_worlds.each do |w, count| %>
         <tr>
           <td><%= link_to w.version, "/worlds/#{@world.id}/#{w.id}" -%></td>
-          <td><%= w.runs.count -%> runs</td>
+          <td><%= count -%> runs</td>
           <td><%= time_ago_in_words w.created_at -%> ago</td>
         </tr>
       <% end %>
