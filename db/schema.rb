@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140302222218) do
+ActiveRecord::Schema.define(version: 20140904112746) do
 
   create_table "results", force: true do |t|
     t.integer  "test_definition_id"
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 20140302222218) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "results", ["parent_id"], name: "index_results_on_parent_id"
+  add_index "results", ["run_id"], name: "index_results_on_run_id"
 
   create_table "runs", force: true do |t|
     t.integer  "world_id"
