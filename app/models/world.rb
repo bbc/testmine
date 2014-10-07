@@ -2,10 +2,12 @@ class World < ActiveRecord::Base
   before_create :generate_name
   
   has_many :runs
+  
+  scope :similar, ->(w) { where( project: w.project).where( component: w.component).where('id != ?', w.id ).order('id DESC').limit(100) }
 
   # Return the ids of recent similar worlds
-  def similar(limit = 100)
-    World.where( :project => project, :component => component).limit(limit).order('id DESC').ids.select { |id| id != self.id }
+  def similar
+    World.similar(self)
   end
 
   private
