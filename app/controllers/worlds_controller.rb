@@ -27,7 +27,7 @@ class WorldsController < ApplicationController
     
     @aggregate_results_hash = aggregate_results.group_by { |i| i.target }
     
-    @comparison_worlds = Run.group(:world).where(:world_id => @world.similar).limit(10).count
+    @comparison_worlds = World.similar(@world).includes(:runs)
   end
   
   def aggregate_element
