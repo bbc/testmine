@@ -4,7 +4,7 @@ class WorldsController < ApplicationController
   end
   
   
-  # world/search?hive_job_id=3000
+  # worlds/search?hive_job_id=3000
   def search
     
     search_params = {}
