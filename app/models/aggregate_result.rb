@@ -34,18 +34,25 @@ class AggregateResult
       
       run_ids = runs.collect { |r| r.id }
     
-      results = 
       if test_definition_id
-        Result.includes(:test_definition,
-                          :run => [ :world ],
-                          :children => [ :test_definition, :run => [:world], :children => [ :test_definition, :run, :children => [ :children, :test_definition, :run ] ] ]
-                          ).where( :run_id => run_ids, :parent_id => parent_id, :test_definition_id => test_definition_id)        
+        where_conditions = { :run_id => run_ids, :parent_id => parent_id, :test_definition_id => test_definition_id }
       else
-        Result.includes(:test_definition,
-                          :run => [ :world ],
-                          :children => [ :test_definition, :run => [:world], :children => [:children, :test_definition, :run] ]
-                          ).where( :run_id => run_ids, :parent_id => parent_id )
+        where_conditions = { :run_id => run_ids, :parent_id => parent_id }
       end
+
+      results = Result.includes(:test_definition,
+                      :run => [ :world ],
+                      :children => [
+                        :test_definition,
+                        :run => [:world],
+                        :children => [
+                          :test_definition,
+                          :run => [:world],
+                          :children => [
+                            :children,
+                            :test_definition,
+                            :run => [:world] ] ] ]
+                      ).where( where_conditions )
 
       aggregate( results.flatten )
     end
