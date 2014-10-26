@@ -2,13 +2,17 @@ class TestsController < ApplicationController
   def show
     @test = TestDefinition.find(params[:id])
     
-    if params[:target]
-      #TODO Ought to limit what we get back to a specific target
-    end
-    
     results = Result.order(:created_at => :desc).includes( :children, :run => [ :world ]).where(:test_definition_id => params[:id]).limit(200)
     
     @results_hash = results.group_by { |r| r.run.target }
     
+  end
+  
+  def history
+    puts "HEHERHEHRE"
+    @test_definition_id = params[:id].to_i
+    @target = params[:target]
+    @histories = ResultHistory.find_for_recent_targets(:test_definition_id => @test_definition_id )
+    @test = @histories[@target].test_definition
   end
 end
