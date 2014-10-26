@@ -9,7 +9,6 @@ class TestsController < ApplicationController
   end
   
   def history
-    puts "HEHERHEHRE"
     @test_definition_id = params[:id].to_i
     @target = params[:target]
     @histories = ResultHistory.find_for_recent_targets(:test_definition_id => @test_definition_id )
