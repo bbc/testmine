@@ -85,7 +85,7 @@ class AggregateResult
 
   def best
     if !@best
-     if !results || results.empty?
+      if !results || results.empty?
         @best = Result.new(:status => "notrun")
       else
         sorted_results = results.sort { |a, b| a.status_score <=> b.status_score }

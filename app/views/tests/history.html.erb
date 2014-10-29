@@ -1,0 +1,91 @@
+<div class="col-xs-12">
+  
+  <h1 class="pull-right"><span class="label label-default"><%= @test.node_type-%></h1>
+  <h2><%= @test.name -%> </h2>
+  <p class="lead"><%= @test.description -%></p>
+    
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+    <% counter = 0 %>
+    <% @histories.each do |target, results| %>
+    <% li_class='active' if params[:target] == target %>
+    <li class="<%=li_class-%>"><a href="#tab-<%=counter-%>" data-toggle="tab"><%=target-%></a></li>
+    <% counter += 1 %>
+    <% end %>
+  </ul>
+    
+  <!-- Tab panes -->
+  <div class="tab-content">
+    
+  <% counter = 0 %>
+  <% @histories.each do |target, results| %>
+
+    <% tab_class='active' if params[:target] == target %>
+    <div class="tab-pane <%=tab_class-%>" id="tab-<%=counter-%>">
+    <% counter += 1 %>
+      <table class="table">
+    
+        <thead>
+          
+          <!-- World information row -->
+          <tr>
+            <th></th>
+              <script>$('#<%="world-primary"-%>').tooltip({"animation": true })</script>
+            <% (-14..0).each do |i| %>
+            <% r =results.reference_results[i.abs] %>
+            <% if r %>
+              <th><span id="<%="world-"+counter.to_s+i.to_s-%>" class="label label-primary" data-toggle="tooltip" data-placement="top" title="<%= r.world.component -%>: <%= r.world.version -%>"><%= r.world.version -%></span></th>
+              <script>$('#<%="world-"+counter.to_s+i.to_s-%>').tooltip({"animation": true })</script>
+            <% else %>  
+              <th></th>
+            <% end %>  
+          <% end %>
+            <th class="info"><span id="world-primary" class="label label-primary" data-toggle="tooltip" data-placement="top" title="<%= results.primary_result.world.component -%>: <%= results.primary_result.world.version -%>"><%= results.primary_result.world.version -%></span></th>
+
+          </tr>
+          
+          
+          <!-- Results row for this test id -->
+          <tr>
+          <th></th>
+          <%  (-14..0).each do |i| %>
+          <% r = results.reference_results[i.abs] %>
+          <% if r %>
+            <th><span class="badge badge-result badge-<%= r.status -%>"><%= r.status.capitalize[0] -%></span></th>
+          <% else %>
+            <th></th>
+          <% end %>
+          <% end %>
+          <th  class="info"><span class="badge badge-result badge-<%= results.primary_result.status -%>"><%= results.primary_result.status.capitalize[0] -%></span></th>
+        </tr>
+        </thead>
+        
+        <!-- Results for the children -->
+        <% if results.child_test_definitions && !results.child_test_definitions.empty? -%>
+        <tbody>
+          <% results.child_test_definitions.each_with_index do |t, j| %>
+          <tr>
+            <td><%= link_to(t.name, "/tests/#{t.id}?target=#{target}") -%></td>
+            <% (-14..0).each do |i| %>
+            <% r = results.reference_child(t,i.abs) %>
+            <% if r %>
+              <% status = ( r ? r.status : 'notrun' ) %>
+              <td><span class="badge badge-result badge-<%= status -%>"><%= status.capitalize[0] -%></span></td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <% end %>
+            <td class="info"><span class="badge badge-result badge-<%= results.primary_child(t).status -%>"><%= results.primary_child(t).status.capitalize[0] -%></span></td>
+          </tr>
+      
+          <% end %>
+        </tbody>
+        <% end %>
+      </table>
+    
+    </div>
+  <% end %>
+  </div>
+    
+</div>
+

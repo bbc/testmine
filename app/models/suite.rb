@@ -1,7 +1,7 @@
 class Suite < ActiveRecord::Base
   
   has_many :test_definitions
-
+ 
   def self.find_or_create(args)
     Suite.where(
       project: args[:project],

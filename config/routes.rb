@@ -22,7 +22,9 @@ Testmite::Application.routes.draw do
 
   get 'runs/:id'   => 'runs#show'
   
-  get 'tests/:id'  => 'tests#show'
+  get 'oldtests/:id'  => 'tests#show'
+  get 'tests/:id'  => 'tests#history'
+  
 
   get '/status' => 'api/v1/status#show'
 
