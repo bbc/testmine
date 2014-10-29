@@ -4,6 +4,9 @@ class Result < ActiveRecord::Base
   belongs_to :parent, :foreign_key => "parent_id", :class_name => 'Result'
   has_many   :children, :foreign_key => "parent_id", :class_name => 'Result', :dependent => :destroy
   alias_attribute :test, :test_definition
+  
+  default_scope includes(:children)
+  
   before_save do |result|
     result.status = Result.normalize_result(result.status)
   end
