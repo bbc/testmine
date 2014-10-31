@@ -17,8 +17,8 @@ Testmite::Application.routes.draw do
   get 'worlds/:id' => 'worlds#show'
   get 'worlds/:primary/:reference' => 'worlds#compare'
   
-  get 'aggregate/:world_id' => 'worlds#aggregate_element'
-  get 'comparison/:primary/:reference' => 'worlds#comparison_element'
+  get 'aggregate/:world_id' => 'worlds#aggregate_group_element'
+  get 'comparison/:primary/:reference' => 'worlds#comparison_group_element'
 
   get 'runs/:id'   => 'runs#show'
   
