@@ -2,7 +2,7 @@
 # best_result_id, status, pass_count, fail_count, error_count, notrun_count
 
 class AggregateResult
-  attr_accessor :results, :world, :test_definition
+  attr_accessor :results, :target, :world, :test_definition
 
   # Returns an array of AggregateResult objects
   # You can find aggregate results in a number of ways:
@@ -17,11 +17,14 @@ class AggregateResult
 
     world_id = args[:world_id]
     parent_id = args[:parent_id]
+    
     target = args[:target]
-    test_definition_id = args[:test_definition_id]
+    test_definition_id = args[:test_definition_id] # Optional -- should it be?
 
     
     if parent_id && parent_id.empty?
+      puts "EMPTY PARENT ID"
+      p args
       []
     else
             
@@ -66,7 +69,7 @@ class AggregateResult
       if m.has_key?(key)
         m[key].add(r)
       else
-        m[key] = AggregateResult.new( r.test_definition, r.run.world, [r] )
+        m[key] = AggregateResult.new( r.test_definition, r.run.world, [r], r.run.target )
       end
       m
     end
@@ -74,11 +77,19 @@ class AggregateResult
     aggregates.values
   end
 
+  def self.process_children( results, world, target )
+    
+    results_by_test = results.group_by { |r| r.test_definition }
+    results_by_test.collect { |k, v| AggregateResult.new( k, world, v, target ) }
+    
+  end  
+  
+
   # Returns an array of AggregateResult children
   def children
     if !@children
       child_result_set = @results.map { |r| r.children }
-      @children = AggregateResult.aggregate(child_result_set.flatten)
+      @children = AggregateResult.process_children(child_result_set.flatten, world, target)
     end
     @children
   end
@@ -99,10 +110,11 @@ class AggregateResult
   # Given a Result, or an array of Results, creates an AggregateResult
   # object.
   #
-  def initialize( _test_definition, _world, _result )
+  def initialize( _test_definition, _world, _result, _target )
     @test_definition = _test_definition
     @world = _world
     @results = _result
+    @target = _target
     @count = {}
   end
 
@@ -124,15 +136,12 @@ class AggregateResult
   end
 
   def status
-    if self.children.count == 0
+    if self.best.status
       self.best.status
+    # If a status hasn't been set, need to work it out
     else
       Result.summary_status(children)
     end
-  end
-
-  def target
-    best.run.target if !best.run.nil?
   end
 
   # Counts the statuses of all the child elements

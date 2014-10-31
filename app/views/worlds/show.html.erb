@@ -73,62 +73,24 @@
 
     <div class="panel-group" id="accordion">
 
-      <% counter = 0%>
-      <% @aggregate_results_hash.each do |t,a| %>
+      <% @targets.each do |t| %>
     
-        <div class="panel panel-primary">
+        <div class="panel panel-default aggregate-group-loader" id="group-<%=@world.id-%>-<%=t-%>">
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=counter-%>"><%=t-%></a>
-            </h4>
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
+              <span class="pull-right">
+              <span class="result result-unknown">????</span> 
+              <span class="badge badge-result badge-pass badge-count-0">?</span>
+              <span class="badge badge-result badge-fail badge-count-0">?</span>
+              <span class="badge badge-result badge-notrun badge-count-0">?</span>
+              <span class="badge badge-result badge-error badge-count-0">?</span>
+              </span>
+           </h4>
           </div>
-          <div id="collapse-<%=counter-%>" class="panel-collapse collapse <%= counter==0 ? 'in' : '' -%>">
-    
-              <table class="table table-condensed">
-
-                <tr>
-                  <th colspan="3"></th>
-                  <th></th>
-                  <th>Result</th>
-                  <th>
-                    <span class="badge-pass badge-result">P</span>
-                    <span class="badge badge-fail badge-result">F</span>
-                    <span class="badge badge-notrun badge-result">N</span>
-                    <span class="badge badge-error badge-result">E</span>
-                  </th>
-                </tr>
-
-                <% a.each do |r| %>
-    
-                  <% id="aggregate-#{r.world.id.to_s}-#{r.test_definition.id.to_s}-#{r.target}" %>
-                  <tr id="<%=id-%>" class="info aggregate-loader">
-                    <td><%= pretty_node(r) -%></td>
-                    <td colspan="2">
-                      <strong>
-                        <%=  pretty_truncate("#{h r.test_definition.name}", 80, 'strong') -%>
-                      </strong>
-                    </td>
-
-                    <td><%= r.results.count %></td>
-                    <td>
-                      <span class="result">????</span>
-                    </td>
-                    <td>
-                      <span class="badge badge-result badge-pass">?</span>
-                      <span class="badge badge-result badge-fail">?</span>
-                      <span class="badge badge-result badge-notrun">?</span>
-                      <span class="badge badge-result badge-error">?</span>
-                    </td>
-                  </tr>
-        
-                <% end %>
-
-              </table>
+          <div id="collapse-<%=t-%>" class="panel-collapse collapse <%= t==0 ? 'in' : '' -%>">
           </div>
         </div>
-
-        <% counter += 1 %>
-        
       <% end %>
     </div>
 
@@ -167,5 +129,5 @@
 
 
 <script>
-  loadAggregates()
+  loadAggregateGroups()
 </script>

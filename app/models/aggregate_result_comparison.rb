@@ -61,11 +61,11 @@ class AggregateResultComparison
     @target = target
 
     if !@primary
-      @primary = AggregateResult.new( @test_definition, primary_world, [] )
+      @primary = AggregateResult.new( @test_definition, primary_world, [], target )
     end
 
     if !@reference
-      @reference = AggregateResult.new( @test_definition, reference_world, [] )
+      @reference = AggregateResult.new( @test_definition, reference_world, [], target )
     end
   end
 

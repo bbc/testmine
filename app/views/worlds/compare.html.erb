@@ -1,117 +1,30 @@
 
   <div class="col-xs-12">
-    <h1><%= @primary.project + ": " + @primary.component -%></h1>
-    <h2><%= link_to @primary.version, "/worlds/#{@primary.id}" -%> vs <%= link_to @reference.version, "/worlds/#{@reference.id}" -%></h2>
+    <h1><%= @primary_world.project + ": " + @primary_world.component -%></h1>
+    <h2><%= link_to @primary_world.version, "/worlds/#{@primary_world.id}" -%> vs <%= link_to @reference_world.version, "/worlds/#{@reference_world.id}" -%></h2>
     <hr />
    </div>
 
   <br>
   <div class="col-xs-12">
     
-    
     <div class="panel-group" id="accordion">
 
-      <% counter = 0%>
-      <% @comparisons_hash.each do |t,a| %>
+    <% @targets.each do |t| %>
     
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=counter-%>"><%=t-%></a>
-            </h4>
-          </div>
-          <div id="collapse-<%=counter-%>" class="panel-collapse collapse <%= counter==0 ? 'in' : '' -%>">
-          <% counter += 1 %>
-    
-    <table class="table table-condensed table-tight table-hover">
-      <tr>
-        <th></th>
-        <th colspan="2"></th>
-        <th colspan="4" class="table-element-right"><h3><span class="label label-primary"><%= @reference.version -%></span></h3></th>
-        <th colspan="4" class="table-element-left"><h3><span class="label label-info"><%= @primary.version -%></span></h3></th>
-        <th></th>
-      </tr>
-      
-      <tr>
-        <th></th>
-        <th colspan="2"></th>
-        <th></th>
-        <th class="table-element-center">
-          <span class="badge badge-pass badge-result">P</span>
-          <span class="badge badge-fail badge-result">F</span>
-          <span class="badge badge-notrun badge-result">N</span>
-          <span class="badge badge-error badge-result">E</span>
-        </th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th class="table-element-center">
-          <span class="badge badge-pass badge-result">P</span>
-          <span class="badge badge-fail badge-result">F</span>
-          <span class="badge badge-notrun badge-result">N</span>
-          <span class="badge badge-error badge-result">E</span>
-        </th>
-        <th></th>
-
-        <th>Diff</th>
-      </tr>
-      
-
-      
-      
-      <% a.each do |c| %>
-      
-        <% id="comparison-#{c.primary.world.id.to_s}-#{c.reference.world.id.to_s}-#{c.test_definition.id.to_s}-#{c.target}" %>
-      
-        <tr id="<%=id-%>" class="info comparison-loader">
-        
-          <td><%= pretty_node(c) -%></td>
-          <td colspan="2"><strong><%= pretty_truncate(h(c.test_definition.name), 80, 'strong') -%></strong></td>
-            <td><%= c.reference.results.count -%></td>
-            <td class="table-element-center">
-              <span class="badge badge-result badge-pass">?</span>
-              <span class="badge badge-result badge-fail">?</span>
-              <span class="badge badge-result badge-notrun">?</span>
-              <span class="badge badge-result badge-error">?</span>
-            </td>
-            <td></td>
-            <td class="table-element-center">
-              <span class="result">????</span>
-            </td>
-            <td class="table-element-center">
-              <span class="result">????</span>
-            </td>
-            <td></td>
-            <td class="table-element-center">
-              <span class="badge badge-result badge-pass">?</span>
-              <span class="badge badge-result badge-fail">?</span>
-              <span class="badge badge-result badge-notrun">?</span>
-              <span class="badge badge-result badge-error">?</span>
-            </td>
-            <td><%= c.primary.results.count %></td>
-
-            <td>
-              <span class="result result-comparison">????</span>
-            </td>
-
-          </tr>
-          
-      <% end %>
-
-    </table>
-    
-              </div>
+      <div class="panel panel-default comparison-loader" id="group-<%=@primary_world.id-%>-<%=@reference_world.id-%>-<%=t-%>">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
+            <span class="pull-right">(loading...)</span>
+          </h4>
         </div>
+        <div id="collapse-<%=t-%>" class="panel-collapse collapse"></div>
+      </div>
+    <% end %>
         
-      <% end %>
     </div>
-
     
-    
-    <hr>
-  </div>
-
-  <script>
-    loadComparisons()
-  </script>
+<script>
+  loadComparisonGroups()
+</script>

@@ -5,7 +5,7 @@ class Result < ActiveRecord::Base
   has_many   :children, :foreign_key => "parent_id", :class_name => 'Result', :dependent => :destroy
   alias_attribute :test, :test_definition
   
-  default_scope includes(:children)
+  default_scope includes(:children, :test_definition)
   
   before_save do |result|
     result.status = Result.normalize_result(result.status)
