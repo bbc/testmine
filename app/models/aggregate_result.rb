@@ -4,87 +4,6 @@
 class AggregateResult
   attr_accessor :results, :target, :world, :test_definition
 
-  # Returns an array of AggregateResult objects
-  # You can find aggregate results in a number of ways:
-  #   AggregateResult.find( :world_id => 1234 )
-  #   AggregateResult.find( :world_id => 1234, target => 'firefox' )
-  #   AggregateResult.find( :world_id => 1234, :parent_id => parent_result_id)
-  # Required params:
-  #   :world_id
-  # Optional params:
-  #   :parent_id, :target, :test_definition_id
-  def self.find( args )
-
-    world_id = args[:world_id]
-    parent_id = args[:parent_id]
-    
-    target = args[:target]
-    test_definition_id = args[:test_definition_id] # Optional -- should it be?
-
-    
-    if parent_id && parent_id.empty?
-      puts "EMPTY PARENT ID"
-      p args
-      []
-    else
-            
-      runs =
-      if target
-        Run.where( :world_id => world_id, :target => target )
-      else
-        Run.where( :world_id => world_id )
-      end
-      
-      run_ids = runs.collect { |r| r.id }
-    
-      if test_definition_id
-        where_conditions = { :run_id => run_ids, :parent_id => parent_id, :test_definition_id => test_definition_id }
-      else
-        where_conditions = { :run_id => run_ids, :parent_id => parent_id }
-      end
-
-      results = Result.includes(:test_definition,
-                      :run => [ :world ],
-                      :children => [
-                        :test_definition,
-                        :run => [:world],
-                        :children => [
-                          :test_definition,
-                          :run => [:world],
-                          :children => [
-                            :children,
-                            :test_definition,
-                            :run => [:world] ] ] ]
-                      ).where( where_conditions )
-
-      aggregate( results.flatten )
-    end
-  end
-
-  # Class function for taking an array of result objects, and aggregating
-  # them into an array of AggregateResult objects
-  def self.aggregate( results )
-    aggregates = results.reduce({}) do |m, r|
-      key = r.test_definition.id.to_s + "---" + r.run.target.to_s
-      if m.has_key?(key)
-        m[key].add(r)
-      else
-        m[key] = AggregateResult.new( r.test_definition, r.run.world, [r], r.run.target )
-      end
-      m
-    end
-
-    aggregates.values
-  end
-
-  def self.process_children( results, world, target )
-    
-    results_by_test = results.group_by { |r| r.test_definition }
-    results_by_test.collect { |k, v| AggregateResult.new( k, world, v, target ) }
-    
-  end  
-  
-
   # Returns an array of AggregateResult children
   def children
     if !@children
@@ -93,6 +12,12 @@ class AggregateResult
     end
     @children
   end
+
+  def self.process_children( results, world, target )
+    results_by_test = results.group_by { |r| r.test_definition }
+    results_by_test.collect { |test, result| AggregateResult.new( test, world, result, target ) }
+  end  
+
 
   def best
     if !@best
@@ -114,26 +39,17 @@ class AggregateResult
     @test_definition = _test_definition
     @world = _world
     @results = _result
+    if @results && @results.count > 0 && @results.first.class != Result
+      raise "Not an array of Results #{caller}"
+    end
+    
     @target = _target
     @count = {}
-  end
-
-
-  def add(result)
-    @best = nil
-    @results.push(result)
   end
 
   #
   # Methods to make this look more like a Result object
   #
-  def test_definition
-    best.test_definition
-  end
-
-  def test_definition_id
-    best.test_definition.id
-  end
 
   def status
     if self.best.status
