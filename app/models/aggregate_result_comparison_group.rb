@@ -50,18 +50,25 @@ class AggregateResultComparisonGroup
   # Return the overall status of the target
   #
   def status
-    # TODO -- this is a complex calculation that I can't deal with yet
-    'unknown'
+    AggregateResultComparisonGroup.summary_status(results)
   end
-
-  #
-  # Counts the statuses of all the child elements
-  #
-  def count (status)
-    # And this one!
-    2
+  
+  def diff
+   results.collect { |r| r.diff }.any? { |v| v == true }
   end
+  
+  
+  def self.summary_status(results)
+    statuses = results.collect { |r| r.status }
 
+    resulting_status = "error"
+    resulting_status = "pass"   if statuses.count("pass") > 0
+    resulting_status = "newpass"   if statuses.count("newpass") > 0
+    resulting_status = "notrun" if statuses.count("notrun") > 0
+    resulting_status = "fail"   if statuses.count("fail") > 0
+    resulting_status = "regres"   if statuses.count("regres") > 0
 
+    resulting_status
+  end
 
 end
