@@ -5,7 +5,14 @@ class Result < ActiveRecord::Base
   has_many   :children, :foreign_key => "parent_id", :class_name => 'Result', :dependent => :destroy
   alias_attribute :test, :test_definition
   
-  default_scope includes(:children)
+  STATUS_SCORES =
+    { "pass"    => 5,
+      "fail"    => 4,
+      "error"   => 3,
+      "timeout" => 2,
+      "notrun"  => 1 }
+  
+  default_scope includes(:children, :test_definition)
   
   before_save do |result|
     result.status = Result.normalize_result(result.status)
@@ -31,11 +38,7 @@ class Result < ActiveRecord::Base
   # returns an integer that represents the test result status
   # Useful for sorting results based on status
   def status_score
-    { "pass"    => 5,
-      "fail"    => 4,
-      "error"   => 3,
-      "timeout" => 2,
-      "notrun"  => 1 }[status] || 0
+    STATUS_SCORES[status] || 0
   end
 
   # Given a collection of result objects, return a summary of the

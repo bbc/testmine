@@ -21,40 +21,44 @@ class WorldsController < ApplicationController
     @world = World.includes(:runs).find(params[:id].to_i)
 
     @runs = @world.runs
-    aggregate_results = AggregateResult.find( :world_id => @world.id ).sort { |a,b|
-      a.target + a.test_definition.name <=> b.target + b.test_definition.name
-    }
     
-    @aggregate_results_hash = aggregate_results.group_by { |i| i.target }
+    @targets = Run.where( :world_id => @world.id ).pluck('DISTINCT target')
     
     @comparison_worlds = World.similar(@world).includes(:runs)
   end
-  
-  def aggregate_element
-    @aggregate = AggregateResult.find( :world_id => params[:world_id].to_i,
-                                       :test_definition_id => params[:test].to_i,
-                                       :target => params[:target] ).first
+
+  def aggregate_group_element
     @target = params[:target]
+    @world_id = params[:world_id].to_i
+    @results = AggregateResultGroup.populate( :world_id => @world_id,
+                                              :target => @target )
+    
     render layout: false
   end
+
 
   def compare
-    @reference = World.find(params[:reference].to_i)
-    @primary = World.find(params[:primary].to_i)
-
-    comparisons = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i ).sort { |a,b|
-      a.target + a.test_definition.name <=> b.target + b.test_definition.name
-    }
+    reference_world_id = params[:reference].to_i
+    primary_world_id = params[:primary].to_i
+    @reference_world = World.find(reference_world_id)
+    @primary_world = World.find(primary_world_id)
     
-    @comparisons_hash = comparisons.group_by { |i| i.target }
-    
+    @targets = Run.where( :world_id => [reference_world_id, primary_world_id] ).pluck('DISTINCT target')
   end
    
-  def comparison_element
-    @comparison = AggregateResultComparison.find( params[:primary].to_i, params[:reference].to_i,
-                                                  :test_definition_id => params[:test].to_i,
-                                                  :target => params[:target] ).first
+  def comparison_group_element
     @target = params[:target]
+    @primary_world_id = params[:primary].to_i
+    @reference_world_id = params[:reference].to_i
+    @reference_world = World.find(params[:reference].to_i)
+    @primary_world = World.find(params[:primary].to_i)
+
+    
+    @results = AggregateResultComparisonGroup.populate( :primary_world_id => @primary_world_id,
+                                                        :reference_world_id => @reference_world_id,
+                                                        :target => @target )
     render layout: false
   end
+  
+  
 end
