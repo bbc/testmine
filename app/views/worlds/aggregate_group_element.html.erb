@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h4 class="panel-title">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=@target-%>"><%=@target-%>
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=@target.hash-%>"><%=@target-%>
       <span class="pull-right">
       <span class="result result-<%= @results.status -%>"><%= @results.status -%></span>
 
@@ -14,7 +14,7 @@
     </h4>
   </div>
 
-  <div id="collapse-<%=@target-%>" class="panel-collapse collapse">
+  <div id="collapse-<%=@target.hash-%>" class="panel-collapse collapse">
     
     <table class="table table-condensed">
       <tr>
