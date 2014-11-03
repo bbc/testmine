@@ -1,0 +1,124 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=@target-%>"><%=@target-%></a>
+      <span class="pull-right">
+        <span class="result result-<%= @results.status -%> <%= @results.diff ? '' : 'result-nodiff' %>"><%= @results.status -%></span>
+      </span>
+    </h4>
+  </div>
+  
+  <div id="collapse-<%=@target-%>" class="panel-collapse collapse">
+    
+    <table class="table table-condensed table-tight table-hover">
+      <tr>
+        <th></th>
+        <th colspan="2"></th>
+        <th colspan="4" class="table-element-right"><h3><span class="label label-primary"><%= @reference_world.version -%></span></h3></th>
+        <th colspan="4" class="table-element-left"><h3><span class="label label-info"><%= @primary_world.version -%></span></h3></th>
+        <th></th>
+      </tr>
+      
+      <tr>
+        <th></th>
+        <th colspan="2"></th>
+        <th></th>
+        <th class="table-element-center">
+          <span class="badge badge-pass badge-result">P</span>
+          <span class="badge badge-fail badge-result">F</span>
+          <span class="badge badge-notrun badge-result">N</span>
+          <span class="badge badge-error badge-result">E</span>
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th class="table-element-center">
+          <span class="badge badge-pass badge-result">P</span>
+          <span class="badge badge-fail badge-result">F</span>
+          <span class="badge badge-notrun badge-result">N</span>
+          <span class="badge badge-error badge-result">E</span>
+        </th>
+        <th></th>
+
+        <th>Diff</th>
+      </tr>
+      
+      <% @results.results.each do |c| %>
+
+          <tr class="info">
+            <td><%= pretty_node(c) -%></td>
+            <td colspan="2" class="test-name"><strong>
+              <%= link_to( pretty_truncate(h(c.test_definition.name), 80, 'strong', h(c.test_definition.file_name(:short))), "/tests/#{c.test_definition.id}?target=#{@target}") -%></strong></td>
+            <td><%= c.reference.results.count -%></td>
+            <td class="table-element-center">
+              <span class="badge badge-parent badge-result badge-pass badge-count-<%= c.reference.count("pass") -%>"><%= c.reference.count("pass") %></span>
+              <span class="badge badge-parent badge-result badge-fail badge-count-<%= c.reference.count("fail") -%>"><%= c.reference.count("fail") or 0 %></span>
+              <span class="badge badge-parent badge-result badge-notrun badge-count-<%= c.reference.count("notrun") -%>"><%= c.reference.count("notrun") %></span>
+              <span class="badge badge-parent badge-result badge-error badge-count-<%= c.reference.count("error") -%>"><%= c.reference.count("error") -%></span>
+            </td>
+            <td></td>
+            <td class="table-element-center">
+              <span class="result result-<%= c.reference.status -%>"><%= c.reference.status -%></span>
+            </td>
+            <td class="table-element-center">
+              <span class="result result-<%= c.primary.status -%>"><%= c.primary.status -%></span>
+            </td>
+            <td></td>
+            <td class="table-element-center">
+              <span class="badge badge-parent badge-result badge-pass badge-count-<%= c.primary.count("pass") -%>"><%= c.primary.count("pass") %></span>
+              <span class="badge badge-parent badge-result badge-fail badge-count-<%= c.primary.count("fail") -%>"><%= c.primary.count("fail") or 0 %></span>
+              <span class="badge badge-parent badge-result badge-notrun badge-count-<%= c.primary.count("notrun") -%>"><%= c.primary.count("notrun") %></span>
+              <span class="badge badge-parent badge-result badge-error badge-count-<%= c.primary.count("error") -%>"><%= c.primary.count("error") -%></span>
+            </td>
+            <td><%= c.primary.results.count %></td>
+
+            <td>
+              <span class="result result-comparison result-<%= c.status -%> <%= c.diff ? '' : 'result-nodiff'-%>"><%= c.status -%></span>
+            </td>
+
+          </tr>
+
+          <% c.children.each do |s| %>
+              <tr>
+                <td><%= pretty_node(s) -%></td>
+                <td></td><td  class="test-name"><em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}?target=#{@target}") -%></em></td>
+
+                <td><%= s.reference.results.count -%></td>
+                <td class="table-element-center">
+                  <span class="badge badge-result badge-pass badge-count-<%= s.reference.count("pass") -%>"><%= s.reference.count("pass") %></span>
+                  <span class="badge badge-result badge-fail badge-count-<%= s.reference.count("fail") -%>"><%= s.reference.count("fail") or 0 %></span>
+                  <span class="badge badge-result badge-notrun badge-count-<%= s.reference.count("notrun") -%>"><%= s.reference.count("notrun") %></span>
+                  <span class="badge badge-result badge-error badge-count-<%= s.reference.count("error") -%>"><%= s.reference.count("error") -%></span>
+                </td>
+                <td>
+                  <%= hive_job_link(s.reference.best.run) if s.reference.best && s.reference.best.run -%>
+                </td>
+                <td class="table-element-center">
+                  <span class="result result-<%= s.reference.status -%>"><%= s.reference.status -%></span>
+                </td>
+                <td class="table-element-center">
+                  <span class="result result-<%= s.primary.status -%>"><%= s.primary.status -%></span>
+                </td>
+                <td>
+                  <%= hive_job_link(s.primary.best.run) if s.primary.best && s.primary.best.run -%>
+                </td>
+                <td class="table-element-center">
+                  <span class="badge badge-result badge-pass badge-count-<%= s.primary.count("pass") -%>"><%= s.primary.count("pass") %></span>
+                  <span class="badge badge-result badge-fail badge-count-<%= s.primary.count("fail") -%>"><%= s.primary.count("fail") or 0 %></span>
+                  <span class="badge badge-result badge-notrun badge-count-<%= s.primary.count("notrun") -%>"><%= s.primary.count("notrun") %></span>
+                  <span class="badge badge-result badge-error badge-count-<%= s.primary.count("error") -%>"><%= s.primary.count("error") -%></span>
+                </td>
+                <td><%= s.primary.results.count -%></td>
+
+                <td>
+                  <span class="result result-comparison result-<%= s.status -%> <%= s.diff ? '' : 'result-nodiff' %>    "><%= s.status -%></span>
+                </td>
+
+              </tr>
+
+          <% end %>
+          
+    <% end %>
+
+
