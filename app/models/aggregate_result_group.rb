@@ -41,7 +41,7 @@ class AggregateResultGroup
   # Return the overall status of the target
   #
   def status
-    Result.summary_status(results.collect { |r| r.best } )
+    Result.summary_status(results.collect { |r| r.status } )
   end
 
   #

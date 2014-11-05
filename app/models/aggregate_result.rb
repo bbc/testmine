@@ -56,7 +56,7 @@ class AggregateResult
       self.best.status
     # If a status hasn't been set, need to work it out
     else
-      Result.summary_status(children)
+      Result.summary_status(children.collect {|r| r.status})
     end
   end
 
