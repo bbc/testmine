@@ -32,13 +32,21 @@ class Result < ActiveRecord::Base
     # Note the use of collect and count here, rather than just a simple
     # count. This is because children is some kind of ActiveRecord array
     # and count doesn't work quite as expected on it
-    self.children.collect { |c| c.status == status.to_s }.count(true)
+    self.children.collect { |c| c.calculated_status == status.to_s }.count(true)
   end
 
   # returns an integer that represents the test result status
   # Useful for sorting results based on status
   def status_score
     STATUS_SCORES[status] || 0
+  end
+  
+  def calculated_status
+    if status
+      status
+    else
+      Result.summary_status(children.collect { |c| c.calculated_status })
+    end
   end
   
   # Given a collection of result objects, return a summary of the
