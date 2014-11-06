@@ -51,12 +51,12 @@
           <%  (-14..0).each do |i| %>
           <% r = results.reference_results[i.abs] %>
           <% if r %>
-            <th><span class="badge badge-result badge-<%= r.status -%>"><%= r.status.capitalize[0] -%></span></th>
+            <th><span class="badge badge-result badge-<%= r.calculated_status -%>"><%= r.calculated_status.capitalize[0] -%></span></th>
           <% else %>
             <th></th>
           <% end %>
           <% end %>
-          <th  class="info"><span class="badge badge-result badge-<%= results.primary_result.status -%>"><%= results.primary_result.status.capitalize[0] -%></span></th>
+          <th  class="info"><span class="badge badge-result badge-<%= results.primary_result.calculated_status -%>"><%= results.primary_result.calculated_status.capitalize[0] -%></span></th>
         </tr>
         </thead>
         
@@ -69,13 +69,13 @@
             <% (-14..0).each do |i| %>
             <% r = results.reference_child(t,i.abs) %>
             <% if r %>
-              <% status = ( r ? r.status : 'notrun' ) %>
-              <td><span class="badge badge-result badge-<%= status -%>"><%= status.capitalize[0] -%></span></td>
+              <% status = ( r ? r.calculated_status : 'notrun' ) %>
+              <td><span class="badge badge-result badge-<%= status -%>"><%= status.capitalize[0] if status -%></span></td>
             <% else %>
               <td></td>
             <% end %>
             <% end %>
-            <td class="info"><span class="badge badge-result badge-<%= results.primary_child(t).status -%>"><%= results.primary_child(t).status.capitalize[0] -%></span></td>
+            <td class="info"><span class="badge badge-result badge-<%= results.primary_child(t).calculated_status -%>"><%= results.primary_child(t).calculated_status.capitalize[0] -%></span></td>
           </tr>
       
           <% end %>
