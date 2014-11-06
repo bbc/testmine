@@ -40,13 +40,12 @@ class Result < ActiveRecord::Base
   def status_score
     STATUS_SCORES[status] || 0
   end
-
+  
   # Given a collection of result objects, return a summary of the
   # the result
   # i.e. pass, pass, fail => fail
   #      pass, error, notrun => notrun
-  def self.summary_status(results)
-    statuses = results.collect { |r| r.status }
+  def self.summary_status(statuses)
 
     resulting_status = "error"
     resulting_status = "pass"   if statuses.count("pass") > 0
