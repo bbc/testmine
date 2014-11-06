@@ -50,7 +50,7 @@ class IrIngestor
 
     results = process_results( run, suite, results, suite ) or raise "Couldn't process results"
 
-    run.status = Result.summary_status( results )
+    run.status = Result.summary_status( results.collect { |r| r.status } )
     run.save
     run
   end
@@ -102,8 +102,8 @@ class IrIngestor
           child_results = process_results(run, suite, children, test_definition, result)
 
           if !status
-            result.status =  Result.summary_status( child_results )
-            result.save
+            result.status =  Result.summary_status( child_results.collect {|c| c.status} )
+            # Note: don't save the result
           end
         end
         results.push result

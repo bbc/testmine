@@ -6,7 +6,7 @@ class Run < ActiveRecord::Base
 
   def duration
     if finished_at && started_at
-      finished_at - started_at
+      (finished_at - started_at).to_i
     else
       0
     end

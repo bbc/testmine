@@ -50,7 +50,7 @@ class AggregateResultComparisonGroup
   # Return the overall status of the target
   #
   def status
-    AggregateResultComparisonGroup.summary_status(results)
+    AggregateResultComparisonGroup.summary_status(results.collect {|r| r.status} )
   end
   
   def diff
@@ -58,8 +58,7 @@ class AggregateResultComparisonGroup
   end
   
   
-  def self.summary_status(results)
-    statuses = results.collect { |r| r.status }
+  def self.summary_status(statuses)
 
     resulting_status = "error"
     resulting_status = "pass"   if statuses.count("pass") > 0
