@@ -38,15 +38,19 @@ class Result < ActiveRecord::Base
   # returns an integer that represents the test result status
   # Useful for sorting results based on status
   def status_score
-    STATUS_SCORES[status] || 0
+    STATUS_SCORES[calculated_status] || 0
   end
   
   def calculated_status
-    if status
-      status
-    else
-      Result.summary_status(children.collect { |c| c.calculated_status })
+    if !@calculated_status
+      @calculated_status = 
+        if status
+          status
+        else
+          Result.summary_status(children.collect { |c| c.calculated_status })
+        end
     end
+    @calculated_status
   end
   
   # Given a collection of result objects, return a summary of the
