@@ -60,7 +60,11 @@ describe IrIngestor do
 
       run.results.count.should == 5
       run.top_level_results.count.should == 1
-      run.top_level_results.first.status.should == "fail"
+      
+      run.top_level_results.first.status.should be_nil
+      run.top_level_results.first.children.first.status.should be_nil
+      
+      run.top_level_results.first.children.first.children.first.status.should == "pass"
     end
   end
 
