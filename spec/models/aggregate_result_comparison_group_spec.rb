@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AggregateResultComparison do
+describe AggregateResultComparisonGroup do
   describe "adding a result" do
 
     before(:each) do
@@ -55,19 +55,19 @@ describe AggregateResultComparison do
     end
 
     it "produces 1 comparison set from results from 2 worlds" do
-      comparisons = AggregateResultComparison.find( @world1.id, @world2.id )
-      comparisons.count.should == 2
-      comparisons.first.should be_a AggregateResultComparison
-      comparisons.collect { |c| c.status }.should == ["newpass", "regres"]
+      comparison = AggregateResultComparisonGroup.populate( :reference_world_id => @world1.id, :primary_world_id => @world2.id, :target => 'osx' )
+      expect( comparison.results.count ).to eq 1
+      expect( comparison.results.first ).to be_a AggregateResultComparison
+      expect( comparison.status ).to eq "newpass"
     end
 
     it "contains aggregates from two different worlds" do
-      comparisons = AggregateResultComparison.find( @world1.id, @world2.id )
+      comparison = AggregateResultComparisonGroup.populate( :reference_world_id => @world1.id, :primary_world_id => @world2.id, :target => 'osx' )
 
-      comparisons.first.status.should == "newpass"
-      comparisons.first.reference.world.id.should_not == comparisons.first.primary.world.id
+      expect(comparison.results.first.status).to eq "newpass"
+      expect(comparison.results.first.reference.world.id).not_to eq comparison.results.first.primary.world.id
 
-      comparisons.first.reference.status.should_not == comparisons.first.primary.status
+      expect(comparison.results.first.reference.status).not_to eq comparison.results.first.primary.status
     end
 
   end
