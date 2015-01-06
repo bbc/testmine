@@ -1,78 +1,67 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4 class="panel-title">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=@target.hash-%>"><%=@target-%>
-      <span class="pull-right">
-      <span class="result result-<%= @results.status -%>"><%= @results.status -%></span>
-
-      <span class="badge badge-result badge-pass badge-count-<%= @results.count(:pass) -%>"><%= @results.count(:pass) %></span>
+<tbody>
+  <tr class="active" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=@target.hash-%>">
+    <td colspan="4"><%=@target-%></td>
+    <td><span class="result result-<%= @results.status -%>"><%= @results.status -%></span></td>
+    <td><span class="badge badge-result badge-pass badge-count-<%= @results.count(:pass) -%>"><%= @results.count(:pass) %></span>
       <span class="badge badge-result badge-fail badge-count-<%= @results.count(:fail) -%>"><%= @results.count(:fail) or 0 %></span>
       <span class="badge badge-result badge-notrun badge-count-<%= @results.count(:notrun) -%>"><%= @results.count(:notrun) %></span>
       <span class="badge badge-result badge-error badge-count-<%= @results.count(:error) -%>"><%= @results.count(:error) -%></span>
-      </span>
-      </a>
-    </h4>
-  </div>
+    </td>
+  </tr>
 
-  <div id="collapse-<%=@target.hash-%>" class="panel-collapse collapse">
-    
-    <table class="table table-condensed">
-      <tr>
-        <th colspan="3"></th>
-        <th></th>
-        <th>Result</th>
-        <th>
-          <span class="badge-pass badge-result">P</span>
-          <span class="badge badge-fail badge-result">F</span>
-          <span class="badge badge-notrun badge-result">N</span>
-          <span class="badge badge-error badge-result">E</span>
-        </th>
-      </tr>
+  <tr id="collapse-<%=@target.hash-%>" class="collapse">
+    <th colspan="3"></th>
+    <th></th>
+    <th>Result</th>
+    <th>
+      <span class="badge-pass badge-result">P</span>
+      <span class="badge badge-fail badge-result">F</span>
+      <span class="badge badge-notrun badge-result">N</span>
+      <span class="badge badge-error badge-result">E</span>
+    </th>
+  </tr>
 
-    <% @results.results.each do |r| %>
-      <tr class="info">
-        <td><%= pretty_node(r) -%></td>
+  <% @results.results.each do |r| %>
+  <tr class="info">
+    <td><%= pretty_node(r) -%></td>
 
-        <td colspan="2" class="test-name"><strong>
-          <%= link_to( pretty_truncate(h(r.test_definition.name), 80, 'strong', h(r.test_definition.file_name(:short))), "/tests/#{r.test_definition.id}?target=#{@target}") -%></strong>
-        </td>
+    <td colspan="2" class="test-name"><strong>
+      <%= link_to( pretty_truncate(h(r.test_definition.name), 80, 'strong', h(r.test_definition.file_name(:short))), "/tests/#{r.test_definition.id}?target=#{@target}") -%></strong>
+    </td>
 
-        <td><%= r.results.count %></td>
-        <td>
-          <span class="result result-<%= r.status -%>"><%= r.status -%></span>
-        </td>
-        <td>
-          <span class="badge badge-result badge-pass badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
-          <span class="badge badge-result badge-fail badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
-          <span class="badge badge-result badge-notrun badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
-          <span class="badge badge-result badge-error badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
-        </td>
-      </tr>
+    <td><%= r.results.count %></td>
+    <td>
+      <span class="result result-<%= r.status -%>"><%= r.status -%></span>
+    </td>
+    <td>
+      <span class="badge badge-result badge-pass badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
+      <span class="badge badge-result badge-fail badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
+      <span class="badge badge-result badge-notrun badge-count-<%= r.count(:notrun) -%>"><%= r.count(:notrun) %></span>
+      <span class="badge badge-result badge-error badge-count-<%= r.count(:error) -%>"><%= r.count(:error) -%></span>
+    </td>
+  </tr>
 
-      <% r.children.each do |s| %>
+  <% r.children.each do |s| %>
 
-      <tr>
-        <td><%= pretty_node(s) -%></td>
-        <td></td><td class="test-name"><em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}?target=#{@target}") -%></em></td>
-        <td><%= s.results.count %></td>
-        <td>
-          <span class="result result-<%= s.status -%>"><%= s.status -%></span>
-          <%= hive_job_link(s.best.run) if s.best -%>
-        </td>
+  <tr>
+    <td><%= pretty_node(s) -%></td>
+    <td></td><td class="test-name"><em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}?target=#{@target}") -%></em></td>
+    <td><%= s.results.count %></td>
+    <td>
+      <span class="result result-<%= s.status -%>"><%= s.status -%></span>
+      <%= hive_job_link(s.best.run) if s.best -%>
+    </td>
 
-        <td>
-          <span class="badge badge-result badge-pass badge-count-<%= s.best.count(:pass) -%>"><%= s.best.count(:pass) %></span>
-          <span class="badge badge-result badge-fail badge-count-<%= s.best.count(:fail) -%>"><%= s.best.count(:fail) or 0 %></span>
-          <span class="badge badge-result badge-notrun badge-count-<%= s.best.count(:notrun) -%>"><%= s.best.count(:notrun) %></span>
-          <span class="badge badge-result badge-error badge-count-<%= s.best.count(:error) -%>"><%= s.best.count(:error) -%></span>
-        </td>
-      </tr>
+    <td>
+      <span class="badge badge-result badge-pass badge-count-<%= s.best.count(:pass) -%>"><%= s.best.count(:pass) %></span>
+      <span class="badge badge-result badge-fail badge-count-<%= s.best.count(:fail) -%>"><%= s.best.count(:fail) or 0 %></span>
+      <span class="badge badge-result badge-notrun badge-count-<%= s.best.count(:notrun) -%>"><%= s.best.count(:notrun) %></span>
+      <span class="badge badge-result badge-error badge-count-<%= s.best.count(:error) -%>"><%= s.best.count(:error) -%></span>
+    </td>
+  </tr>
       
-    <% end %>
   <% end %>
+<% end %>
       
-    </table>
-    
-  </div>
-</div>
+</tbody>
 

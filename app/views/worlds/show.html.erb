@@ -32,6 +32,10 @@
 
   <!-- Tab panes -->
   <div class="tab-content">
+  
+  
+    
+    <!-- Runs pane -->
     <div class="tab-pane active" id="runs">
 
       <br />
@@ -67,36 +71,39 @@
 
     </div>
 
+    
+    
+    
+    <!-- Results pane -->
     <div class="tab-pane" id="results">
 
     <br />
 
-    <div class="panel-group" id="accordion">
-
+      <table class="table">
+           
       <% @targets.each do |t| %>
-    
-        <div class="panel panel-default aggregate-group-loader" id="group-<%=@world.id-%>-<%=t-%>">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
-              <span class="pull-right">
-              <span class="result result-unknown">????</span> 
+      
+        <tbody class="aggregate-group-loader" id="group-<%=@world.id-%>-<%=t-%>">
+          <tr>
+            <td><a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
+            <td><span class="result result-unknown">????</span></td>
+            <td>
               <span class="badge badge-result badge-pass badge-count-0">?</span>
               <span class="badge badge-result badge-fail badge-count-0">?</span>
               <span class="badge badge-result badge-notrun badge-count-0">?</span>
               <span class="badge badge-result badge-error badge-count-0">?</span>
-              </span>
-           </h4>
-          </div>
-          <div id="collapse-<%=t-%>" class="panel-collapse collapse <%= t==0 ? 'in' : '' -%>">
-          </div>
-        </div>
-      <% end %>
+            </td>
+          </tr>
+        </tbody>
+        <% end %>
+      </table>
+      
     </div>
 
-  </div>
-
-<div class="tab-pane" id="compare">
+    
+    
+    <!--comparison pane -->
+    <div class="tab-pane" id="compare">
 
       <br />
 
