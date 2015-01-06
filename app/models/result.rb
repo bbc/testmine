@@ -12,7 +12,7 @@ class Result < ActiveRecord::Base
       "timeout" => 2,
       "notrun"  => 1 }
   
-  default_scope includes(:children, :test_definition)
+  default_scope { includes(:children, :test_definition) }
   
   before_save do |result|
     result.status = Result.normalize_result(result.status)
