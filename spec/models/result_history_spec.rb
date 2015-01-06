@@ -47,7 +47,7 @@ describe ResultHistory do
     end
     
     it "has reference results" do
-      expect( @result_history.reference_results.count ).to eq 2
+      expect( @result_history.reference_results.count ).to be >= 2
       expect( @result_history.reference_results.first ).to be_a Result
     end
     
