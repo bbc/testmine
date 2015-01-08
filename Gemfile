@@ -5,8 +5,6 @@ gem 'rails', '4.2.0'
 
 gem 'thin'
 
-gem 'rack-bbc_auth'
-
 group :development, :test do
   gem 'rspec-rails'
   gem 'sqlite3'

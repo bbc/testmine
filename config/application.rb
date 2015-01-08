@@ -20,6 +20,9 @@ module Testmite
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.middleware.use Rack::BBCAuth
+    begin
+      config.middleware.use Rack::BBCAuth
+    rescue NameError => e
+    end
   end
 end
