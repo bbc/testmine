@@ -25,7 +25,7 @@
           <tbody>
           <tr class="info">
             <td><%= pretty_node(r) -%></td>
-            <td colspan="3" class="test-name"><%= link_to( pretty_truncate("#{h r.test_definition.name}", 80, 'strong', r.test_definition.file_name(:short) ), "/tests/#{r.test_definition.id}") -%></td>
+            <td colspan="3" class="test-name"><%= link_to( pretty_truncate("#{h r.test_definition.name}", 80, 'strong', r.test_definition.file_name(:short) ), "/tests/#{r.test_definition.id}?target=#{@run.target}") -%></td>
 
             <td>
               <span class="result result-<%= r.calculated_status -%>"><%= r.calculated_status -%></span>
@@ -42,7 +42,7 @@
 
               <tr class="warning">
                 <td><%= pretty_node(s) -%></td>
-                <td></td><td colspan="2" class="test-name"><%= link_to( pretty_truncate(h(s.test.name), 80, 'em'), "/tests/#{s.test.id}") -%></td>
+                <td></td><td colspan="2" class="test-name"><%= link_to( pretty_truncate(h(s.test.name), 80, 'em'), "/tests/#{s.test.id}?target=#{@run.target}") -%></td>
 
                 <td>
                   <span class="result result-<%= s.calculated_status -%>"><%= s.calculated_status -%></span>
