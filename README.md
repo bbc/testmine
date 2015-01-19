@@ -6,7 +6,29 @@ Testmite is test results tool for storing and analysing result data. Testmite ta
 
 ### Worlds
 
-Testmite stores test results in buckets called worlds. A world is identified by the project, component, and version strings submitted along with the test results. So, for example, if you're testing a mobile application, you might submit
+Testmite stores test results in buckets called worlds. A world is identified by the project, component, and version strings submitted along with the test results. So, for example, if you're testing a mobile application, you might submit against:
+
+    project: 'mobile_app',
+    component: 'android'
+    version: <build_id>
+
+This would mean every build has its results captured in a different bucket. Testmite uses the project and component names to allow you to compare worlds under test. So you could compare a new feature branch build, '1.1-new-feature' against the results for your last know release candidate: '1.0-rc' 
+
+### Runs
+
+Runs are the individual executions of your test suites. A run may comprise multiple test results for a particular world and target. A target represents the platform you are testing in. So for our Android app, it might be a particular device or OS build. You can view individual run results in testmite by clicking on a run id. While it can be useful to look at specific run results, the aggregated world views give an overview of your testing for a particular world.
+
+### Aggregate Results
+
+Testmite aggregates all the runs for a world into a single-page aggregated view of the results. Results are organised by target. It's important to note that the aggregated view takes the best results for a test result. So if you have two different runs, and a test passed in first run, but failed in the second run, the second result is discarded. This behaviour means that testmite filters out failed results where test behaviour is inconsistent.
+
+### Comparison Results
+
+Testmite can present a side-by-side view of aggregate results for two worlds.
+
+### Result Histories
+
+
 
 ## Running testmite
 
