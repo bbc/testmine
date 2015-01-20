@@ -16,17 +16,26 @@ This would mean every build has its results captured in a different bucket. Test
 
 ### Runs
 
-Runs are the individual executions of your test suites. A run may comprise multiple test results for a particular world and target. A target represents the platform you are testing in. So for our Android app, it might be a particular device or OS build. You can view individual run results in testmite by clicking on a run id. While it can be useful to look at specific run results, the aggregated world views give an overview of your testing for a particular world.
+Runs are the individual executions of your test suites. A run may comprise multiple test results for a particular world and target. A target represents the platform you are testing against. So for our Android app, it might be a particular device or OS build. You can view individual run results in testmite by clicking on a run id. While it can be useful to look at specific run results, the aggregated world views give an overview of your testing for a particular world.
 
 ### Aggregate Results
 
-Testmite aggregates all the runs for a world into a single-page aggregated view of the results. Results are organised by target. It's important to note that the aggregated view takes the best results for a test result. So if you have two different runs, and a test passed in first run, but failed in the second run, the second result is discarded. This behaviour means that testmite filters out failed results where test behaviour is inconsistent.
+Testmite aggregates all the runs for a world into a single-page aggregated view of the results. Results are organised by target. It's important to note that the aggregated view takes the best results from across your test runs. So if you have two different runs, and a test passed in first run, but failed in the second run, the second result is discarded. This behaviour means that testmite filters out failed results where test behaviour is inconsistent.
 
 ### Comparison Results
 
-Testmite can present a side-by-side view of aggregate results for two worlds.
+Testmite can present a side-by-side view of aggregate results for two worlds. Testmite compares the results to provide a comparason status. They have the following meanings:
+* PASS      Results passed consistently in line with the reference world
+* NEWPASS   Tests that previously failed are now passing
+* REGRESS   Tests that previously passed are now failing
+* FAIL      Tests that failed previously are still failing
+* ERROR     Tests failed to execute correctly
+* NOTRUN    The tests have not been run
+
+In addition, the comparison result will be faded if the results between the two worlds exactly match.
 
 ### Result Histories
+
 
 
 
