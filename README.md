@@ -34,11 +34,6 @@ Testmite can present a side-by-side view of aggregate results for two worlds. Te
 
 In addition, the comparison result will be faded if the results between the two worlds exactly match.
 
-### Result Histories
-
-
-
-
 ## Running testmite
 
 Testmite is a straightforward Rails application. You can deploy a local copy easily by checking it out and running:
