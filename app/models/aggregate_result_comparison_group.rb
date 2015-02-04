@@ -1,5 +1,5 @@
 class AggregateResultComparisonGroup
-  attr_accessor :primary_world, :reference_world, :results, :target
+  attr_accessor :primary_world, :reference_world, :results, :target, :tags
 
 
 
@@ -11,6 +11,7 @@ class AggregateResultComparisonGroup
     reference_world = World.find(reference_world_id)
     target = args[:target]
     
+    tags = args[:tags]
     
     primary_results_by_test = Result.joins(:run).where(:parent_id => nil,
       :runs => {:target => target, :world_id => primary_world_id}).group_by { |r| r.test_definition }
@@ -25,17 +26,18 @@ class AggregateResultComparisonGroup
       primary_results = primary_results_by_test[test] || []
       reference_results = reference_results_by_test[test] || []
       
-      primary_aggregate = AggregateResult.new( test, primary_world, primary_results, target )
-      reference_aggregate = AggregateResult.new( test, reference_world, reference_results, target )
+      primary_aggregate = AggregateResult.new( test, primary_world, primary_results, target, tags )
+      reference_aggregate = AggregateResult.new( test, reference_world, reference_results, target, tags )
       
       aggregates.push(AggregateResultComparison.new( primary_world, reference_world, test, target,
-                                     primary_aggregate, reference_aggregate) )
+                                     primary_aggregate, reference_aggregate, tags) )
     end
 
     AggregateResultComparisonGroup.new( :primary_world => primary_world,
                                         :reference_world => reference_world,
                                         :target => target,
-                                        :results => aggregates )
+                                        :results => aggregates,
+                                        :tags => tags )
   end
 
   def initialize( args )
@@ -43,6 +45,7 @@ class AggregateResultComparisonGroup
     @reference_world = args[:reference_world]
     @results = args[:results]
     @target = args[:target]
+    @tags = args[:tags]
     @count = {}
   end
   
