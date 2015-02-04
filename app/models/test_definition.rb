@@ -5,7 +5,7 @@ class TestDefinition < ActiveRecord::Base
   has_many   :children, :foreign_key => "parent_id", :class_name => 'TestDefinition', :dependent => :destroy
   has_many   :results
   acts_as_taggable
-  default_scope { includes(:tags) }
+  default_scope { includes(:tags, :parent ) }
 #  default_scope { includes(:children) } #TODO Test impact of this default scope
 
   def self.find_or_create(args)
