@@ -22,6 +22,8 @@ class WorldsController < ApplicationController
 
     @runs = @world.runs
     
+    @tag = params[:tag] if (params[:tag] && params[:tag].length > 0)
+    
     @targets = Run.where( :world_id => @world.id ).pluck('DISTINCT target')
     
     @comparison_worlds = World.similar(@world).includes(:runs)
@@ -30,8 +32,13 @@ class WorldsController < ApplicationController
   def aggregate_group_element
     @target = params[:target]
     @world_id = params[:world_id].to_i
+    @tag = params[:tag] if (params[:tag] && params[:tag].length > 0)
+    tags = []
+    tags.push @tag if @tag
+    
     @results = AggregateResultGroup.populate( :world_id => @world_id,
-                                              :target => @target )
+                                              :target => @target,
+                                              :tags => tags )
     
     render layout: false
   end

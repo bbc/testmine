@@ -1,4 +1,15 @@
 <div class="panel panel-default">
+  <% if @results.tags %>
+  <% @results.tags.each do |t| %>
+    <script>
+    list = $('ul.test-tags')
+    if ( ! $("ul.test-tags #<%=t-%>").length ) {
+      $.unique(list.prepend('<li id="<%=t-%>"><h4><span class="label <%= @tag == t ? 'label-primary' : 'label-default' -%>"> <%= link_to(t, "/worlds/#{@world_id}?tag=#{t}") -%> </span></h4></li>'));
+    }
+    </script>
+  <% end %>
+  <% end %>
+
   <div class="panel-heading">
     <h4 class="panel-title">
       <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=@target.hash-%>"><%=@target-%>
@@ -15,6 +26,8 @@
   </div>
 
   <div id="collapse-<%=@target.hash-%>" class="panel-collapse collapse">
+ 
+    <% if !@results.results.empty? %>
     
     <table class="table table-condensed">
       <tr>
@@ -72,6 +85,8 @@
   <% end %>
       
     </table>
+    
+  <% end %>  
     
   </div>
 </div>

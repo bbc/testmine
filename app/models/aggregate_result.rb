@@ -2,22 +2,26 @@
 # best_result_id, status, pass_count, fail_count, error_count, notrun_count
 
 class AggregateResult
-  attr_accessor :results, :target, :world, :test_definition
+  attr_accessor :results, :target, :world, :test_definition, :filter_tags
 
   # Returns an array of AggregateResult children
   def children
     if !@children
       child_result_set = @results.map { |r| r.children }
-      @children = AggregateResult.process_children(child_result_set.flatten, world, target)
+      @children = AggregateResult.process_children(child_result_set.flatten, world, target, filter_tags)
     end
     @children
   end
 
-  def self.process_children( results, world, target )
+  def self.process_children( results, world, target, filter_tags )
     results_by_test = results.group_by { |r| r.test_definition }
-    results_by_test.collect { |test, result| AggregateResult.new( test, world, result, target ) }
+    aggregates = results_by_test.collect { |test, result| AggregateResult.new( test, world, result, target, filter_tags ) }
+    
+    if !filter_tags.empty?
+      aggregates = aggregates.select { |ar| ar.child_tags.any? { |t| filter_tags.include?(t) } } 
+    end
+    aggregates
   end  
-
 
   def best
     if !@best
@@ -35,10 +39,11 @@ class AggregateResult
   # Given a Result, or an array of Results, creates an AggregateResult
   # object.
   #
-  def initialize( _test_definition, _world, _result, _target )
+  def initialize( _test_definition, _world, _result, _target, _filter_tags )
     @test_definition = _test_definition
     @world = _world
     @results = _result
+    @filter_tags = _filter_tags
     if @results && @results.count > 0 && @results.first.class != Result
       raise "Not an array of Results #{caller}"
     end
@@ -50,7 +55,6 @@ class AggregateResult
   #
   # Methods to make this look more like a Result object
   #
-
   def status
     if self.best.status
       self.best.status
@@ -61,11 +65,19 @@ class AggregateResult
   end
 
   # Counts the statuses of all the child elements
-  def count (status)
+  def count(status)
     if !@count[status]
       @count[status] = self.children.collect { |c| c.status == status.to_s }.count(true)
     end
     @count[status]
   end
-
+  
+  def child_tags
+    all = self.test_definition.all_tags
+    if self.children
+      all += self.children.collect { |c| c.child_tags }
+    end
+    all.flatten.uniq
+  end
+  
 end

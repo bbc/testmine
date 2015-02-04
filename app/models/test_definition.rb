@@ -4,6 +4,9 @@ class TestDefinition < ActiveRecord::Base
   belongs_to :parent,   :foreign_key => "parent_id", :class_name => 'TestDefinition'
   has_many   :children, :foreign_key => "parent_id", :class_name => 'TestDefinition', :dependent => :destroy
   has_many   :results
+  acts_as_taggable
+  default_scope { includes(:tags) }
+#  default_scope { includes(:children) } #TODO Test impact of this default scope
 
   def self.find_or_create(args)
     TestDefinition.where(
@@ -18,9 +21,18 @@ class TestDefinition < ActiveRecord::Base
       test.file = args[:file]
       test.line = args[:line]
       test.parent_id = args[:parent_id]
+      test.tag_list = args[:tags]
     end
   end
-
+  
+  def all_tags
+    all = self.tag_list
+    if self.parent
+      all += self.parent.all_tags
+    end
+    all.uniq
+  end
+  
   def add_test_definition(args)
     args[:suite_id] = self.suite_id
     args[:parent_id] = self.id

@@ -16,17 +16,23 @@ class AggregateResultGroup
     world = World.find(world_id)
     target = args[:target] or raise "Need to provide  a target"
     
+    tags = args[:tags]
+
     results_by_test_id = Result.joins(:run).where(:parent_id => nil,
                                        :runs => {:target => target, :world_id => world_id}).group_by { |r| r.test_definition_id }
+
     
     aggregates = results_by_test_id.values.collect do |results|
-      AggregateResult.new( results[0].test_definition, world, results, target )
+      AggregateResult.new( results[0].test_definition, world, results, target, tags )
+    end
+    
+    if !tags.empty?
+      aggregates = aggregates.select { |ar| ar.child_tags.any? { |t| tags.include?(t) } } 
     end
     
     AggregateResultGroup.new( :results => aggregates, :world => world, :target => target )
-    
   end
-
+  
   #
   # Construct the object
   #
@@ -37,11 +43,20 @@ class AggregateResultGroup
     @count = {}
   end
 
+  # Get a list of tags that all the test_definitions in this aggregate are tagged with
+  def tags
+    results.collect { |r| r.child_tags }.flatten.uniq
+  end
+
   #
   # Return the overall status of the target
   #
   def status
-    Result.summary_status(results.collect { |r| r.status } )
+    if results.empty?
+      'notrun'
+    else
+      Result.summary_status(results.collect { |r| r.status } )
+    end
   end
 
   #

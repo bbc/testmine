@@ -78,6 +78,7 @@ class IrIngestor
         status      = r["status"]
         started     = r["started"]
         finished    = r["finished"]
+        tags        = r["tags"]
 
 
         test_definition = parent_definiton.add_test_definition(
@@ -85,8 +86,13 @@ class IrIngestor
           node_type: type,
           file: file,
           line: line,
-          description: description
+          description: description,
+          tag_list: tags
         )
+        
+        # Replace tags with the latest
+        test_definition.tag_list = tags
+        test_definition.save
 
         parent_id = parent_result.id if parent_result
         result = Result.create(
@@ -95,7 +101,8 @@ class IrIngestor
           :parent_id => parent_id,
           :run_id => run.id,
           :started_at => started,
-          :finished_at => finished
+          :finished_at => finished,
+          :tag_list => tags
         )
 
         if children
