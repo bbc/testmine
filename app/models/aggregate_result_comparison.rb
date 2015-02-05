@@ -1,20 +1,21 @@
 class AggregateResultComparison
-  attr_accessor :primary, :reference, :test_definition, :target
+  attr_accessor :primary, :reference, :test_definition, :target, :tags
 
-  def initialize( primary_world, reference_world,  test_def, target, primary_aggregate_result, reference_aggregate_result )
+  def initialize( primary_world, reference_world,  test_def, target, primary_aggregate_result, reference_aggregate_result, tags )
     @primary = primary_aggregate_result
     @reference = reference_aggregate_result
     @test_definition = test_def
     @target = target
     @primary_world = primary_world
     @reference_world = reference_world
+    @tags = tags
 
     if !@primary
-      @primary = AggregateResult.new( @test_definition, primary_world, [], target )
+      @primary = AggregateResult.new( @test_definition, primary_world, [], target, tags )
     end
 
     if !@reference
-      @reference = AggregateResult.new( @test_definition, reference_world, [], target )
+      @reference = AggregateResult.new( @test_definition, reference_world, [], target, tags )
     end
   end
 
@@ -62,7 +63,7 @@ class AggregateResultComparison
           primary_aggregate = primary_child_results_by_test[test].pop if primary_child_results_by_test[test]
           reference_aggregate = reference_child_results_by_test[test].pop if reference_child_results_by_test[test]
           
-          AggregateResultComparison.new( primary, reference, test, target, primary_aggregate, reference_aggregate )
+          AggregateResultComparison.new( primary, reference, test, target, primary_aggregate, reference_aggregate, tags )
         end
       end
       

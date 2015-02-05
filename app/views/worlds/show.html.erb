@@ -7,6 +7,14 @@
     <% end %>
   </h1>
   <h2><%= @world.version -%></h2>
+ 
+  <p> 
+  <ul class="center-block test-tags list-inline">
+    <% if @tag %>
+    <li><h4><span class='label label-primary'><%= link_to('all tags', "/worlds/#{@world.id}") -%></h4></span></li>
+    <% end %>
+  </ul>
+  </p>
 </div>
 
 <div class="col-xs-6">
@@ -19,12 +27,13 @@
   </table>
 </div>
 
+
 <div class="col-xs-12">
 
   <!-- Nav tabs -->
   <ul class="nav nav-pills">
-    <li class="active"><a href="#runs" data-toggle="tab">Runs</a></li>
-    <li><a href="#results" data-toggle="tab">Results</a></li>
+    <li class="active"><a href="#results" data-toggle="tab">Results</a></li>
+    <li><a href="#runs" data-toggle="tab">Runs</a></li>
     <li><a href="#compare" data-toggle="tab">Compare</a></li>
 
   </ul>
@@ -32,7 +41,39 @@
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div class="tab-pane active" id="runs">
+
+    <div class="tab-pane active" id="results">
+
+    <br />
+
+    <div class="panel-group" id="accordion">
+
+      <% @targets.each do |t| %>
+    
+        <div class="panel panel-default aggregate-group-loader" id="group-<%=@world.id-%>-<%=t-%>">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
+              <span class="pull-right">
+              <span class="result result-unknown">????</span> 
+              <span class="badge badge-result badge-pass badge-count-0">?</span>
+              <span class="badge badge-result badge-fail badge-count-0">?</span>
+              <span class="badge badge-result badge-notrun badge-count-0">?</span>
+              <span class="badge badge-result badge-error badge-count-0">?</span>
+              </span>
+           </h4>
+          </div>
+          <div id="collapse-<%=t-%>" class="panel-collapse collapse <%= t==0 ? 'in' : '' -%>">
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+
+
+    <div class="tab-pane" id="runs">
 
       <br />
 
@@ -67,34 +108,6 @@
 
     </div>
 
-    <div class="tab-pane" id="results">
-
-    <br />
-
-    <div class="panel-group" id="accordion">
-
-      <% @targets.each do |t| %>
-    
-        <div class="panel panel-default aggregate-group-loader" id="group-<%=@world.id-%>-<%=t-%>">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
-              <span class="pull-right">
-              <span class="result result-unknown">????</span> 
-              <span class="badge badge-result badge-pass badge-count-0">?</span>
-              <span class="badge badge-result badge-fail badge-count-0">?</span>
-              <span class="badge badge-result badge-notrun badge-count-0">?</span>
-              <span class="badge badge-result badge-error badge-count-0">?</span>
-              </span>
-           </h4>
-          </div>
-          <div id="collapse-<%=t-%>" class="panel-collapse collapse <%= t==0 ? 'in' : '' -%>">
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-  </div>
 
 <div class="tab-pane" id="compare">
 
@@ -129,5 +142,9 @@
 
 
 <script>
-  loadAggregateGroups()
+  <% if @tag %>
+    loadAggregateGroups('<%=@tag-%>')
+  <% else %>
+    loadAggregateGroups('')
+  <% end %>   
 </script>

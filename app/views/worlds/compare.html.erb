@@ -8,6 +8,8 @@
   <br>
   <div class="col-xs-12">
     
+    
+    
     <div class="panel-group" id="accordion">
 
     <% @targets.each do |t| %>
@@ -26,5 +28,9 @@
     </div>
     
 <script>
-  loadComparisonGroups()
+  <% if @tag %>
+    loadComparisonGroups('<%=@tag-%>')
+  <% else %>
+    loadComparisonGroups('')
+  <% end %>   
 </script>

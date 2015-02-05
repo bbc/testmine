@@ -4,6 +4,7 @@ class Result < ActiveRecord::Base
   belongs_to :parent, :foreign_key => "parent_id", :class_name => 'Result'
   has_many   :children, :foreign_key => "parent_id", :class_name => 'Result', :dependent => :destroy
   alias_attribute :test, :test_definition
+  acts_as_taggable
   
   STATUS_SCORES =
     { "pass"    => 5,
@@ -17,7 +18,15 @@ class Result < ActiveRecord::Base
   before_save do |result|
     result.status = Result.normalize_result(result.status)
   end
-
+  
+  def all_tags
+    all = self.tag_list
+    if self.parent
+      all += self.parent.all_tags
+    end
+    all.uniq
+  end
+  
   def self.normalize_result(status)
     { "passed"    => "pass",
       "failed"    => "fail",
