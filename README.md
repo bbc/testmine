@@ -25,12 +25,12 @@ Testmite aggregates all the runs for a world into a single-page aggregated view 
 ### Comparison Results
 
 Testmite can present a side-by-side view of aggregate results for two worlds. Testmite compares the results to provide a comparason status. They have the following meanings:
-* PASS      Results passed consistently in line with the reference world
-* NEWPASS   Tests that previously failed are now passing
-* REGRESS   Tests that previously passed are now failing
-* FAIL      Tests that failed previously are still failing
-* ERROR     Tests failed to execute correctly
-* NOTRUN    The tests have not been run
+* **PASS**      Results passed consistently in line with the reference world
+* **NEWPASS**   Tests that previously failed are now passing
+* **REGRESS**   Tests that previously passed are now failing
+* **FAIL**      Tests that failed previously are still failing
+* **ERROR**     Tests failed to execute correctly
+* **NOTRUN**    The tests have not been run
 
 In addition, the comparison result will be faded if the results between the two worlds exactly match.
 
