@@ -21,6 +21,7 @@ class Result < ActiveRecord::Base
   
   def all_tags
     all = self.tag_list
+#    all = self.tags.collect { |t| t.name }
     if self.parent
       all += self.parent.all_tags
     end
