@@ -5,8 +5,9 @@ class TestDefinition < ActiveRecord::Base
   has_many   :children, :foreign_key => "parent_id", :class_name => 'TestDefinition', :dependent => :destroy
   has_many   :results
   acts_as_taggable
-  default_scope { includes(:tags, :parent ) }
+  default_scope { includes( :parent, :tags) }
 #  default_scope { includes(:children) } #TODO Test impact of this default scope
+
 
   def self.find_or_create(args)
     TestDefinition.where(
@@ -26,11 +27,16 @@ class TestDefinition < ActiveRecord::Base
   end
   
   def all_tags
-    all = self.tags{ |t| t.name }
-    if self.parent
-      all += self.parent.all_tags
+    if ! @all_tags
+      all = self.tags.collect { |t| t.name }
+      if self.parent
+        all += self.parent.all_tags
+      end
+      all.uniq
+      @all_tags = all.uniq
+    else
     end
-    all.uniq
+    @all_tags
   end
   
   def add_test_definition(args)
