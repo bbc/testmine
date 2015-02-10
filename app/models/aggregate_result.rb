@@ -8,17 +8,20 @@ class AggregateResult
   def children
     if !@children
       child_result_set = @results.map { |r| r.children }
-      @children = AggregateResult.process_children(child_result_set.flatten, world, target, filter_tags)
+      @children = AggregateResult.process_children(child_result_set.flatten, world, target, self.inherited_tags, filter_tags)
     end
     @children
   end
 
-  def self.process_children( results, world, target, filter_tags )
+  def self.process_children( results, world, target, tags, filter_tags )
     results_by_test = results.group_by { |r| r.test_definition }
+    
+    filter_tags = [] if !tags.empty? && tags.any? { |t| filter_tags.include?(t) }
+    
     aggregates = results_by_test.collect { |test, result| AggregateResult.new( test, world, result, target, filter_tags ) }
     
     if !filter_tags.empty?
-      aggregates = aggregates.select { |ar| ar.child_tags.any? { |t| filter_tags.include?(t) } } 
+      aggregates = aggregates.select { |ar| ar.tags.any? { |t| filter_tags.include?(t) } } 
     end
     aggregates
   end  
@@ -75,15 +78,19 @@ class AggregateResult
     @count[status]
   end
   
-  def child_tags
-    if !@child_tags
+  def inherited_tags
+    self.test_definition.inherited_tags
+  end
+    
+  def tags
+    if !@tags
       all = self.test_definition.tags.collect { |t| t.name }
       if self.children
-        all += self.children.collect { |c| c.child_tags }
+        all += self.children.collect { |c| c.tags }
       end
-      @child_tags = all.flatten.uniq
+      @tags = all.flatten.uniq
     end
-    @child_tags
+    @tags
   end
   
 end

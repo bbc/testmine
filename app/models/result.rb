@@ -25,14 +25,6 @@ class Result < ActiveRecord::Base
     result.status = Result.normalize_result(result.status)
   end
   
-  def all_tags
-    all = self.tags.collect { |t| t.name }
-    if self.parent
-      all += self.parent.all_tags
-    end
-    all.uniq
-  end
-  
   def self.normalize_result(status)
     { "passed"    => "pass",
       "failed"    => "fail",

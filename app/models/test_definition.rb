@@ -25,7 +25,19 @@ class TestDefinition < ActiveRecord::Base
       test.tag_list = args[:tags]
     end
   end
-    
+  
+  def inherited_tags
+    if ! @inherited_tags
+      all = self.tags.collect { |t| t.name }
+      if self.parent
+        all += self.parent.inherited_tags
+      end
+      all.uniq
+      @inherited_tags = all.uniq
+    end
+    @inherited_tags
+  end
+  
   def add_test_definition(args)
     args[:suite_id] = self.suite_id
     args[:parent_id] = self.id
