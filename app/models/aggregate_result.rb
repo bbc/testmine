@@ -56,12 +56,15 @@ class AggregateResult
   # Methods to make this look more like a Result object
   #
   def status
-    if self.best.status
-      self.best.status
-    # If a status hasn't been set, need to work it out
-    else
-      Result.summary_status(children.collect {|r| r.status})
+    if !@status
+      if self.best.status
+        @status = self.best.status
+      # If a status hasn't been set, need to work it out
+      else
+        @status = Result.summary_status(children.collect {|r| r.status})
+      end
     end
+    @status
   end
 
   # Counts the statuses of all the child elements
@@ -73,11 +76,14 @@ class AggregateResult
   end
   
   def child_tags
-    all = self.test_definition.all_tags
-    if self.children
-      all += self.children.collect { |c| c.child_tags }
+    if !@child_tags
+      all = self.test_definition.all_tags
+      if self.children
+        all += self.children.collect { |c| c.child_tags }
+      end
+      @child_tags = all.flatten.uniq
     end
-    all.flatten.uniq
+    @child_tags
   end
   
 end

@@ -6,6 +6,12 @@ class Result < ActiveRecord::Base
   alias_attribute :test, :test_definition
   acts_as_taggable
   
+  after_initialize :init
+
+  def init
+    @count = {}
+  end
+  
   STATUS_SCORES =
     { "pass"    => 5,
       "fail"    => 4,
@@ -41,7 +47,10 @@ class Result < ActiveRecord::Base
     # Note the use of collect and count here, rather than just a simple
     # count. This is because children is some kind of ActiveRecord array
     # and count doesn't work quite as expected on it
-    self.children.collect { |c| c.calculated_status == status.to_s }.count(true)
+    if !@count[status]
+      @count[status] = self.children.collect { |c| c.calculated_status == status.to_s }.count(true)
+    end
+    @count[status]
   end
 
   # returns an integer that represents the test result status
