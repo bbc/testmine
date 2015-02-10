@@ -77,7 +77,7 @@ class AggregateResult
   
   def child_tags
     if !@child_tags
-      all = self.test_definition.all_tags
+      all = self.test_definition.tags.collect { |t| t.name }
       if self.children
         all += self.children.collect { |c| c.child_tags }
       end
