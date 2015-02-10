@@ -34,7 +34,6 @@ class TestDefinition < ActiveRecord::Base
       end
       all.uniq
       @all_tags = all.uniq
-    else
     end
     @all_tags
   end
