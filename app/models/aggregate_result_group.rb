@@ -27,7 +27,7 @@ class AggregateResultGroup
     end
     
     if !tags.empty?
-      aggregates = aggregates.select { |ar| ar.child_tags.any? { |t| tags.include?(t) } } 
+      aggregates = aggregates.select { |ar| ar.tags.any? { |t| tags.include?(t) } } 
     end
     
     AggregateResultGroup.new( :results => aggregates, :world => world, :target => target )
@@ -45,7 +45,10 @@ class AggregateResultGroup
 
   # Get a list of tags that all the test_definitions in this aggregate are tagged with
   def tags
-    results.collect { |r| r.child_tags }.flatten.uniq
+    if !@tags
+      @tags = results.collect { |r| r.tags }.flatten.uniq
+    end
+    @tags
   end
 
   #

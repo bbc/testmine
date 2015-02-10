@@ -5,7 +5,7 @@ class TestDefinition < ActiveRecord::Base
   has_many   :children, :foreign_key => "parent_id", :class_name => 'TestDefinition', :dependent => :destroy
   has_many   :results
   acts_as_taggable
-  default_scope { includes( :parent, :tags) }
+  default_scope { includes( :parent , :tags) }
 #  default_scope { includes(:children) } #TODO Test impact of this default scope
 
 
@@ -26,16 +26,16 @@ class TestDefinition < ActiveRecord::Base
     end
   end
   
-  def all_tags
-    if ! @all_tags
+  def inherited_tags
+    if ! @inherited_tags
       all = self.tags.collect { |t| t.name }
       if self.parent
-        all += self.parent.all_tags
+        all += self.parent.inherited_tags
       end
       all.uniq
-      @all_tags = all.uniq
+      @inherited_tags = all.uniq
     end
-    @all_tags
+    @inherited_tags
   end
   
   def add_test_definition(args)
