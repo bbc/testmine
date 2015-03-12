@@ -55,11 +55,15 @@ class AggregateResultGroup
   # Return the overall status of the target
   #
   def status
-    if results.empty?
-      'notrun'
-    else
-      Result.summary_status(results.collect { |r| r.status } )
+    if !@status
+      @status = 
+      if results.empty?
+        'notrun'
+      else
+        Result.summary_status(results.collect { |r| r.status } )
+      end
     end
+    @status
   end
 
   #

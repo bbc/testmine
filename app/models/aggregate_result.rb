@@ -31,8 +31,12 @@ class AggregateResult
       if !results || results.empty?
         @best = Result.new(:status => "notrun")
       else
-        sorted_results = results.sort { |a, b| a.status_score <=> b.status_score }
-        @best = sorted_results.last
+        if results.last.status =='pass'
+          @best = results.last
+        else
+          sorted_results = results.sort { |a, b| a.status_score <=> b.status_score }
+          @best = sorted_results.last
+        end
       end
     end
     @best
@@ -72,20 +76,23 @@ class AggregateResult
 
   # Counts the statuses of all the child elements
   def count(status)
-    if !@count[status]
-      @count[status] = self.children.collect { |c| c.status == status.to_s }.count(true)
+    if !@count[status.to_sym]
+      self.children.each { |c| @count[c.status.to_sym] = @count[c.status.to_sym].to_i + 1 }
     end
-    @count[status]
+    @count[status.to_sym]
   end
   
   def inherited_tags
-    self.test_definition.inherited_tags
+    if !@inherited_tags
+      @inherited_tags = self.test_definition.specific_tags
+    end
+    @inherited_tags
   end
     
   def tags
     if !@tags
-      all = self.test_definition.tags.collect { |t| t.name }
-      if self.children
+      all = self.test_definition.specific_tags
+      if self.test_definition.node_type !~ /::Step$/ && self.children 
         all += self.children.collect { |c| c.tags }
       end
       @tags = all.flatten.uniq
