@@ -5,8 +5,7 @@ class TestDefinition < ActiveRecord::Base
   has_many   :children, :foreign_key => "parent_id", :class_name => 'TestDefinition', :dependent => :destroy
   has_many   :results
   acts_as_taggable
-  default_scope { includes( :parent , :tags) }
-#  default_scope { includes(:children) } #TODO Test impact of this default scope
+  default_scope { includes( :tags) }
 
 
   def self.find_or_create(args)
@@ -24,6 +23,13 @@ class TestDefinition < ActiveRecord::Base
       test.parent_id = args[:parent_id]
       test.tag_list = args[:tags]
     end
+  end
+  
+  def specific_tags
+    if ! @specific_tags
+      @specific_tags = self.tags.collect { |t| t.name } 
+    end
+    @specific_tags
   end
   
   def inherited_tags
