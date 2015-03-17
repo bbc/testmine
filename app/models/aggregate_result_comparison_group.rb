@@ -13,11 +13,15 @@ class AggregateResultComparisonGroup
     
     tags = args[:tags]
     
-    primary_results_by_test = Result.joins(:run).where(:parent_id => nil,
-      :runs => {:target => target, :world_id => primary_world_id}).group_by { |r| r.test_definition }
+    primary_results_by_test = Result.joins(:run)
+                                    .where(:parent_id => nil, :runs => {:target => target, :world_id => primary_world_id})
+                                    .last(500)
+                                    .group_by { |r| r.test_definition }
 
-    reference_results_by_test = Result.joins(:run).where(:parent_id => nil,
-      :runs => {:target => target, :world_id => reference_world_id}).group_by { |r| r.test_definition }
+    reference_results_by_test = Result.joins(:run)
+                                      .where(:parent_id => nil, :runs => {:target => target, :world_id => reference_world_id})
+                                      .last(500)
+                                      .group_by { |r| r.test_definition }
      
     tests = primary_results_by_test.keys.concat(reference_results_by_test.keys).uniq
     

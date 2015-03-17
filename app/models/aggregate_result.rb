@@ -78,6 +78,7 @@ class AggregateResult
   def count(status)
     if !@count[status.to_sym]
       self.children.each { |c| @count[c.status.to_sym] = @count[c.status.to_sym].to_i + 1 }
+      @count.default = 0
     end
     @count[status.to_sym]
   end
