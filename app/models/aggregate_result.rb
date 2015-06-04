@@ -93,12 +93,18 @@ class AggregateResult
   def tags
     if !@tags
       all = self.test_definition.specific_tags
-      if self.test_definition.node_type !~ /::Step$/ && self.children 
+      if self.is_a_test?
         all += self.children.collect { |c| c.tags }
       end
       @tags = all.flatten.uniq
     end
     @tags
+  end
+  
+  # Is this an actual test node -- i.e. does it have a status
+  # TODO Create new step class to make optimisations easier
+  def is_a_test?
+    self.best.status
   end
   
 end

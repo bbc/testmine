@@ -18,12 +18,15 @@ class AggregateResultGroup
     
     tags = args[:tags]
 
-    results_by_test_id = Result.joins(:run).where(:parent_id => nil,
+    results_by_test_id = Result.unscoped.includes(:test_definition => :tags,
+                                                  :children => [
+                                                    :children => [:test_definition => :tags],
+                                                    :test_definition => :tags ]).joins(:run)
+                                .where(:parent_id => nil,
                                        :runs => {:target => target, :world_id => world_id})
                                 .last(500)
                                 .group_by { |r| r.test_definition_id }
 
-    
     aggregates = results_by_test_id.values.collect do |results|
       AggregateResult.new( results[0].test_definition, world, results, target, tags )
     end

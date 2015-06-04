@@ -30,16 +30,19 @@ class WorldsController < ApplicationController
   end
 
   def aggregate_group_element
+    
     @target = params[:target]
     @world_id = params[:world_id].to_i
     @tag = params[:tag] if (params[:tag] && params[:tag].length > 0)
     tags = []
     tags.push @tag if @tag
-    
+ 
     @results = AggregateResultGroup.populate( :world_id => @world_id,
                                               :target => @target,
                                               :tags => tags )
     
+    @tags = @results.tags
+
     render layout: false
   end
 
