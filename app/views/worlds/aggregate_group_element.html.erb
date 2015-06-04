@@ -1,6 +1,6 @@
 <div class="panel panel-default">
-  <% if @results.tags %>
-  <% @results.tags.each do |t| %>
+  <% if !@tags.empty? %>
+  <% @tags.each do |t| %>
     <script>
     list = $('ul.test-tags')
     if ( ! $("ul.test-tags #<%=t-%>").length ) {
