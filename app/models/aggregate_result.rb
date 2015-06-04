@@ -93,7 +93,7 @@ class AggregateResult
   def tags
     if !@tags
       all = self.test_definition.specific_tags
-      if self.is_a_test?
+      if !self.is_a_test?
         all += self.children.collect { |c| c.tags }
       end
       @tags = all.flatten.uniq
@@ -106,5 +106,5 @@ class AggregateResult
   def is_a_test?
     self.best.status
   end
-  
+    
 end
