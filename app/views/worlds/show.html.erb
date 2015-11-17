@@ -98,7 +98,7 @@
             <td><%= status_badge(r.status) -%>
               <%= hive_job_link(r) -%>
             </td>
-            <td><%= r.started_at.to_s(:short) -%></td>
+            <td><%= r.started_at ? r.started_at.to_s(:short) : '-' -%></td>
             <td><%= r.duration -%></td>
           </tr>
 
