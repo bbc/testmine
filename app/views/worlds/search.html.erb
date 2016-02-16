@@ -1,0 +1,8 @@
+<h1>No worlds retrieved</h1>
+
+<% if @search_params[:hive_job_id] %>
+<p class="lead">Hive job <em><%= @search_params[:hive_job_id] -%></em> was not reported to Testmine.</p>
+<% elsif @search_params[:world_version] %>
+<p class="lead">World version <em><%= @search_params[:version] -%></em> was not reported to Testmine.</p>
+<% end %>
+<p>Perhaps the suite isn't configured correctly for this Testmine instance?</p>
