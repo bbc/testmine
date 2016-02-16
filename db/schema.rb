@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150604091815) do
+ActiveRecord::Schema.define(version: 20160216102230) do
 
   create_table "results", force: :cascade do |t|
     t.integer  "test_definition_id", limit: 4
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20150604091815) do
   add_index "results", ["parent_id"], name: "index_results_on_parent_id", using: :btree
   add_index "results", ["run_id", "test_definition_id"], name: "index_results_on_run_id_and_test_definition_id", using: :btree
   add_index "results", ["run_id"], name: "index_results_on_run_id", using: :btree
+  add_index "results", ["test_definition_id"], name: "index_results_on_test_definition_id", using: :btree
 
   create_table "runs", force: :cascade do |t|
     t.integer  "world_id",    limit: 4
@@ -91,6 +92,7 @@ ActiveRecord::Schema.define(version: 20150604091815) do
   end
 
   add_index "test_definitions", ["name", "suite_id", "file", "parent_id"], name: "lookup", using: :btree
+  add_index "test_definitions", ["suite_id"], name: "index_test_definitions_on_suite_id", using: :btree
 
   create_table "worlds", force: :cascade do |t|
     t.string   "type",        limit: 255
