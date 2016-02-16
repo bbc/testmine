@@ -7,15 +7,29 @@ class WorldsController < ApplicationController
   # worlds/search?hive_job_id=3000
   def search
     
-    search_params = {}
-    search_params[:hive_job_id] = params[:hive_job_id] if params[:hive_job_id]
+    @search_params = {}
+
+    if params[:hive_job_id]
+      @search_params[:hive_job_id] = params[:hive_job_id]
+      runs = Run.where( @search_params )
     
-    runs = Run.where( search_params )
+      if runs && !runs.empty?
+        world = runs.first.world
+        redirect_to "/worlds/#{world.id}"
+      end
     
-    if runs && !runs.empty?
-      world = runs.first.world
-      redirect_to "/worlds/#{world.id}"
-    else
+    elsif params[:version]
+      
+      @search_params[:project] = params[:project] if params[:project]
+      @search_params[:component] = params[:component] if params[:component]
+      @search_params[:version] = params[:version]
+      
+      world = World.where( @search_params ).last
+      
+      if world
+        redirect_to "/worlds/#{world.id}"
+      end
+      
       
     end
   end
