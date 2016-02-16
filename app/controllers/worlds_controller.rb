@@ -1,6 +1,6 @@
 class WorldsController < ApplicationController
   def index
-    @worlds = World.last(20).reverse
+    @worlds = World.last(100).reverse
   end
   
   
@@ -10,17 +10,20 @@ class WorldsController < ApplicationController
     search_params = {}
     search_params[:hive_job_id] = params[:hive_job_id] if params[:hive_job_id]
     
-    run = Run.where( search_params ).first
-      
-    world = run.world
+    runs = Run.where( search_params )
     
-    redirect_to "/worlds/#{world.id}"
+    if runs && !runs.empty?
+      world = runs.first.world
+      redirect_to "/worlds/#{world.id}"
+    else
+      
+    end
   end
 
   def show
     @world = World.includes(:runs).find(params[:id].to_i)
 
-    @runs = @world.runs
+    @runs = @world.runs.reverse
     
     @tag = params[:tag] if (params[:tag] && params[:tag].length > 0)
     
