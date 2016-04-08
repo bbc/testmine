@@ -4,8 +4,6 @@ Testmite::Application.routes.draw do
   get "suites" => 'suites#index'
   get "suites/:id" => 'suites#show'
   
-  get "keys" => 'keys#show'
-  
   get "runs/show"
   get "worlds/show"
   get "worlds/index"
