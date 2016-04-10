@@ -27,6 +27,7 @@
   opacity: 0.2;
 }
 
+.panel-heading .badge.badge-fail,
 .badge-fail {
     background-color: #b94a48;
 }
@@ -35,6 +36,7 @@
     background-color: #953b39;
 }
 
+.panel-heading .badge.badge-notrun,
 .badge-notrun {
     background-color: #f89406;
 }
@@ -43,6 +45,7 @@
     background-color: #c67605;
 }
 
+.panel-heading .badge.badge-pass,
 .badge-pass {
     background-color: #468847;
 }
@@ -59,6 +62,7 @@
     background-color: #2d6987;
 }
 
+.panel-heading .badge.badge-error,
 .badge-error {
     background-color: #333333;
 }
