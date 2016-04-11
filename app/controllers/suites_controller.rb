@@ -1,6 +1,6 @@
 class SuitesController < ApplicationController
   def index
-    @suites = Suite.last(200)
+    @suites = Suite.last(200).reverse
   end
   
   def show
