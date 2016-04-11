@@ -7,15 +7,7 @@
     <% end %>
   </h1>
   <h2><%= @world.version -%></h2>
- 
-  <p> 
-  <ul class="center-block test-tags list-inline">
-    <% if @tag %>
-    <li><h4><span class='label label-primary'><%= link_to('all tags', "/worlds/#{@world.id}") -%></h4></span></li>
-    <% end %>
-  </ul>
-  </p>
-</div>
+ </div>
 
 <div class="col-xs-6">
   <table class="table">
@@ -25,6 +17,17 @@
     <tr><th>Version</th><td><%= @world.version -%></td></tr>
     <tr><th>Runs</th><td><%= @world.runs.count -%></td></tr>
   </table>
+</div>
+
+
+<div class="col-xs-12">
+  <p> 
+  <ul class="center-block test-tags list-inline">
+    <% if @tag %>
+    <li><h4><span class='label label-primary'><%= link_to('all tags', "/worlds/#{@world.id}") -%></h4></span></li>
+    <% end %>
+  </ul>
+  </p>
 </div>
 
 

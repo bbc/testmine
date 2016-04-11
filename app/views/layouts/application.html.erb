@@ -32,21 +32,19 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= current_page?('/worlds') ? 'active' : '' -%>"><a href="/worlds">Recent</a></li>
+        <li class="<%= current_page?('/worlds') ? 'active' : '' -%>"><a href="/worlds">Worlds</a></li>
         <li class="<%= current_page?('/suites') ? 'active' : '' -%>"><a href="/suites">Suites</a></li>
-        <li class="<%= current_page?(controller: 'keys', action: 'show') ? 'active' : '' -%>"><a href="/keys">Keys</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a><%= current_user ? current_user.email : 'Not signed in'-%></a></li>
+        <li><a><%= current_user ? current_user.email : ''-%></a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Titan <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hive <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#">DeviceDB</a></li>
-            <li><a href="#">Hive</a></li>
-            <li><a href="#">Gems</a></li>
+            <li><a href="<%= hive_url ? hive_url : 'http://bbc.github.io/hive-ci/' -%>">Hive</a></li>
+            <li><a href="https://rubygems.org/profiles/bbc">Gems</a></li>
             <li class="divider"></li>
-            <li><a href="#">Learn more</a></li>
-            <li><a href="#">Raise an issue</a></li>
+            <li><a href="http://bbc.github.io/hive-ci/testmine.html">Learn more</a></li>
+            <li><a href="https://github.com/bbc/testmine/issues">Raise an issue</a></li>
           </ul>
         </li>
       </ul>
