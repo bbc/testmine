@@ -1,4 +1,4 @@
-Testmite::Application.routes.draw do
+Testmine::Application.routes.draw do
   
   root 'suites#index'
   get "suites" => 'suites#index'
