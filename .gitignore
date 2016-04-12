@@ -15,6 +15,9 @@
 /log/*.log
 /tmp
 
+# Ignore rspec res files
+rspec.res
+
 .idea
 
 .DS_Store

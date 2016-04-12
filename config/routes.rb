@@ -1,10 +1,8 @@
-Testmite::Application.routes.draw do
+Testmine::Application.routes.draw do
   
   root 'suites#index'
   get "suites" => 'suites#index'
   get "suites/:id" => 'suites#show'
-  
-  get "keys" => 'keys#show'
   
   get "runs/show"
   get "worlds/show"

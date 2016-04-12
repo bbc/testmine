@@ -31,7 +31,7 @@ class AggregateResultGroup
       AggregateResult.new( results[0].test_definition, world, results, target, tags )
     end
     
-    if !tags.empty?
+    if tags && !tags.empty?
       aggregates = aggregates.select { |ar| ar.tags.any? { |t| tags.include?(t) } } 
     end
     

@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Testmite::Application.config.secret_key_base = 'b28ee70e95c8790954be8eb5d2bb743cccd95a2e1e759c18b493652312f8378fe0280f51313782683d036176147321bbe2310483863372c398b19991c0c256be'
+Testmine::Application.config.secret_key_base = ENV['RAILS_SECRET_KEY_BASE'] || 'b28ee70e95c8790954be8eb5d2bb743cccd95a2e1e759c18b493652312f8378fe0280f51313782683d036176147321bbe2310483863372c398b19991c0c256be' 

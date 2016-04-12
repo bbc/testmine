@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Testmite</title>
+  <title>Testmine</title>
 
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
@@ -25,7 +25,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"><%= image_tag('testmite-20.png') -%></i></a><a class="navbar-brand">Testmite</a>
+      <a class="navbar-brand" href="/"><%= image_tag('testmine-20.png') -%></i></a><a class="navbar-brand">Testmine</a>
       
     </div>
 
@@ -38,7 +38,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a><%= current_user ? current_user.email : ''-%></a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hive <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hive CI<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="<%= hive_url ? hive_url : 'http://bbc.github.io/hive-ci/' -%>">Hive</a></li>
             <li><a href="https://rubygems.org/profiles/bbc">Gems</a></li>

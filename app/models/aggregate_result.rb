@@ -20,7 +20,7 @@ class AggregateResult
     
     aggregates = results_by_test.collect { |test, result| AggregateResult.new( test, world, result, target, filter_tags ) }
     
-    if !filter_tags.empty?
+    if filter_tags && !filter_tags.empty?
       aggregates = aggregates.select { |ar| ar.tags.any? { |t| filter_tags.include?(t) } } 
     end
     aggregates

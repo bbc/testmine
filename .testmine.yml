@@ -1,0 +1,3 @@
+project: hive-ci
+component: testmine
+suite: rspec
