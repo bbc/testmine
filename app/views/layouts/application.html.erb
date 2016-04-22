@@ -10,6 +10,8 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
+  <%= render partial: 'layouts/favicons' %>
+
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
 </head>
@@ -25,7 +27,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"><%= image_tag('testmine-20.png') -%></i></a><a class="navbar-brand">Testmine</a>
+      <a class="navbar-image" href="/"><%= image_tag('testmine-logo-40.png') -%></i></a>
+      <a class="navbar-brand">Testmine</a>
       
     </div>
 

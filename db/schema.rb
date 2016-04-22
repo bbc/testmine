@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150604091815) do
+ActiveRecord::Schema.define(version: 20160216102230) do
 
   create_table "results", force: :cascade do |t|
     t.integer  "test_definition_id"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20150604091815) do
   add_index "results", ["parent_id"], name: "index_results_on_parent_id"
   add_index "results", ["run_id", "test_definition_id"], name: "index_results_on_run_id_and_test_definition_id"
   add_index "results", ["run_id"], name: "index_results_on_run_id"
+  add_index "results", ["test_definition_id"], name: "index_results_on_test_definition_id"
 
   create_table "runs", force: :cascade do |t|
     t.integer  "world_id"
