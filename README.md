@@ -47,7 +47,7 @@ You should get a testmine instance on port 3002 with an sqlite database.
 ## Submitting results
 
 In order to submit your results to testmine, you will need to format your test results as Res IR
-(see our [res](/bbc/res) repo for more information). Res provides a number of formatters for sumbitting from popular test runner such as cucumber and rspec.
+(see our [res](https://github.com/bbc/res) repo for more information). Res provides a number of formatters for sumbitting from popular test runner such as cucumber and rspec.
 
 Alternatively you can hand-craft your own res output, and submit it against the endpoint: /api/v1/submit
 
