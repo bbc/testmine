@@ -19,6 +19,7 @@ Testmine::Application.routes.draw do
   get 'comparison/:primary/:reference' => 'worlds#comparison_group_element'
 
   get 'runs/:id'   => 'runs#show'
+  get 'reliability/:suite'   => 'reliability#show'
   
   get 'oldtests/:id'  => 'tests#show'
   get 'tests/:id'  => 'tests#history'
