@@ -2,21 +2,25 @@
 
 <table class="reliability">
 <tr>
+  <th>Measure</th>
   <th>Number of Failures and Errors in Test Suite</th>
   <th>Number of Passes in Test Suite</th>
   <th>Reliability Ratio as a Percentage</th>
 </tr>
 <tr>
+  <td><b>Last 2 days</b></td>
   <td><%=@fail_last_day -%></td>
   <td><%=@pass_last_day -%></td>
   <td><%=@reliability_last_day-%></td>
 </tr>
 <tr>
+  <td><b>Last 7 days</b></td>
   <td><%=@fail_last_week -%></td>
   <td><%=@pass_last_week -%></td>
   <td><%=@reliability_last_week-%></td>
 </tr>
 <tr>
+  <td><b>Last 30 days</b></td>
   <td><%=@fail_last_month -%></td>
   <td><%=@pass_last_month -%></td>
   <td><%=@reliability_last_month-%></td>
