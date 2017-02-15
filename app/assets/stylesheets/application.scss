@@ -24,3 +24,22 @@
   float: left;
   padding: 5px 20px 5px 5px;
 }
+
+.reliability table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.reliability th, .reliability td {
+    text-align: left;
+    padding: 8px;
+}
+
+.reliability tr:nth-child(even){
+  background-color: #f2f2f2
+}
+
+.reliability th {
+    background-color: #4CAF50;
+    color: white;
+}
