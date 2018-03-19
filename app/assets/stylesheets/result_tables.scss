@@ -7,3 +7,17 @@
     display: inline-block;
 }
 
+th.rotate-th {
+  white-space: nowrap;
+}
+
+th.rotate-th > div {
+  transform:
+    translate(10px, 0px)
+    rotate(315deg);
+  width: 30px;
+}
+
+.summary-row {
+  background-color: #eeeeee;
+}
