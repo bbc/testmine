@@ -2,14 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.0'
 
-gem 'pry'
-
 gem 'sass-rails'
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'
 
 gem 'thin'
-gem 'mysql'
 
 gem 'token_phrase'
 
