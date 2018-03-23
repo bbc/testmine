@@ -97,7 +97,7 @@ GEM
     multi_json (1.11.2)
     multipart-post (2.0.0)
     mysql2 (0.4.3)
-    nokogiri (1.7.2)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     ox (2.3.0)
     rack (1.6.9)
@@ -202,7 +202,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   mysql2
-  nokogiri (< 1.8.0)
+  nokogiri (< 1.7.0)
   rails (= 4.2.0)
   res (~> 1.2)
   rspec-rails
