@@ -96,7 +96,7 @@ GEM
     minitest (5.11.3)
     multi_json (1.11.2)
     multipart-post (2.0.0)
-    mysql2 (0.4.3)
+    mysql2 (0.3.21)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     ox (2.3.0)
@@ -201,7 +201,7 @@ DEPENDENCIES
   font-awesome-sass
   jbuilder (~> 1.2)
   jquery-rails
-  mysql2
+  mysql2 (~> 0.3.18)
   nokogiri (< 1.7.0)
   rails (= 4.2.0)
   res (~> 1.2)
