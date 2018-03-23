@@ -12,10 +12,10 @@ class AggregateResultGroup
   #
   def self.populate( args )
     world_id = args[:world_id] or raise "Need to provide a world_id"
-    
+
     world = World.find(world_id)
     target = args[:target] or raise "Need to provide  a target"
-    
+
     tags = args[:tags]
 
     results_by_test_id = Result.unscoped.includes(:test_definition => :tags,
@@ -30,14 +30,14 @@ class AggregateResultGroup
     aggregates = results_by_test_id.values.collect do |results|
       AggregateResult.new( results[0].test_definition, world, results, target, tags )
     end
-    
+
     if tags && !tags.empty?
-      aggregates = aggregates.select { |ar| ar.tags.any? { |t| tags.include?(t) } } 
+      aggregates = aggregates.select { |ar| ar.tags.any? { |t| tags.include?(t) } }
     end
-    
+
     AggregateResultGroup.new( :results => aggregates, :world => world, :target => target )
   end
-  
+
   #
   # Construct the object
   #
@@ -61,7 +61,7 @@ class AggregateResultGroup
   #
   def status
     if !@status
-      @status = 
+      @status =
       if results.empty?
         'notrun'
       else
@@ -69,6 +69,9 @@ class AggregateResultGroup
       end
     end
     @status
+  end
+
+  def confidence
   end
 
   #

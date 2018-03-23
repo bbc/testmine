@@ -26,13 +26,15 @@
   </div>
 
   <div id="collapse-<%=@target.hash-%>" class="panel-collapse collapse">
- 
+
     <% if !@results.results.empty? %>
-    
+
     <table class="table table-condensed">
       <tr>
         <th colspan="3"></th>
-        <th></th>
+
+        <th>S</th>
+        <th>n</th>
         <th>Result</th>
         <th>
           <span class="badge-pass badge-result">P</span>
@@ -50,10 +52,16 @@
           <%= link_to( pretty_truncate(h(r.test_definition.name), 80, 'strong', h(r.test_definition.file_name(:short))), "/tests/#{r.test_definition.id}?target=#{@target}") -%></strong>
         </td>
 
+        <td>
+          <span class="label label-default"><%= r.stability -%></span>
+          <span class="label label-default"><%= r.confidence -%></span>
+        </td>
+
         <td><%= r.results.count %></td>
         <td>
           <span class="result result-<%= r.status -%>"><%= r.status -%></span>
         </td>
+
         <td>
           <span class="badge badge-result badge-pass badge-count-<%= r.count(:pass) -%>"><%= r.count(:pass) %></span>
           <span class="badge badge-result badge-fail badge-count-<%= r.count(:fail) -%>"><%= r.count(:fail) or 0 %></span>
@@ -67,6 +75,12 @@
       <tr>
         <td><%= pretty_node(s) -%></td>
         <td></td><td class="test-name"><em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}?target=#{@target}") -%></em></td>
+
+        <td>
+          <span class="label label-default"><%= s.stability -%></span>
+          <span class="label label-default"><%= s.confidence -%></span>
+        </td>
+
         <td><%= s.results.count %></td>
         <td>
           <span class="result result-<%= s.status -%>"><%= s.status -%></span>
@@ -79,15 +93,15 @@
           <span class="badge badge-result badge-notrun badge-count-<%= s.best.count(:notrun) -%>"><%= s.best.count(:notrun) %></span>
           <span class="badge badge-result badge-error badge-count-<%= s.best.count(:error) -%>"><%= s.best.count(:error) -%></span>
         </td>
+
       </tr>
-      
+
     <% end %>
   <% end %>
-      
+
     </table>
-    
-  <% end %>  
-    
+
+  <% end %>
+
   </div>
 </div>
-

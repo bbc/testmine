@@ -8,6 +8,8 @@ gem 'font-awesome-sass'
 
 gem 'thin'
 
+gem 'token_phrase'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'sqlite3'
@@ -23,5 +25,3 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'acts-as-taggable-on', '~> 3.4'
-
-
