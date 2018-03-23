@@ -8,6 +8,8 @@ gem 'font-awesome-sass'
 
 gem 'thin'
 
+gem 'nokogiri', '< 1.8.0'
+
 gem 'token_phrase'
 
 group :development, :test do

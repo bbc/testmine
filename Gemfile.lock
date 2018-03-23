@@ -92,13 +92,13 @@ GEM
       mini_mime (>= 0.1.1)
     mimemagic (0.3.1)
     mini_mime (1.0.0)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.1.0)
     minitest (5.11.3)
     multi_json (1.11.2)
     multipart-post (2.0.0)
     mysql2 (0.4.3)
-    nokogiri (1.8.2)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.7.2)
+      mini_portile2 (~> 2.1.0)
     ox (2.3.0)
     rack (1.6.9)
     rack-test (0.6.3)
@@ -202,6 +202,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   mysql2
+  nokogiri (< 1.8.0)
   rails (= 4.2.0)
   res (~> 1.2)
   rspec-rails
