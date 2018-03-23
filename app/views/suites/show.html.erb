@@ -22,7 +22,7 @@
 
 <div class="col-xs-12">
   <h3>Latest test worlds</h3>
-  
+
   <table class="table table-striped">
 
   <thead>
@@ -32,15 +32,15 @@
     <th>Runs</th>
   </thead>
   <% @worlds.each do |w| %>
- 
+
      <tr>
       <td><%= w.id -%></td>
       <td><%= link_to w.name, "/worlds/#{w.id}" -%></td>
       <td><%= w.version -%></td>
       <td><%= w.runs.count -%></td>
-    </tr> 
-  
+    </tr>
+
   <% end %>
   </table>
-  
+
 </div>

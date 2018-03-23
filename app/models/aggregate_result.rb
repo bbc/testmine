@@ -15,16 +15,16 @@ class AggregateResult
 
   def self.process_children( results, world, target, tags, filter_tags )
     results_by_test = results.group_by { |r| r.test_definition }
-    
+
     filter_tags = [] if !tags.empty? && tags.any? { |t| filter_tags.include?(t) }
-    
+
     aggregates = results_by_test.collect { |test, result| AggregateResult.new( test, world, result, target, filter_tags ) }
-    
+
     if filter_tags && !filter_tags.empty?
-      aggregates = aggregates.select { |ar| ar.tags.any? { |t| filter_tags.include?(t) } } 
+      aggregates = aggregates.select { |ar| ar.tags.any? { |t| filter_tags.include?(t) } }
     end
     aggregates
-  end  
+  end
 
   def best
     if !@best
@@ -42,6 +42,14 @@ class AggregateResult
     @best
   end
 
+  def stability
+    (results.collect { |r| r.status_score }.sum / best.status_score ) * ( 100 / results.count )
+  end
+
+  def confidence
+    test_definition.confidence
+  end
+
   #
   # Given a Result, or an array of Results, creates an AggregateResult
   # object.
@@ -54,7 +62,7 @@ class AggregateResult
     if @results && @results.count > 0 && @results.first.class != Result
       raise "Not an array of Results #{caller}"
     end
-    
+
     @target = _target
     @count = {}
   end
@@ -82,14 +90,14 @@ class AggregateResult
     end
     @count[status.to_sym]
   end
-  
+
   def inherited_tags
     if !@inherited_tags
       @inherited_tags = self.test_definition.specific_tags
     end
     @inherited_tags
   end
-    
+
   def tags
     if !@tags
       all = self.test_definition.specific_tags
@@ -100,11 +108,11 @@ class AggregateResult
     end
     @tags
   end
-  
+
   # Is this an actual test node -- i.e. does it have a status
   # TODO Create new step class to make optimisations easier
   def is_a_test?
     self.best.status
   end
-    
+
 end

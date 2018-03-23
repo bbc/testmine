@@ -1,5 +1,5 @@
 class TestDefinition < ActiveRecord::Base
-  
+
   belongs_to :suite
   belongs_to :parent,   :foreign_key => "parent_id", :class_name => 'TestDefinition'
   has_many   :children, :foreign_key => "parent_id", :class_name => 'TestDefinition', :dependent => :destroy
@@ -24,14 +24,14 @@ class TestDefinition < ActiveRecord::Base
       test.tag_list = args[:tags]
     end
   end
-  
+
   def specific_tags
     if ! @specific_tags
-      @specific_tags = self.tags.collect { |t| t.name } 
+      @specific_tags = self.tags.collect { |t| t.name }
     end
     @specific_tags
   end
-  
+
   def inherited_tags
     if ! @inherited_tags
       all = self.tags.collect { |t| t.name }
@@ -43,14 +43,14 @@ class TestDefinition < ActiveRecord::Base
     end
     @inherited_tags
   end
-  
+
   def add_test_definition(args)
     args[:suite_id] = self.suite_id
     args[:parent_id] = self.id
     args[:file] = self.file if !args[:file]
     TestDefinition.find_or_create(args)
   end
-  
+
   def file_name( modifier = :short )
     file_name = file
     if modifier == :short
@@ -58,5 +58,8 @@ class TestDefinition < ActiveRecord::Base
       file_name = $1 if $1
     end
     file_name
+  end
+
+  def confidence
   end
 end

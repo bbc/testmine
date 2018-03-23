@@ -6,7 +6,7 @@
       <%= @world.project + ": " + @world.component -%>
     <% end %>
   </h1>
-  <h2><%= @world.version -%></h2>
+  <h2><%= @world.name -%></h2>
  </div>
 
 <div class="col-xs-6">
@@ -21,7 +21,7 @@
 
 
 <div class="col-xs-12">
-  <p> 
+  <p>
   <ul class="center-block test-tags list-inline">
     <% if @tag %>
     <li><h4><span class='label label-primary'><%= link_to('all tags', "/worlds/#{@world.id}") -%></h4></span></li>
@@ -52,13 +52,13 @@
     <div class="panel-group" id="accordion">
 
       <% @targets.each do |t| %>
-    
+
         <div class="panel panel-default aggregate-group-loader" id="group-<%=@world.id-%>-<%=t-%>">
           <div class="panel-heading">
             <h4 class="panel-title">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=t-%>"><%=t-%></a>
               <span class="pull-right">
-              <span class="result result-unknown">????</span> 
+              <span class="result result-unknown">????</span>
               <span class="badge badge-result badge-pass badge-count-0">?</span>
               <span class="badge badge-result badge-fail badge-count-0">?</span>
               <span class="badge badge-result badge-notrun badge-count-0">?</span>
@@ -124,7 +124,7 @@
         <p class="lead">Couldn't find any comparison worlds</p>
 
       <% end %>
-      
+
       <div class="col-xs-6">
 
       <table class="table table-condensed">
@@ -136,7 +136,7 @@
         </tr>
       <% end %>
       </table>
-      
+
       </div>
 
     </div>
@@ -149,5 +149,5 @@
     loadAggregateGroups('<%=@tag-%>')
   <% else %>
     loadAggregateGroups('')
-  <% end %>   
+  <% end %>
 </script>

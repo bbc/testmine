@@ -9,6 +9,7 @@
     <th>Component</th>
     <th>Version</th>
     <th>Runs</th>
+    <th>Last run</th>
   </thead>
 
   <tbody>
@@ -21,6 +22,7 @@
       <td><%= w.component -%></td>
       <td><%= w.version -%></td>
       <td><%= w.runs.count -%></td>
+      <td><%= simple_time w.last_run.started_at -%></td>
     </tr>
 
   <% end %>
