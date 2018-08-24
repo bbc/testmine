@@ -1,0 +1,10 @@
+version: '3'
+services:
+  testmine:
+    build: .
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: 'bin/start'
+    ports:
+      - "3002:3002"
