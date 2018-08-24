@@ -38,11 +38,49 @@ In addition, the comparison result will be faded if the results between the two 
 
 Testmine is a straightforward Rails application. You can deploy a local copy easily by checking it out and running:
 
+
+### Method # 1: Run directly on Host Machine
+
     bundle install --local --without development test
     bundle exec rake db:migrate
     bundle exec rails s
 
 You should get a testmine instance on port 3002 with an sqlite database.
+
+### Method # 2: Run it on Docker 
+
+#### Prerequiste for Docker
+1. Ensure your docker machine is running
+```
+$ docker-machine status
+```
+It should say "Running".
+
+2. Get the ip address of your docker machine
+```
+$ docker-machine env default
+...
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+...
+```
+The ip address is 192.168.99.100 in this case.
+3. Run the following command to configure your shell
+```
+eval $(docker-machine env default)
+```
+
+#### Run testmine on Docker
+
+Run the following to startup a docker machine for testmine.
+
+```
+docker-compose build
+docker-compose up
+```
+
+Visit the browser http://192.168.99.100:3002 to see the output.
+
+
 
 ## Submitting results
 
