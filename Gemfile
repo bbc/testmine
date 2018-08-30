@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.7.1'
 
 gem 'sass-rails'
 gem 'bootstrap-sass'
@@ -8,7 +8,7 @@ gem 'font-awesome-sass'
 
 gem 'thin'
 
-gem 'nokogiri', '< 1.7.0'
+gem 'nokogiri', '~> 1.8.2'
 
 gem 'token_phrase'
 
