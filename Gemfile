@@ -2,6 +2,10 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.0'
 
+gem "autoprefixer-rails"
+
+gem 'concurrent-ruby'
+
 gem 'sass-rails'
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'

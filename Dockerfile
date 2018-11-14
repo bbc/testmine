@@ -22,4 +22,6 @@ ADD . $app
 RUN bundle update
 RUN bundle install --with production
 
+RUN rake acts_as_taggable_on_engine:install:migrations
+
 EXPOSE 3002

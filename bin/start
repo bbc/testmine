@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+echo "Starting testmine, visit: http://192.168.99.100:3002/ in your browser."
+
 bundle exec rake db:migrate
 bundle exec rails s
