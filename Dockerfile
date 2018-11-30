@@ -19,6 +19,7 @@ RUN mkdir $app
 WORKDIR $app
 ADD . $app
 
+RUN cd $app
 RUN bundle update
 RUN bundle install --with production
 

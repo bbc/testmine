@@ -1,5 +1,16 @@
 version: '3'
 services:
+  app-db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: testmine
+      MYSQL_DATABASE: testmite
   testmine:
     build: .
     working_dir: /app
@@ -8,3 +19,7 @@ services:
     command: 'bin/start'
     ports:
       - "3002:3002"
+    links:
+      - app-db
+volumes:
+  db_data:
