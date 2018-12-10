@@ -1,33 +1,21 @@
-source 'https://rubygems.org'
+Dockerfilesource 'https://rubygems.org'
 
-gem 'rails', '4.2.0'
+gem 'rails', '= 5.0.7.1'
 
-gem "autoprefixer-rails"
+gem 'sass-rails', '= 5.0.7'
+gem 'bootstrap-sass', '= 3.3.7'
+gem 'font-awesome-sass', '= 5.5.0.1'
 
-gem 'concurrent-ruby'
+gem 'thin', '= 1.7.2'
 
-gem 'sass-rails'
-gem 'bootstrap-sass'
-gem 'font-awesome-sass'
+gem 'nokogiri', '= 1.8.5'
 
-gem 'thin'
+gem 'token_phrase', '= 1.0.6'
 
-gem 'nokogiri', '< 1.7.0'
-
-gem 'token_phrase'
-
-group :development, :test do
-  gem 'rspec-rails'
-  gem 'sqlite3'
-  gem 'res', '~> 1.2'
-end
-
-group :production do
-  gem 'mysql2', '~> 0.3.18'
-end
+gem 'mysql2', '= 0.5.2'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
-gem 'jbuilder', '~> 1.2'
-gem 'acts-as-taggable-on', '~> 3.4'
+gem 'uglifier', '= 4.1.20'
+gem 'jquery-rails', '= 4.3.3'
+gem 'jbuilder', '= 2.8.0'
+gem 'acts-as-taggable-on', '= 6.0.0'

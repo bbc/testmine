@@ -8,6 +8,9 @@ while ! mysqladmin ping -h"app-db" --silent; do
     echo -n "."
 done
 echo "Starting testmine, visit: http://192.168.99.100:3002/ in your browser."
+gem install bundler
 bundle install
 bundle exec rake db:migrate
 bundle exec rails s
+
+
