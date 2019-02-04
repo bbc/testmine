@@ -10,6 +10,8 @@ development:
   username: root
   password: testmine
   port: 3306
+  variables:
+    sql_mode: TRADITIONAL
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
