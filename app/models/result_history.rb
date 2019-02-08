@@ -29,7 +29,34 @@ class ResultHistory
     # Finally find the results
     targets.reduce({}) { |h, t| h[t] = ResultHistory.find( args.merge({:target=>t}) ); h }
   end
-  
+
+  def self.group_by_commit (histories)
+    grouped_results = Hash.new
+
+    histories.each do |target, results|
+      results.reference_results.each do |r|
+
+        commit = r.world.version
+        status = r.calculated_status
+        date   = r.updated_at
+
+        if !grouped_results.has_key? commit
+          grouped_results[commit] = Hash.new
+        end
+
+        grouped_results[commit][:date] = date
+
+        if !grouped_results[commit].has_key? status
+          grouped_results[commit][status] = 1
+        else
+          grouped_results[commit][status] = grouped_results[commit][status] + 1
+        end
+      end
+    end
+
+    return grouped_results
+  end
+
   def initialize(test_definition, primary, reference)
     @test_definition = test_definition
     @primary_result = primary

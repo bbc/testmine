@@ -18,33 +18,42 @@
   <div class="tab-content">
 
   <% counter = 0 %>
+
+  </td>
+
+<% if params[:detail] %>
+    <table class="table">
+    <thead>
+        <tr>
+          <th>Updated At</th>
+          <th>Commits</th>
+          <th>Passes</th>
+          <th>Fails</th>
+          <th>Status</th>
+          <th>Flaky (%)</th>
+        </tr>
+    </thead>
+  <% @grouped_results.each do |commit, values| %>
+    <tr>
+      <td><%= values[:date] %></td>
+      <td><%= commit %></td>
+      <td><%= values["pass"] %></td>
+      <td><%= values["fail"] %></td>
+      <td><%= "Flaky" if values["pass"] && values["fail"] %></td>
+      <td><%= (values["fail"].to_f / (values["pass"].to_f + values["fail"].to_f) * 100).round(2) if values["pass"] && values["fail"]  %></td>
+    </tr>
+  <% end %>
+    </table>
+
+    <a href="javascript:window.history.back();">&larr; Back </a>
+<% else %>
   <% @histories.each do |target, results| %>
 
     <% tab_class='active' if params[:target] == target %>
     <div class="tab-pane <%=tab_class-%>" id="tab-<%=counter-%>">
     <% counter += 1 %>
+
       <table class="table">
-
-        <thead>
-
-          <!-- World information row -->
-          <tr>
-            <th class="rotate-th"></th>
-              <script>$('#<%="world-primary"-%>').tooltip({"animation": true })</script>
-            <% (-14..0).each do |i| %>
-            <% r =results.reference_results[i.abs] %>
-            <% if r %>
-              <th class="rotate-th"><div><span id="<%="world-"+counter.to_s+i.to_s-%>" class="label label-primary" data-toggle="tooltip" data-placement="top" title="<%= r.world.component -%>: <%= r.world.version -%>"><%= r.world.version -%></span></div></th>
-              <script>$('#<%="world-"+counter.to_s+i.to_s-%>').tooltip({"animation": true })</script>
-            <% else %>
-              <th class="rotate-th"></th>
-            <% end %>
-          <% end %>
-            <th class="info rotate-th"><div><span id="world-primary" class="label label-primary" data-toggle="tooltip" data-placement="top" title="<%= results.primary_result.world.component -%>: <%= results.primary_result.world.version -%>"><%= results.primary_result.world.version -%></span></div></th>
-
-          </tr>
-
-
           <!-- Results row for this test id -->
           <tr class="summary-row">
           <th></th>
@@ -58,14 +67,13 @@
           <% end %>
           <th  class="info"><span class="badge badge-result badge-<%= results.primary_result.calculated_status -%>"><%= results.primary_result.calculated_status.capitalize[0] -%></span></th>
         </tr>
-        </thead>
 
         <!-- Results for the children -->
         <% if results.child_test_definitions && !results.child_test_definitions.empty? -%>
         <tbody>
           <% results.child_test_definitions.each_with_index do |t, j| %>
           <tr>
-            <td><%= link_to(t.name, "/tests/#{t.id}?target=#{target}") -%></td>
+            <td><%= link_to(t.name, "/tests/#{t.id}?target=#{target}&test_suite=#{@test_definition_id}&detail=true") -%></td>
             <% (-14..0).each do |i| %>
             <% r = results.reference_child(t,i.abs) %>
             <% if r %>
@@ -85,6 +93,7 @@
 
     </div>
   <% end %>
+<% end %>
   </div>
 
 </div>

@@ -12,6 +12,9 @@ class TestsController < ApplicationController
     @test_definition_id = params[:id].to_i
     @target = params[:target]
     @histories = ResultHistory.find_for_recent_targets(:test_definition_id => @test_definition_id )
+
+    @grouped_results = ResultHistory.group_by_commit(@histories)
+
     @test = @histories[@target].test_definition
   end
 end
