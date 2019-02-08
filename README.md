@@ -50,13 +50,22 @@ You should get a testmine instance on port 3002 with an sqlite database.
 ### Method # 2: Run it on Docker 
 
 #### Prerequiste for Docker
-1. Ensure your docker machine is running
+1. Download and install docker https://docs.docker.com/docker-for-mac/install/
+2. Install virtualbox on your machine.
+```
+$ brew cask install virtualbox
+```
+3. Create a default docker machine
+```
+$ docker-machine create default
+```
+4. Ensure your docker machine is running
 ```
 $ docker-machine status
 ```
 It should say "Running".
 
-2. Get the ip address of your docker machine
+5. Get the ip address of your docker machine
 ```
 $ docker-machine env default
 ...
@@ -64,7 +73,7 @@ export DOCKER_HOST="tcp://192.168.99.100:2376"
 ...
 ```
 The ip address is 192.168.99.100 in this case.
-3. Run the following command to configure your shell
+6. Run the following command to configure your shell
 ```
 eval $(docker-machine env default)
 ```
