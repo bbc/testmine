@@ -78,7 +78,7 @@ class AggregateResult
     self.statuses.uniq.count > 1
   end
 
-  def falkyPercentage
+  def flakyPercentage
     ((self.statuses.count("fail").to_f / self.statuses.count.to_f) * 100).round(2)
   end
 

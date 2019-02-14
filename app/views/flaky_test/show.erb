@@ -42,7 +42,7 @@
           <em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}?target=#{@target}&detail=true") -%></em></td>
           <td><%= s.statuses.count("pass") %></td>
           <td><%= s.statuses.count("fail") %></td>
-          <td><%= s.falkyPercentage %></td>
+          <td><%= s.flakyPercentage %></td>
         </tr>
       <% end %>
     <% end %>
