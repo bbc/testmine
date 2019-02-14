@@ -1,0 +1,56 @@
+<h1> Flaky Test Report </h1>
+<br />
+<div class="panel panel-default">
+  
+  <% if !@tags.empty? %>
+  <% @tags.each do |t| %>
+    <script>
+    list = $('ul.test-tags')
+    if ( ! $("ul.test-tags #<%=t-%>").length ) {
+      $.unique(list.prepend('<li id="<%=t-%>"><h4><span class="label <%= @tag == t ? 'label-primary' : 'label-default' -%>"> <%= link_to(t, "/worlds/#{@world_id}?tag=#{t}") -%> </span></h4></li>'));
+    }
+    </script>
+  <% end %>
+  <% end %>
+
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%=@target.hash-%>"><%=@target-%></a>
+    </h4>
+  </div>
+
+  <div id="collapse-<%=@target.hash-%>" class="panel-collapse in">
+
+    <% if !@results.results.empty? %>
+
+    <table class="table table-condensed">
+      <tr>
+        <th> Suite </th>
+        <th> Test Name </th>
+        <th> Pass </th>
+        <th> Fail </th>
+        <th> Flaky (%) </th>
+      </tr>
+
+    <% @results.results.each do |r| %>
+      <% r.children.each do |s| %>
+      <% if s.flaky? %>
+        <tr>
+          <td><strong><%= r.test_definition.name %></strong></td>
+
+          <td class="test-name">
+          <em><%= link_to( pretty_truncate(h(s.test_definition.name), 80, 'em'), "/tests/#{s.test_definition.id}?target=#{@target}&detail=true") -%></em></td>
+          <td><%= s.statuses.count("pass") %></td>
+          <td><%= s.statuses.count("fail") %></td>
+          <td><%= s.flakyPercentage %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+
+    </table>
+
+  <% end %>
+
+  </div>
+</div>

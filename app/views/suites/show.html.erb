@@ -28,6 +28,7 @@
   <thead>
     <th>ID</th>
     <th>World</th>
+    <th>Flaky Test Report</th>
     <th>Version</th>
     <th>Runs</th>
   </thead>
@@ -36,6 +37,7 @@
      <tr>
       <td><%= w.id -%></td>
       <td><%= link_to w.name, "/worlds/#{w.id}" -%></td>
+      <td><%= link_to "View", "/flaky-test-report/#{w.id}?" if w.runs.count > 1 -%></td>
       <td><%= w.version -%></td>
       <td><%= w.runs.count -%></td>
     </tr>

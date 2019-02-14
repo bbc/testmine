@@ -15,6 +15,8 @@ Testmine::Application.routes.draw do
   get 'worlds/:id' => 'worlds#show'
   get 'worlds/:primary/:reference' => 'worlds#compare'
   
+  get 'flaky-test-report/:world_id' => 'flaky_test#show'
+
   get 'aggregate/:world_id' => 'worlds#aggregate_group_element'
   get 'comparison/:primary/:reference' => 'worlds#comparison_group_element'
 
