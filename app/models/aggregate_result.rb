@@ -70,6 +70,18 @@ class AggregateResult
   #
   # Methods to make this look more like a Result object
   #
+  def statuses
+    statuses = results.collect {|r| r.status}
+  end
+
+  def falky?
+    self.statuses.uniq.count > 1
+  end
+
+  def falkyPercentage
+    ((self.statuses.count("fail").to_f / self.statuses.count.to_f) * 100).round(2)
+  end
+
   def status
     if !@status
       if self.best.status
