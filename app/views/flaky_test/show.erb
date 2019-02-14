@@ -34,7 +34,7 @@
 
     <% @results.results.each do |r| %>
       <% r.children.each do |s| %>
-      <% if s.falky? %>
+      <% if s.flaky? %>
         <tr>
           <td><strong><%= r.test_definition.name %></strong></td>
 

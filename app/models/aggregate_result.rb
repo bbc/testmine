@@ -74,7 +74,7 @@ class AggregateResult
     statuses = results.collect {|r| r.status}
   end
 
-  def falky?
+  def flaky?
     self.statuses.uniq.count > 1
   end
 
