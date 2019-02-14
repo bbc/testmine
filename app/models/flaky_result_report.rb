@@ -20,17 +20,11 @@ class FlakyResultReport
 
     tests = primary_results_by_test.keys
     
-    aggregates = []
-    tests.each do |test|
+    aggregates = tests.map do |test|
       primary_results = primary_results_by_test[test] || []
-      
-      primary_aggregate = AggregateResult.new( test, primary_world, primary_results, target, tags )
-      
-      aggregates.push(primary_aggregate)
-      
+      AggregateResult.new( test, primary_world, primary_results, target, tags )
     end
 
-    
     AggregateResultGroup.new( :results => aggregates, :world => primary_world, :target => target )
   end
 
