@@ -1,3 +1,4 @@
+<% @has_flaky = false %>
 <h1> Flaky Test Report </h1>
 <br />
 <div class="panel panel-default">
@@ -31,10 +32,12 @@
         <th> Fail </th>
         <th> Flaky (%) </th>
       </tr>
-
+    
     <% @results.results.each do |r| %>
       <% r.children.each do |s| %>
-      <% if s.flaky? %>
+      <% if s.flaky? 
+          @has_flaky = true
+      %>
         <tr>
           <td><strong><%= r.test_definition.name %></strong></td>
 
@@ -51,6 +54,10 @@
     </table>
 
   <% end %>
+  
 
   </div>
 </div>
+<% if !@has_flaky %>
+    <h2>There are no flaky tests in this world. </h2>
+<% end %>

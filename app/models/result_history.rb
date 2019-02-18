@@ -12,8 +12,22 @@ class ResultHistory
     
     test_definition = TestDefinition.find( test_definition_id )
     
-    results = Result.joins(:run).where( :test_definition_id => test_definition_id, :runs => { :target => target } ).last(20).reverse
+    results = Result.joins(:run).where( :test_definition_id => test_definition_id, :runs => { :target => target } ).reverse
     ResultHistory.new( test_definition, results.shift, results )
+  end
+
+  def self.find_for_all_targets(args)
+
+    # First identify the test_definition
+    test_definition_id = args[:test_definition_id] or raise "Need to provide a test definition id"
+    target = args[:target]
+
+    # Next derive recent targets...
+    targets = Run.joins(:results => :test_definition).where( :results => {:test_definition_id => test_definition_id} ).order('runs.id DESC').pluck('DISTINCT runs.target' )
+    targets.push(target).uniq! if target
+    
+    # Finally find the results
+    targets.reduce({}) { |h, t| h[t] = ResultHistory.find( args.merge({:target=>t}) ); h }
   end
   
   def self.find_for_recent_targets(args)
