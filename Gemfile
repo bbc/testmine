@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '= 5.0.7.1'
 
 gem 'sass-rails', '= 5.0.7'
-gem 'bootstrap-sass', '= 3.3.7'
+gem 'bootstrap-sass', '3.4.1'
 gem 'font-awesome-sass', '= 5.5.0.1'
 
 gem 'thin', '= 1.7.2'
