@@ -8,7 +8,7 @@ gem 'font-awesome-sass', '= 5.5.0.1'
 
 gem 'thin', '= 1.7.2'
 
-gem 'nokogiri', '= 1.8.5'
+gem 'nokogiri', '1.15.4'
 
 gem 'token_phrase', '= 1.0.6'
 
